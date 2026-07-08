@@ -56,7 +56,7 @@ def compute_accuracy(model, data_loader, device):
 
 
 @hydra.main(version_base=None, config_path="conf", config_name="config")
-def train(cfg: DictConfig) -> None:
+def train(cfg: DictConfig) -> float:
     print(OmegaConf.to_yaml(cfg))
     
     print(f"Training on {cfg.dataset} dataset...")
@@ -65,7 +65,7 @@ def train(cfg: DictConfig) -> None:
     num_classes = 10
     learning_rate = cfg.lr
     batch_size = cfg.batch_size
-    num_epochs = 1
+    num_epochs = cfg.epochs
 
     train_loader = DataLoader(dataset=train_dataset,batch_size=batch_size,shuffle=True)
     test_loader = DataLoader(dataset=test_dataset, batch_size=batch_size, shuffle=True)
@@ -103,15 +103,18 @@ def train(cfg: DictConfig) -> None:
         model.eval()
         with torch.no_grad():
             train_acc = compute_accuracy(model=model, data_loader=train_loader,device=DEVICE)
-            print(f"Train accuracy : {train_acc:.4f}")
+            print(f"Train Acc : {train_acc:.4f}")
             train_acc_list.append(train_acc)
 
     
-
+    model.eval()
     test_acc = compute_accuracy(model=model, data_loader=test_loader, device=DEVICE)
     print(f"Test Acc : {test_acc}")
 
+    print(f"Parameters after trail : lr={cfg.lr:.4f}, batch_size={cfg.batch_size} -> Accuracy: {test_acc:.4f}")
+    print("-------------------------------------------------------------------------------------------------------\n")
     torch.save(model.state_dict(), 'save-data/mnistModel.pt')
+    return test_acc
 
 
     
