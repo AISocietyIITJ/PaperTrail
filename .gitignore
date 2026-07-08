@@ -25,9 +25,10 @@ share/python-wheels/
 .installed.cfg
 *.egg
 MANIFEST
+checkpoints/
 outputs/
 multirun/
-dataset/MNIST/
+data/
 wandb/
 
 # PyInstaller
