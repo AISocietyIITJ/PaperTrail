@@ -10,6 +10,7 @@ import torchvision.transforms as transforms
 import hydra
 from omegaconf import DictConfig, OmegaConf
 from torchinfo import summary
+import wandb
 
 
 
@@ -30,6 +31,9 @@ class MNIST_classifier(nn.Module):
         x = self.fc(x)
         return x
     
+
+model = MNIST_classifier(inp_channel=1, num_classes=10)
+print(summary(model=model))
 
 
 DEVICE = 'cuda' if torch.cuda.is_available() else 'cpu'
@@ -67,14 +71,21 @@ def train(cfg: DictConfig) -> float:
     batch_size = cfg.batch_size
     num_epochs = cfg.epochs
 
+    run = wandb.init(
+        project="mnist model",
+        group="optuna sweep",
+        config=OmegaConf.to_container(cfg=cfg,resolve=True),
+        reinit=True
+    )
+
     train_loader = DataLoader(dataset=train_dataset,batch_size=batch_size,shuffle=True)
     test_loader = DataLoader(dataset=test_dataset, batch_size=batch_size, shuffle=True)
 
     model = MNIST_classifier(inp_channel=input_channels, num_classes=num_classes)
 
     # # checking the dimension are perfect with random value
-    x = torch.randn(1, 1, 28, 28)
-    print(model(x).shape)
+    # x = torch.randn(1, 1, 28, 28)
+    # print(model(x).shape)
 
     model = model.to(device=DEVICE)
     optimizer = optim.Adam(model.parameters(), lr=learning_rate)
@@ -98,13 +109,20 @@ def train(cfg: DictConfig) -> float:
 
             losses.append(loss.item())
         
-        print(f"{epoch+1}/{num_epochs} epoch | loss = {(sum(losses)/len(losses)):.4f}")
+        train_loss = (sum(losses)/len(losses))
+        print(f"{epoch+1}/{num_epochs} epoch | loss = {train_loss:.4f}")
 
         model.eval()
         with torch.no_grad():
             train_acc = compute_accuracy(model=model, data_loader=train_loader,device=DEVICE)
             print(f"Train Acc : {train_acc:.4f}")
             train_acc_list.append(train_acc)
+
+        wandb.log({
+            "epoch":epoch,
+            "train/loss":train_loss,
+            "train/accuracy":train_acc
+        })
 
     
     model.eval()
@@ -114,10 +132,10 @@ def train(cfg: DictConfig) -> float:
     print(f"Parameters after trail : lr={cfg.lr:.4f}, batch_size={cfg.batch_size} -> Accuracy: {test_acc:.4f}")
     print("-------------------------------------------------------------------------------------------------------\n")
     torch.save(model.state_dict(), 'save-data/mnistModel.pt')
+    
+    run.finish()
     return test_acc
 
-
-    
 
 
     
