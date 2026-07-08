@@ -1,5 +1,6 @@
 defaults:
   - dataset: mnist
+  - override hydra/sweeper: optuna
   - _self_
 
 lr: 0.001
