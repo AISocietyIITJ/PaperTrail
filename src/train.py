@@ -1,5 +1,6 @@
 import torch
 
+
 def train(model, train_loader, criterion, optimizer, device):
     model.train()
 
@@ -11,15 +12,16 @@ def train(model, train_loader, criterion, optimizer, device):
 
         optimizer.zero_grad()
         outputs = model(images)
-        
+
         loss = criterion(outputs, labels)
         loss.backward()
-        
+
         optimizer.step()
 
         total_loss += loss.item()
 
-    return total_loss / len(train_loader)    
+    return total_loss / len(train_loader)
+
 
 def test(model, test_loader, device):
     model.eval()
@@ -39,9 +41,4 @@ def test(model, test_loader, device):
             correct += (labels == predictions).sum().item()
             samples += predictions.size(0)
 
-    return 100 * (correct / samples)        
-
-
-
-
-    
+    return 100 * (correct / samples)
