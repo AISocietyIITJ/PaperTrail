@@ -1,0 +1,61 @@
+_wandb:
+    value:
+        cli_version: 0.28.0
+        e:
+            mgwblmzg2ejr72c5ccj9fq1ssbxr5zb8:
+                codePath: OneDrive\Desktop\learn_pytorch\src\tune.py
+                codePathLocal: tune.py
+                cpu_count: 8
+                cpu_count_logical: 16
+                cudaVersion: "12.7"
+                disk:
+                    /:
+                        total: "343124807680"
+                        used: "151809175552"
+                email: b25mt1017@iitj.ac.in
+                executable: C:\Users\HARSHIKA BAJAJ\OneDrive\Desktop\learn_pytorch\.venv\Scripts\python.exe
+                gpu: NVIDIA GeForce RTX 3050 Laptop GPU
+                gpu_count: 1
+                gpu_nvidia:
+                    - architecture: Ampere
+                      cudaCores: 2048
+                      memoryTotal: "4294967296"
+                      name: NVIDIA GeForce RTX 3050 Laptop GPU
+                      uuid: GPU-aa54c9d5-15f1-18f5-e211-3a32c74276cc
+                host: LAPTOP-93QG76H4
+                memory:
+                    total: "16989736960"
+                os: Windows-11-10.0.26200-SP0
+                program: C:\Users\HARSHIKA BAJAJ\OneDrive\Desktop\learn_pytorch\src\tune.py
+                python: CPython 3.13.9
+                root: C:\Users\HARSHIKA BAJAJ\OneDrive\Desktop\learn_pytorch\src
+                startedAt: "2026-07-08T12:29:23.531864Z"
+                writerId: mgwblmzg2ejr72c5ccj9fq1ssbxr5zb8
+        m: []
+        python_version: 3.13.9
+        t:
+            "1":
+                - 1
+                - 35
+                - 41
+                - 50
+            "2":
+                - 1
+                - 35
+                - 41
+                - 50
+            "3":
+                - 2
+                - 16
+            "4": 3.13.9
+            "5": 0.28.0
+            "8":
+                - 3
+            "12": 0.28.0
+            "13": windows-amd64
+batch_size:
+    value: 64
+epochs:
+    value: 8
+learning_rate:
+    value: 0.00023753371371831012
