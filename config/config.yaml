@@ -1,0 +1,14 @@
+
+optuna:
+  n_trials: 20
+  min_epochs: 10
+  max_epochs: 20
+  min_lr: 0.0001
+  max_lr: 0.001
+
+
+wandb:
+  project: "Logging_for_task1"
+  entity: "sreehari20620-indian-institute-of-technology-jodhpur"
+  architecture: "CNN"
+  dataset: "MNIST"
