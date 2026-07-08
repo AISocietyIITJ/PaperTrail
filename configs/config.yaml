@@ -1,0 +1,8 @@
+defaults:
+  - dataset: default
+  - model: small_cnn
+  - optimizer: adam
+  - trainer: default
+  - _self_
+
+seed: 42

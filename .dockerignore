@@ -1,0 +1,7 @@
+.venv/
+data/
+wandb/
+*.pt
+.git/
+__pycache__/
+outputs/
