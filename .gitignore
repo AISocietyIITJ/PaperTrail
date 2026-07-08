@@ -6,6 +6,11 @@ __pycache__/
 # C extensions
 *.so
 
+#model outputs
+dataset
+outputs
+wandb
+__pycache__
 # Distribution / packaging
 .Python
 build/
