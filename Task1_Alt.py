@@ -182,7 +182,7 @@ def main(cfg: DictConfig) -> None:
 
 
     run = wandb.init(
-        entity="sreehari20620-indian-institute-of-technology-jodhpur",
+        entity=cfg.wandb.entity,
         project="Logging_for_task1",
         config={
             "learning_rate":lr,
