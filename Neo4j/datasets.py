@@ -61,7 +61,7 @@ print(airport.sample(5))
 
 
 
-# print(routes.shape)
+print(routes.shape)
 # print(routes.sample(5))
 
 
