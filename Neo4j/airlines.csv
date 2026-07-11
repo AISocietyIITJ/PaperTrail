@@ -1,6 +1,6 @@
 Airline_ID,Names,Alias,IATA,ICAO,Call_Sign,Country,Active
--1,Unknown,Unknown,-,Unknown,Unknown,Unknown,Y
-1,Private flight,Unknown,-,Unknown,Unknown,Unknown,Y
+-1,Unknown,Unknown,Unknown,Unknown,Unknown,Unknown,Y
+1,Private flight,Unknown,Unknown,Unknown,Unknown,Unknown,Y
 2,135 Airways,Unknown,Unknown,GNL,GENERAL,United States,N
 3,1Time Airline,Unknown,1T,RNX,NEXTIME,South Africa,Y
 4,2 Sqn No 1 Elementary Flying Training School,Unknown,Unknown,WYT,Unknown,United Kingdom,N
