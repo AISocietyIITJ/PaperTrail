@@ -26,6 +26,17 @@ import pandas as pd
 # ===========================================================================================================================================================
 
 airport = pd.read_csv("airports.csv")
+airport = airport.fillna("Unknown")
+airport = airport.replace('\\N', "Unknown")
+airport.to_csv("airports.csv",index=False)
+airlines = pd.read_csv("airlines.csv")
+airlines = airlines.fillna("Unknown")
+airlines = airlines.replace('\\N', "Unknown")
+airlines.to_csv("airlines.csv", index=False)
+routes = pd.read_csv("routes.csv")
+routes = routes.fillna("Unknown")
+routes = routes.replace('\\N', "Unknown")
+routes.to_csv("routes.csv", index=False)
 
 print(airport.sample(5))
 
@@ -43,7 +54,7 @@ for col in port_col_name:
 
 
 print("=========================================================================================================================================")
-airlines = pd.read_csv("airlines.csv")
+
 
 lines_col_name = ["Airline_ID", "Names", "Alias", "IATA", "ICAO", "Call_Sign","Country","Active"]
 print(airlines.info())
@@ -52,7 +63,8 @@ for col in lines_col_name:
     print(f"{col} ==> {missing_value} missing values")
 
 
-routes = pd.read_csv("routes.csv")
+
+print(routes.shape)
 print(routes.sample(5))
 
 
@@ -62,3 +74,4 @@ print(routes.sample(5))
 x = routes.iloc[5]
 print(airport[airport['Airport ID'] == int(x['Source airport_ID'])])
 print(airlines[airlines['Airline_ID'] == int(x['Airline_ID'])])
+
