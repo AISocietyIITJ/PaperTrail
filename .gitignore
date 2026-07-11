@@ -222,4 +222,4 @@ data/raw/
 data/processed/
 .env
 __pycache__/
-*.egg-info/
+*.egg-info/.idea/

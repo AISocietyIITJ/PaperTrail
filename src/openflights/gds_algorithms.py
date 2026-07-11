@@ -30,6 +30,20 @@ def run_pagerank(session, top_n: int = 10):
     )
     return [dict(r) for r in result]
 
+def largest_community_countries(session, community_id: int):
+    result = session.run(
+        """
+        CALL gds.louvain.stream('flightNetwork')
+        YIELD nodeId, communityId
+        WHERE communityId = $community_id
+        RETURN gds.util.asNode(nodeId).country AS country, count(*) AS airport_count
+        ORDER BY airport_count DESC
+        LIMIT 10
+        """,
+        community_id=community_id,
+    )
+    return [dict(r) for r in result]
+
 
 def run_louvain(session, top_n: int = 10):
     result = session.run(
@@ -45,6 +59,7 @@ def run_louvain(session, top_n: int = 10):
     return [dict(r) for r in result]
 
 
+
 def main():
     driver = get_driver()
     with driver.session() as session:
@@ -56,6 +71,10 @@ def main():
 
         print("\n--- Louvain (top 10 largest communities) ---")
         for row in run_louvain(session):
+            print(row)
+
+        print("\n--- Countries in largest community (id 3899) ---")
+        for row in largest_community_countries(session, 3899):
             print(row)
 
     driver.close()
