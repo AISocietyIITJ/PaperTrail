@@ -14,7 +14,7 @@ with GraphDatabase.driver(URI, auth=AUTH) as driver:
         LOAD CSV WITH HEADERS FROM 'https://raw.githubusercontent.com/Rishabh-iitj2029/PaperTrail/refs/heads/tasks/Neo4j/routes.csv' AS routes
         WITH routes LIMIT 5
         MERGE(r:Route {stops: routes.Stops})
-        MERGE(ap1:Airport {id: routes.airport_ID}) 
+        MERGE(ap1:Airport {id: routes.Source_airport_ID}) 
         
         
         """,

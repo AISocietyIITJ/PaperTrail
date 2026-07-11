@@ -1,4 +1,4 @@
-Airline,Airline_ID,Source_airport,Source airport_ID,Destination_airport,Destination airport_ID,Codeshare,Stops,Equipment
+Airline,Airline_ID,Source_airport,Source_airport_ID,Destination_airport,Destination_airport_ID,Codeshare,Stops,Equipment
 2B,410,AER,2965,KZN,2990,Unknown,0,CR2
 2B,410,ASF,2966,KZN,2990,Unknown,0,CR2
 2B,410,ASF,2966,MRV,2962,Unknown,0,CR2
