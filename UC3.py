@@ -17,7 +17,7 @@ output= model(**tokens)
 A=output.last_hidden_state[:,0,:]
 embedding= A.detach().cpu().numpy()
 
-paper_embeddings
+paper_embeddings=total_embeddings
 
 distances= torch.mm(embedding,paper_embeddings)
 
