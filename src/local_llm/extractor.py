@@ -37,4 +37,11 @@ def get_interest_topics(user_query: str):
 
     result = extract_information(user_query)
 
-    return result["interest_topics"]
+    if(result["keyphrases"] == result["interest_topics"]):
+        interest_topics = ", ".join(result.get("interest_topics", []))
+        return f"{interest_topics}"
+    
+    interest_topics = ", ".join(result.get("interest_topics", []))
+    details = ", ".join(result.get("keyphrases", []))
+    
+    return f"{interest_topics}: {details}"

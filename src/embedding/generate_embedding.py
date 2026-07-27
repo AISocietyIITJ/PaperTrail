@@ -1,6 +1,5 @@
 import pandas as pd
 from sentence_transformers import SentenceTransformer
-import numpy as np
 from pinecone import Pinecone, ServerlessSpec
 import os
 import time

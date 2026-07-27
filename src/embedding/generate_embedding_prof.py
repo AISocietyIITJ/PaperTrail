@@ -1,6 +1,5 @@
 import pandas as pd
 from sentence_transformers import SentenceTransformer
-import numpy as np
 from pinecone import Pinecone, ServerlessSpec
 import os
 import time
@@ -59,7 +58,8 @@ def gen_prof_emb_ingestion():
         vector_values = embeddings[idx].tolist()
         
         metadata = {
-            "interest": str(row['Interests'])
+            "interest": str(row['Interests']),
+            "Prof_name":str(row['Name'])
         }
         
         vectors_to_upsert.append((vector_id, vector_values, metadata))
