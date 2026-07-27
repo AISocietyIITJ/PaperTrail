@@ -3,7 +3,7 @@ from adapters import AutoAdapterModel
 from transformers import AutoTokenizer
 from Embed_gen import total_embeddings
 
-query="parameter-efficient fine-tuning"
+query=input("Enter query:")
 
 model= AutoAdapterModel.from_pretrained("allenai/specter2_base")
 tokenizer= AutoTokenizer.from_pretrained("allenai/specter2_base")

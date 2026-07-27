@@ -53,5 +53,6 @@ for rec in outputs_dict['matches']:
     meta_dict= rec['metadata']
     print(meta_dict['title'])
     print(meta_dict['category'])
+    print(rec['score'])
 
 
