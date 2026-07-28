@@ -26,7 +26,7 @@ def setup_constraints(driver):
     with driver.session() as session:
         for q in queries:
             session.run(q)
-    print("✓ Constraints successfully set up.")
+    print("      [OK] Constraints set up")
 
 def clean_text(text):
     if not isinstance(text, str):
@@ -75,7 +75,7 @@ def ingest_research_topics(driver, interests_csv):
             chunk = topic_batch[i : i + BATCH_SIZE]
             session.run(topic_query, batch=chunk)
 
-    print(f"✓ Ingested {len(topic_batch)} ResearchTopic nodes.")
+    print(f"      [OK] Ingested {len(topic_batch)} ResearchTopic nodes")
 
 
 
@@ -85,7 +85,7 @@ def ingest_research_node():
     )
 
     try:
-        print("Connecting to Neo4j AuraDB...")
+        print("      Connecting to Neo4j AuraDB")
         setup_constraints(driver)
         ingest_research_topics(
             driver, interests_csv=file_path
@@ -93,4 +93,4 @@ def ingest_research_node():
     finally:
         driver.close()
 
-ingest_research_node()
+# ingest_research_node()

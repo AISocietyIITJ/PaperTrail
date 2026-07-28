@@ -45,19 +45,20 @@ def query_graph_db(interest_id_list:list):
             driver, interest_ids
         )
 
-        print(f"Found {len(professors_list)} connected professor(s):\n")
+        print(f"      Found {len(professors_list)} connected professor(s)")
+        print("      " + "-" * 72)
         for prof in professors_list:
-            print(f"• Name: {prof['professor_name']}")
-            print(f"  Affiliation: {prof['affiliation']}")
-            print(f"  Google Scholar Link: {prof['profile_url']}")
-            print(f"  Citations: {prof['cited_by']}")
-            print(f"  H-index: {prof['h_index']}")
+            print(f"      Name        : {prof['professor_name']}")
+            print(f"      Affiliation : {prof['affiliation']}")
+            print(f"      Scholar URL : {prof['profile_url']}")
+            print(f"      Citations   : {prof['cited_by']}")
+            print(f"      H-index     : {prof['h_index']}")
             print(
-                f"  Matched Interests ({prof['matching_interest_count']}): {prof['matched_interests']}"
+                f"      Interests   : {prof['matching_interest_count']} matched - {', '.join(map(str, prof['matched_interests']))}"
             )
-            print("-" * 50)
+            print("      " + "-" * 72)
 
     finally:
         driver.close()
 
-query_graph_db(["interest_3"])
+# query_graph_db(["interest_3"])

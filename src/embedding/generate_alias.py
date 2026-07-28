@@ -117,7 +117,7 @@ def generate_phrase():
     df_out = df_out.drop_duplicates(subset=['Interest']).sort_values(by='Interest').reset_index(drop=True)
 
     df_out.to_csv(save_path, index=False)
-    print(f"Successfully exported {len(df_out)} rows to 'interests_with_aliases.csv'")
+    print(f"      [OK] Exported {len(df_out)} rows to interests_with_aliases.csv")
 
 
-generate_phrase()
+# generate_phrase()

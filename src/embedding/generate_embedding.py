@@ -39,10 +39,10 @@ index = pc.Index(INDEX_NAME)
 df = pd.read_csv(file_path)
 
 
-def gen_emb_ingestion():
+def gen_res_emb_ingestion():
     df['Combined_Text'] = df['Interest'].fillna('') + ": " + df['Aliases'].fillna('')
 
-    print("Generating sentence embeddings...")
+    print("      Building sentence embeddings")
     embedding_model = SentenceTransformer('all-MiniLM-L6-v2')
     embeddings = embedding_model.encode(df['Combined_Text'].tolist(), normalize_embeddings=True)
 
@@ -64,18 +64,18 @@ def gen_emb_ingestion():
         vectors_to_upsert.append((vector_id, vector_values, metadata))
 
     BATCH_SIZE = 100
-    print("Upserting vectors to Pinecone...")
+    print(f"      Upserting {len(vectors_to_upsert)} vectors to Pinecone")
     for i in range(0, len(vectors_to_upsert), BATCH_SIZE):
         batch = vectors_to_upsert[i:i + BATCH_SIZE]
         index.upsert(vectors=batch)
 
-    print("Ingestion complete!")
+    print("      [OK] Pinecone ingestion complete")
 
 
 
     df['vector_id'] = vector_ids
     df_final = df[['Interest', 'Aliases', 'vector_id']]
     df_final.to_csv(file_path, index=False)
-    print("Updated 'interests_with_aliases.csv' with vector IDs.")
+    print("      [OK] Updated interests_with_aliases.csv with vector IDs")
 
-gen_emb_ingestion()
+# gen_res_emb_ingestion()

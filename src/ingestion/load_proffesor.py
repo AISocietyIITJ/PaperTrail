@@ -26,7 +26,7 @@ def setup_constraints(driver):
     with driver.session() as session:
         for q in queries:
             session.run(q)
-    print("✓ Constraints successfully set up.")
+    print("      [OK] Constraints set up")
 
 
 def clean_text(text):
@@ -118,7 +118,7 @@ def ingest_professors_and_edges(driver, prof_csv, interests_csv):
             chunk = prof_batch[i : i + BATCH_SIZE]
             session.run(prof_query, batch=chunk)
 
-    print(f"✓ Ingested {len(prof_batch)} Professor nodes and created edges.")
+    print(f"      [OK] Ingested {len(prof_batch)} Professor nodes and created edges")
 
 
 def ingest_proff_connect_edges():
@@ -127,7 +127,7 @@ def ingest_proff_connect_edges():
     )
 
     try:
-        print("Connecting to Neo4j AuraDB...")
+        print("      Connecting to Neo4j AuraDB")
         setup_constraints(driver)
         ingest_professors_and_edges(
             driver,
@@ -135,9 +135,9 @@ def ingest_proff_connect_edges():
             interests_csv=alias_path,
         )
 
-        print("\n Complete Graph Ingestion finished successfully!")
+        print("      [OK] Graph ingestion complete")
 
     finally:
         driver.close()
 
-ingest_proff_connect_edges()
+# ingest_proff_connect_edges()

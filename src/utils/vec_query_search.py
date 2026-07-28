@@ -53,17 +53,21 @@ def search_vector_db(text:str):
         include_values=False, 
     )
 
-    print("Query Results:")
+    print("      Vector matches")
+    print("      " + "-" * 72)
+    print(f"      {'ID':<14} {'Score':<10} Interest")
+    print("      " + "-" * 72)
     for match in query_response['matches']:
         metadata = match.get('metadata', {})
         interest = metadata.get('interest', 'N/A')
-        print(f"ID: {match['id']} | Score: {match['score']} | Interest: {interest}")
+        print(f"      {match['id']:<14} {float(match['score']):<10.4f} {interest}")
 
     vector_ids = []
     for match in query_response['matches']:
         if(float(match['score']) >= 0.5):
             vector_ids.append(match['id'])
 
+    print(f"      Selected IDs: {', '.join(vector_ids) if vector_ids else 'None'}")
     return vector_ids
 
-print(search_vector_db(text))
+# print(search_vector_db(text))
