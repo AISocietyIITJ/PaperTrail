@@ -28,3 +28,8 @@ paths:
   candidate_edges: "data/processed/edges_candidate.parquet"
   directed_edges: "data/processed/edges_directed.parquet"
   graph_path: "data/processed/graph.gpickle"
+
+neo4j:
+  uri: "bolt://127.0.0.1:7687"
+  user: "neo4j"
+  password: "QZ7uW5Yc5B"  
