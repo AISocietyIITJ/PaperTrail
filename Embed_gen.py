@@ -5,35 +5,59 @@ from transformers import AutoTokenizer, DataCollatorWithPadding
 from torch.utils.data import DataLoader
 import numpy as np
 import configz
-dataset= pd.read_csv('arXiv_scientific_dataset.csv', )
-act_dataset= dataset.head(32768)
+from UC3 import compute_token,compute_output
+import csv
+
+def load_dataset(filename='arXiv_scientific_dataset.csv'):
+    dataset= pd.read_csv(filename, engine="python", quoting=csv.QUOTE_NONE, on_bad_lines='skip')
+
+    return dataset
+
+def create_loader(tokenizer,dataset):
+    text_list= (dataset['title'].fillna("")+ " " + tokenizer.sep_token + " " + dataset['summary'].fillna("")).astype(str).tolist()
+    text_list_refined=[i.strip() for i in text_list if i.strip() !="[SEP]"]
+
+    Loader= DataLoader(dataset=text_list_refined,batch_size=64,shuffle=False,drop_last=False,pin_memory=True, num_workers=2,collate_fn=lambda batch:compute_token(tokenizer,batch))
+
+    return Loader
+
+def create_paper_embeds(model, loader,dataset):
+    fp= np.memmap("paper_embeddings.dat", dtype='float32', mode='w+', shape=(len(dataset),768))
+    idx=0   
+    with torch.inference_mode():  
+        for batch in loader:
+            batch_gp={}
+            for key,value in batch.items():
+                batch_gp[key]= value.to('cuda', non_blocking=True)
+
+            batch=batch_gp
+
+            with torch.autocast(device_type='cuda'):
+                output= compute_output(model,batch)
+
+            embeddings= output.last_hidden_state[:,0,:].detach().cpu().numpy().astype('float32')
+            batch_size= len(embeddings)
+            fp[idx:idx+batch_size]= embeddings
+            idx+=batch_size
+
+    fp.flush()
 
 
-tokenizer= AutoTokenizer.from_pretrained('allenai/specter2_base')
-model= AutoAdapterModel.from_pretrained('allenai/specter2_base')
-model.load_adapter('allenai/specter2', source ='hf', set_active=True)
+def main():
+    model= AutoAdapterModel.from_pretrained('allenai/specter2_base')
+    model.load_adapter('allenai/specter2', source ='hf', set_active=True)
+    tokenizer= AutoTokenizer.from_pretrained('allenai/specter2_base', use_fast=True)
 
+    dataset= load_dataset('arXiv_scientific_dataset.csv')
+    loader= create_loader(tokenizer,dataset)
+    model.eval()
+    model.to('cuda')
 
-text_list= (act_dataset['title']+ " " + tokenizer.sep_token + " " + act_dataset['summary']).tolist()
+    create_paper_embeds(model,loader,dataset)
 
-
-Loader= DataLoader(dataset=text_list,batch_size=64,shuffle=True)
-
-model.eval()
-model.to('cuda')
-
-total_embeddings=[]
-with torch.inference_mode():
-    for batch in Loader:
-        input= tokenizer(text= list(batch),padding=True,return_tensors="pt",truncation=True, max_length=512).to('cuda')
-
-        with torch.autocast(device_type='cuda'):
-            output= model(**input)
-
-        embeddings= output.last_hidden_state[:,0,:].detach().cpu().tolist()
-        total_embeddings.append(embeddings)
-
-
+if __name__=="__main__":
+    main()
+    
 
 
 

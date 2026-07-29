@@ -1,34 +1,57 @@
 import torch
 from adapters import AutoAdapterModel
 from transformers import AutoTokenizer
-from Embed_gen import total_embeddings
+import numpy as np
 
-query=input("Enter query:")
+def compute_token(tokenizer, query, **kwargs):        
+    tokens= tokenizer(text=query,padding=True, truncation=True,return_tensors="pt",max_length=512, **kwargs)
+    return tokens
 
-model= AutoAdapterModel.from_pretrained("allenai/specter2_base")
-tokenizer= AutoTokenizer.from_pretrained("allenai/specter2_base")
+def compute_output(model,tokens):
+    output=model(**tokens)
 
-model.load_adapter("allenai/specter2_adhoc_query", source="hf", set_activ=True)
+    return output
 
-tokens= tokenizer(text=query,padding=True, return_tensors="pt")
+def user_query_emb(output):
 
-output= model(**tokens)
+    A=output.last_hidden_state[:,0,:]
+    embedding= A.detach().cpu()
 
-A=output.last_hidden_state[:,0,:]
-embedding= A.detach().cpu()
+    return embedding
 
-paper_embeddings=torch.tensor(total_embeddings).reshape(-1,768)
+def read_paper_embeds():
+    paper_embeddings= torch.tensor(np.memmap("paper_embeddings.dat", dtype='float32', mode='r')).reshape(-1,768)
 
-print(embedding.shape)
-print(paper_embeddings.shape)
+    return paper_embeddings
 
-distances= torch.mm(embedding,paper_embeddings.t())
+def recommend_embeddings(user_embed, paper_embeds, top_n):
 
-top_n=3
+    distances= torch.mm(user_embed,paper_embeds.t())
+    recommended_indices= torch.topk(distances, k=top_n, dim=1, largest=True)[1]
+    recommended_embeddings= paper_embeds[recommended_indices].reshape(-1,768)
 
-recommended_indices= torch.topk(distances, k=top_n, dim=1, largest=True)[1]
+    return recommended_embeddings
 
-recommended_embeddings= paper_embeddings[recommended_indices].reshape(-1,768)
-print(recommended_embeddings.shape)
+def get_recommendations():
+    query=input("Enter query:")
+    top_n= int(input("Enter top_n"))
+
+    model= AutoAdapterModel.from_pretrained("allenai/specter2_base")
+    tokenizer= AutoTokenizer.from_pretrained("allenai/specter2_base", use_fast=True)
+
+    model.load_adapter("allenai/specter2_adhoc_query", source="hf", set_active=True)
+
+    tokens=compute_token(tokenizer,query)
+    output= compute_output(model,tokens)
+    embedding= user_query_emb(output)
+    paper_embeddings= read_paper_embeds()
+    recommended_embeddings= recommend_embeddings(embedding,paper_embeddings,top_n)
+
+    return recommended_embeddings
+
+if __name__=="__main__":
+    recommended_embeddings_fin= get_recommendations()
+
+
 
 
