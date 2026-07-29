@@ -16,6 +16,7 @@ def extract_information(user_query: str) -> dict:
 
     response = client.chat(
         model="qwen2.5:3b",
+        format="json",
         messages=[
             {
                 "role": "system",
@@ -28,7 +29,14 @@ def extract_information(user_query: str) -> dict:
         ]
     )
 
-    output = response["message"]["content"]
+    output = response["message"]["content"].strip()
+    if output.startswith("```json"):
+        output = output[7:]
+    elif output.startswith("```"):
+        output = output[3:]
+    if output.endswith("```"):
+        output = output[:-3]
+    output = output.strip()
 
     return json.loads(output)
 
@@ -36,6 +44,9 @@ def extract_information(user_query: str) -> dict:
 def get_interest_topics(user_query: str):
 
     result = extract_information(user_query)
+
+    if(result.get('interest_topics', []) == [] or result.get('keyphrases', []) == []):
+        return None
 
     if(result["keyphrases"] == result["interest_topics"]):
         interest_topics = ", ".join(result.get("interest_topics", []))
