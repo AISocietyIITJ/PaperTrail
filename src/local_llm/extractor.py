@@ -8,7 +8,7 @@ from .client import client
 from .prompts import SYSTEM_PROMPT
 
 
-def extract_information(user_query: str) -> dict:
+def extract_information(user_query: str, resume_content:str) -> dict:
     """
     Extract keyphrases, aliases and interest topics
     from a research-related user query.
@@ -24,7 +24,7 @@ def extract_information(user_query: str) -> dict:
             },
             {
                 "role": "user",
-                "content": user_query
+                "content": user_query+resume_content
             }
         ]
     )
@@ -41,9 +41,9 @@ def extract_information(user_query: str) -> dict:
     return json.loads(output)
 
 
-def get_interest_topics(user_query: str):
+def get_interest_topics(user_query: str, resume_path:str):
 
-    result = extract_information(user_query)
+    result = extract_information(user_query,resume_path)
 
     if(result.get('interest_topics', []) == [] or result.get('keyphrases', []) == []):
         return None
