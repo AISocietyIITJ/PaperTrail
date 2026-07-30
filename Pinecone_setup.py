@@ -46,17 +46,17 @@ def load_data_to_pc(index,batch_size,dataset,paper_embeddings):
 def return_output(index,recommended_embeddings):
     all_outputs=[]
     for i in recommended_embeddings.tolist():
-        output= index.query(vector =i,top_k=3, include_metadata=True)
+        output= index.query(vector =i,top_k=1, include_metadata=True)
         all_outputs.append(output.to_dict())
 
     
     return all_outputs
 
 def print_results(all_outputs):
-    for out_dict in all_outputs:   
-        for idx,rec in enumerate(out_dict['matches']):
+    for idx,out_dict in enumerate(all_outputs):
+        print(f"{idx+1}.")   
+        for rec in out_dict['matches']:
             meta_dict= rec['metadata']
-            print(f"{idx+1}.")
             print(f"Title:{meta_dict['title']}")
             print(f"Category:{meta_dict['category']}")
             print(f"Similarity_score:{rec['score']}")
@@ -67,11 +67,12 @@ def main():
     index= create_pc_index("paper-embeds")
 
     dataset= load_dataset()
-    dataset_fin=dataset.dropna(axis=0, how="all", subset=['title','summary']).reset_index(drop=True)
-
+    print(list(dataset.columns))
+    
     paper_embeddings= read_paper_embeds()
+    
 
-    load_data_to_pc(index,150,dataset_fin,paper_embeddings)
+    load_data_to_pc(index,100,dataset,paper_embeddings)
 
     recommended_embeddings_fin=get_recommendations()
 

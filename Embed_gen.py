@@ -8,16 +8,22 @@ import configz
 from UC3 import compute_token,compute_output
 import csv
 
-def load_dataset(filename='arXiv_scientific_dataset.csv'):
-    dataset= pd.read_csv(filename, engine="python", quoting=csv.QUOTE_NONE, on_bad_lines='skip')
+def load_dataset(filename='dataset.csv'):
+    dataset= pd.read_csv(filename, engine="python", on_bad_lines='skip')
+
+
+    dataset['title'] = dataset['title'].replace(r'^\s*$', np.nan, regex=True)
+    dataset['summary'] = dataset['summary'].replace(r'^\s*$', np.nan, regex=True)
+    
+    dataset=dataset.dropna(axis=0, how="all", subset=['title','summary']).reset_index(drop=True)
 
     return dataset
 
 def create_loader(tokenizer,dataset):
     text_list= (dataset['title'].fillna("")+ " " + tokenizer.sep_token + " " + dataset['summary'].fillna("")).astype(str).tolist()
-    text_list_refined=[i.strip() for i in text_list if i.strip() !="[SEP]"]
+    
 
-    Loader= DataLoader(dataset=text_list_refined,batch_size=64,shuffle=False,drop_last=False,pin_memory=True, num_workers=2,collate_fn=lambda batch:compute_token(tokenizer,batch))
+    Loader= DataLoader(dataset=text_list,batch_size=64,shuffle=False,drop_last=False,pin_memory=True, num_workers=2,collate_fn=lambda batch:compute_token(tokenizer,batch))
 
     return Loader
 
@@ -41,6 +47,7 @@ def create_paper_embeds(model, loader,dataset):
             idx+=batch_size
 
     fp.flush()
+    del fp
 
 
 def main():
