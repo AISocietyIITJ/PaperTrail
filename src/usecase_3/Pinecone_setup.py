@@ -1,16 +1,16 @@
-import configz
+from src.config import PINECONE_API_KEY
 from pinecone import Pinecone,ServerlessSpec
 import time
 import pandas as pd
 import random
 from torch.utils.data import DataLoader
 import numpy as np
-from Embed_gen import load_dataset
-from UC3 import read_paper_embeds, get_recommendations
+from src.usecase_3.Embed_gen import load_dataset
+from src.usecase_3.UC3 import read_paper_embeds, get_recommendations
 
 def create_pc_index(index_name):
 
-    pc= Pinecone(api_key=configz.pc_api)
+    pc= Pinecone(api_key=PINECONE_API_KEY)
     if pc.has_index(name=index_name):
         pc.delete_index(name=index_name)
 

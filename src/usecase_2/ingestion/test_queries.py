@@ -1,8 +1,5 @@
 from neo4j import GraphDatabase
-import sys
-from pathlib import Path
-sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
-from config import aura_uri,aura_password,aura_user
+from src.config import aura_uri,aura_password,aura_user
 
 AURA_URI = aura_uri
 AURA_USER = aura_user

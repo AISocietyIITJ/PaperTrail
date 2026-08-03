@@ -4,8 +4,7 @@ from adapters import AutoAdapterModel
 from transformers import AutoTokenizer, DataCollatorWithPadding
 from torch.utils.data import DataLoader
 import numpy as np
-import configz
-from UC3 import compute_token,compute_output
+from src.usecase_3.UC3 import compute_token,compute_output
 import csv
 
 def load_dataset(filename='dataset.csv'):

@@ -34,23 +34,4 @@ neo4j:
   uri: "bolt://127.0.0.1:7687"
   user: "neo4j"
   password: "QZ7uW5Yc5B"  
-
-#usecase-2
-import os
-from dotenv import load_dotenv
-
-load_dotenv()
-
-pinecone = os.getenv("PINECONE_API")
-aura_uri = os.getenv("AURA_URI")
-aura_user = os.getenv("AURA_USER")
-aura_password = os.getenv("AURA_PASSWORD")
-ollama_api = os.getenv("OLLAMA_API_KEY")
-
-#usecase-3
-import os
-from dotenv import load_dotenv
-from pinecone import Pinecone,ServerlessSpec
-load_dotenv('keys.env')
-
-pc_api= os.getenv("API_KEY")
+

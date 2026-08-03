@@ -3,16 +3,13 @@ from sentence_transformers import SentenceTransformer
 from pinecone import Pinecone, ServerlessSpec
 import os
 import time
-import sys
-from pathlib import Path
-sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
-from config import pinecone
+from src.config import PINECONE_API_KEY
 
 
 script_dir = os.path.dirname(os.path.abspath(__file__))
 file_path = os.path.join(script_dir, "../../data/professor_updated1.csv")
 
-PINECONE_API_KEY = pinecone 
+PINECONE_API_KEY = PINECONE_API_KEY 
 INDEX_NAME = "prof-profile"
 VECTOR_DIMENSION = 384  
 
@@ -79,4 +76,5 @@ def gen_prof_emb_ingestion():
     df_final.to_csv(file_path, index=False)
     print("      [OK] Updated professor_updated1.csv with vector IDs")
 
-gen_prof_emb_ingestion()
+if __name__ == "__main__":
+    gen_prof_emb_ingestion()

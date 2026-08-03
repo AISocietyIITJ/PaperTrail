@@ -1,13 +1,13 @@
 """Main CLI entrypoint for executing PaperTrail graph generation and Neo4j queries."""
 
 import argparse
-from src.data_prep import prepare_dataset
-from src.embed import generate_embeddings
-from src.candidate_edges import generate_candidate_edges
-from src.direction import assign_edge_directions
-from src.build_graph import assemble_graph
-from src.ingest_neo4j import ingest_to_neo4j
-from src.query import load_neo4j_driver, generate_path_neo4j
+from src.usecase_1.data_prep import prepare_dataset
+from src.usecase_1.embed import generate_embeddings
+from src.usecase_1.candidate_edges import generate_candidate_edges
+from src.usecase_1.direction import assign_edge_directions
+from src.usecase_1.build_graph import assemble_graph
+from src.usecase_1.ingest_neo4j import ingest_to_neo4j
+from src.usecase_1.query import load_neo4j_driver, generate_path_neo4j
 
 def main():
     parser = argparse.ArgumentParser(description="PaperTrail Structured Research Path Generation Pipeline & Query Interface")

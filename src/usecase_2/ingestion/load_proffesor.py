@@ -2,10 +2,7 @@ import re
 import pandas as pd
 from neo4j import GraphDatabase
 import os
-import sys
-from pathlib import Path
-sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
-from config import aura_uri,aura_password,aura_user
+from src.config import aura_uri,aura_password,aura_user
 
 
 script_dir = os.path.dirname(os.path.abspath(__file__))

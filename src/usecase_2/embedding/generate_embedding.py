@@ -3,16 +3,13 @@ from sentence_transformers import SentenceTransformer
 from pinecone import Pinecone, ServerlessSpec
 import os
 import time
-import sys
-from pathlib import Path
-sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
-from config import pinecone
+from src.config import PINECONE_API_KEY
 
 
 script_dir = os.path.dirname(os.path.abspath(__file__))
 file_path = os.path.join(script_dir, "../../data/interests_with_aliases.csv")
 
-PINECONE_API_KEY = pinecone 
+PINECONE_API_KEY = PINECONE_API_KEY 
 INDEX_NAME = "academic-interests"
 VECTOR_DIMENSION = 384  
 

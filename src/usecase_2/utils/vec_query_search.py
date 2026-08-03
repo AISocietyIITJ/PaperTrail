@@ -1,13 +1,10 @@
 from sentence_transformers import SentenceTransformer
 from pinecone import Pinecone, ServerlessSpec
 import time
-import sys
-from pathlib import Path
-sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
-from config import pinecone
+from src.config import PINECONE_API_KEY
 
 
-PINECONE_API_KEY = pinecone 
+PINECONE_API_KEY = PINECONE_API_KEY 
 INDEX_NAME = "academic-interests"
 VECTOR_DIMENSION = 384  
 
