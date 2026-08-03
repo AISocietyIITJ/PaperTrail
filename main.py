@@ -35,7 +35,7 @@ def query_reading_path(query_str: str, config_path="config.yaml"):
 # ==========================================
 from src.usecase_2.embedding.generate_embedding import gen_res_emb_ingestion as ingest_academic_interests_pinecone
 from src.usecase_2.embedding.generate_embedding_prof import gen_prof_emb_ingestion as ingest_professor_profiles_pinecone
-from src.usecase_2.utils.get_prof_info import process_query as query_academic_profiles
+from src.usecase_2.utils.get_prof_info import query_graph_db as query_academic_profiles
 
 # ==========================================
 # 3. Paper Recommendations

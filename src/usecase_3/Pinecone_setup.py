@@ -74,13 +74,13 @@ def main():
 
     load_data_to_pc(index,100,dataset,paper_embeddings)
 
-    recommended_embeddings_fin=get_recommendations()
+    recommended_embeddings_fin=get_recommendations(query="machine learning", top_n=5)
 
     all_outputs_list= return_output(index,recommended_embeddings_fin)
 
     print_results(all_outputs_list)
 
-
+    
 if __name__=="__main__":
     main()
     

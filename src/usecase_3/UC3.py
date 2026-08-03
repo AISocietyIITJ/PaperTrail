@@ -34,9 +34,7 @@ def recommend_embeddings(user_embed, paper_embeds, top_n, device):
 
     return recommended_embeddings
 
-def get_recommendations():
-    query=input("Enter query:")
-    top_n= int(input("Enter top_n"))
+def get_recommendations(query: str, top_n: int):
 
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     model= AutoAdapterModel.from_pretrained("allenai/specter2_base")
