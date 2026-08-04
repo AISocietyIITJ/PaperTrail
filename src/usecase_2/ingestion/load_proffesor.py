@@ -2,18 +2,13 @@ import re
 import pandas as pd
 from neo4j import GraphDatabase
 import os
-from src.config import aura_uri,aura_password,aura_user
+from src.config import AURA_URI, AURA_USER, AURA_PASSWORD
 
 
 script_dir = os.path.dirname(os.path.abspath(__file__))
-proff_path = os.path.join(script_dir, "../../data/professor_updated1.csv")
-alias_path = os.path.join(script_dir, "../../data/interests_with_aliases.csv")
+proff_path = os.path.join(script_dir, "../../../data/professor_updated1.csv")
+alias_path = os.path.join(script_dir, "../../../data/interests_with_aliases.csv")
 
-
-
-AURA_URI = aura_uri
-AURA_USER = aura_user
-AURA_PASSWORD = aura_password
 BATCH_SIZE = 500
 
 def setup_constraints(driver):

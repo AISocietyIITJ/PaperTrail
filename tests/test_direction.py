@@ -2,7 +2,7 @@
 
 import pandas as pd
 import numpy as np
-from src.direction import assign_direction, compute_generality_scores
+from src.usecase_1.direction import assign_direction, compute_generality_scores
 
 
 def test_compute_generality_scores():

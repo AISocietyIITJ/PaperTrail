@@ -2,7 +2,7 @@
 
 import networkx as nx
 import pandas as pd
-from src.build_graph import build_graph, remove_cycles, reduce_graph, graph_stats, enforce_acyclic_order
+from src.usecase_1.build_graph import build_graph, remove_cycles, reduce_graph, graph_stats, enforce_acyclic_order
 
 
 def test_enforce_acyclic_order():

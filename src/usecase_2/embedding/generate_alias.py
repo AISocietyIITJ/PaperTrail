@@ -3,8 +3,8 @@ import os
 import re
 
 script_dir = os.path.dirname(os.path.abspath(__file__))
-csv_path = os.path.join(script_dir, "../../data/professor_updated1.csv")
-save_path = os.path.join(script_dir, "../../data/interests_with_aliases.csv")
+csv_path = os.path.join(script_dir, "../../../data/professor_updated1.csv")
+save_path = os.path.join(script_dir, "../../../data/interests_with_aliases.csv")
 
 
 # 1. Clean interest text (remove non-breaking spaces, trailing dots/ellipses)
@@ -91,22 +91,22 @@ def generate_aliases(interest):
     return clean_text, ", ".join(sorted(list(aliases)))
 
 
-# 3. Read input CSV and extract unique interests
-df = pd.read_csv(csv_path)
-col_name = 'Interests' if 'Interests' in df.columns else 'Interest'
-
-raw_unique = (
-    df[col_name]
-    .dropna()
-    .str.split(',')
-    .explode()
-    .str.strip()
-    .loc[lambda x: x != '']
-    .unique()
-)
-
 # 4. Generate Aliases for all entries
 def generate_phrase():
+    # 3. Read input CSV and extract unique interests
+    df = pd.read_csv(csv_path)
+    col_name = 'Interests' if 'Interests' in df.columns else 'Interest'
+
+    raw_unique = (
+        df[col_name]
+        .dropna()
+        .str.split(',')
+        .explode()
+        .str.strip()
+        .loc[lambda x: x != '']
+        .unique()
+    )
+
     results = []
     for item in raw_unique:
         cleaned, alias_str = generate_aliases(item)
@@ -120,4 +120,5 @@ def generate_phrase():
     print(f"      [OK] Exported {len(df_out)} rows to interests_with_aliases.csv")
 
 
-# generate_phrase()
+if __name__ == "__main__":
+    generate_phrase()

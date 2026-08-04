@@ -1,10 +1,6 @@
 from neo4j import GraphDatabase
-from src.config import aura_uri,aura_password,aura_user
+from src.config import AURA_URI, AURA_USER, AURA_PASSWORD
 
-
-AURA_URI = aura_uri
-AURA_USER = aura_user
-AURA_PASSWORD = aura_password
 
 
 def get_professors_by_interest_ids(driver, interest_ids):
@@ -42,18 +38,7 @@ def query_graph_db(interest_id_list:list):
             driver, interest_ids
         )
 
-        print(f"      Found {len(professors_list)} connected professor(s)")
-        print("      " + "-" * 72)
-        for prof in professors_list:
-            print(f"      Name        : {prof['professor_name']}")
-            print(f"      Affiliation : {prof['affiliation']}")
-            print(f"      Scholar URL : {prof['profile_url']}")
-            print(f"      Citations   : {prof['cited_by']}")
-            print(f"      H-index     : {prof['h_index']}")
-            print(
-                f"      Interests   : {prof['matching_interest_count']} matched - {', '.join(map(str, prof['matched_interests']))}"
-            )
-            print("      " + "-" * 72)
+        return professors_list
 
     finally:
         driver.close()

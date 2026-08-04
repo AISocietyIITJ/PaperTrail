@@ -1,9 +1,6 @@
 from neo4j import GraphDatabase
-from src.config import aura_uri,aura_password,aura_user
+from src.config import AURA_URI, AURA_USER, AURA_PASSWORD
 
-AURA_URI = aura_uri
-AURA_USER = aura_user
-AURA_PASSWORD = aura_password
 
 driver = GraphDatabase.driver(AURA_URI, auth=(AURA_USER, AURA_PASSWORD))
 

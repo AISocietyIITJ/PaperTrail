@@ -1,6 +1,6 @@
 #testing file
 
-from src.local_llm.extractor import (
+from src.usecase_2.local_llm.extractor import (
     extract_information,
     get_interest_topics,
 )
