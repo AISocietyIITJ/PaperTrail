@@ -1,146 +1,65 @@
-from fastapi import FastAPI
-from pydantic import BaseModel
-from typing import List
 
-app = FastAPI(title="PaperTrail Backend Demo")
+# this is only core logic . app.py will import these functions 
 
-# requesting models 
+import random
+from typing import List, Dict, Any
 
-class ReadingPathRequest(BaseModel):
-    query: str
+# Usecase 1: Reading path pipeline
 
-
-class ProfessorRequest(BaseModel):
-    interest_topics: List[str]
-                                                                                                                                                                                                                                                            
-
-class PaperRecommendationRequest(BaseModel):
-    query: str
-    top_n: int = 5 #if user doesn't specify any value top 5 papers will be recommended
+def run_reading_path_pipeline(config_path: str = "config.yaml") -> Dict[str, Any]:
+   
+    return {"status": "pipeline executed", "config_path": config_path}
 
 
-# Use Case 1
-# Reading Path Generation
-
-
-@app.post("/usecase1/reading-path")
-def reading_path(request: ReadingPathRequest):
-
-    return {
-        "query": request.query,
-        "reading_path": [
-            {
-                "hop_distance": 0,
-                "title": "Linear Algebra",
-                "published_date": "2018"
-            },
-            {
-                "hop_distance": 1,
-                "title": "Machine Learning Basics",
-                "published_date": "2020"
-            },
-            {
-                "hop_distance": 2,
-                "title": "Deep Learning",
-                "published_date": "2022"
-            },
-            {
-                "hop_distance": 3,
-                "title": "Vision Transformers",
-                "published_date": "2024"
-            }
-        ]
-    }
-
-
-
-# Use Case 2
-# Professor Recommendation
-
-
-@app.post("/usecase2/professors")
-def professor_recommendation(request: ProfessorRequest):
-
-    return {
-        "interest_topics": request.interest_topics,
-        "professors": [
-            {
-                "name": "Dr. A",
-                "department": "Computer Science",
-                "h_index": 42,
-                "citations": 6100,
-                "matching_topics": ["Computer Vision", "Deep Learning"]
-            },
-            {
-                "name": "Dr. B",
-                "department": "AI Research",
-                "h_index": 36,
-                "citations": 4100,
-                "matching_topics": ["Image Recognition"]
-            }
-        ]
-    }
-
-
-
-# Use Case 3
-# Paper Recommendation
-
-
-@app.post("/usecase3/papers")
-def paper_recommendation(request: PaperRecommendationRequest):
-
-    papers = [
+def run_reading_path_query(query_str: str, config_path: str = "config.yaml") -> List[Dict[str, Any]]:
+   
+    return [
         {
-            "title": "Attention is All You Need",
-            "authors": ["Ashish Vaswani"],
-            "year": 2017,
-            "similarity_score": 0.96
-        },
-        {
-            "title": "Vision Transformer",
-            "authors": ["Dosovitskiy"],
-            "year": 2021,
-            "similarity_score": 0.94
-        },
-        {
-            "title": "CLIP",
-            "authors": ["OpenAI"],
-            "year": 2021,
-            "similarity_score": 0.92
-        },
-        {
-            "title": "ResNet",
-            "authors": ["Kaiming He"],
-            "year": 2016,
-            "similarity_score": 0.90
-        },
-        {
-            "title": "Swin Transformer",
-            "authors": ["Microsoft"],
-            "year": 2021,
-            "similarity_score": 0.89
+            "hop_distance": i,
+            "title": f"{query_str} paper {i}",
+            "published_date": f"202{i}-01-01",
         }
+        for i in range(3)
     ]
 
-    return {
-        "query": request.query,
-        "recommendations": papers[:request.top_n]
-    }
+
+# Usecase 2: Academic profiles (Pinecone-backed)
 
 
-# Home Route
+def ingest_academic_interests() -> Dict[str, str]:
+    
+    return {"status": "success"}
 
 
-@app.get("/")
-def home():
-    return {
-        "message": "PaperTrail Hardcoded Backend Running",
-        "available_routes": [
-            "/usecase1/reading-path",
-            "/usecase2/professors",
-            "/usecase3/papers"
-        ]
-    }
+def ingest_professor_profiles() -> Dict[str, str]:
+    
+    return {"status": "success"}
 
-#this endpoint function currently returns hardcoded data    
+
+def get_academic_profiles(interest_id_list: List[str]) -> List[Dict[str, Any]]:
+    
+    return [
+        {
+            "name": f"Prof for {interest_id}",
+            "h_index": random.randint(10, 60),
+            "citations": random.randint(500, 20000),
+        }
+        for interest_id in interest_id_list
+    ]
+
+# Usecase 3: Paper recommendations (Pinecone-backed)
+
+def get_paper_recommendations(query: str, top_n: int = 5) -> List[Dict[str, Any]]:
+
+    return [
+        {
+            "paper_id": f"paper_{i}",
+            "title": f"{query} result {i}",
+            "score": round(random.uniform(0.7, 0.99), 3),
+        }
+        for i in range(1, top_n + 1)
+    ]
+
+
+def setup_recommendations_index() -> Dict[str, str]:
+    return {"status": "success"}  
