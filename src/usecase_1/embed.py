@@ -1,4 +1,4 @@
-"""Semantic embedding module using SPECTER2 with CUDA optimization and disk verification."""
+"""Semantic embedding module using SPECTER2 with CUDA optimization and Pinecone ingestion."""
 
 import os
 from pathlib import Path
@@ -6,26 +6,41 @@ import numpy as np
 import pandas as pd
 import yaml
 import torch
+import time
 from sentence_transformers import SentenceTransformer
+from pinecone import Pinecone, ServerlessSpec
+
+# Import API key
+from src.config import PINECONE_API_KEY
 
 
 def embed_corpus(
     df: pd.DataFrame,
     model_name: str,
+    index_name: str,
+    dimension: int = 768,
     batch_size: int = 256,
     adapter_name: str | None = None,
-    out_path: str | None = None
-) -> np.ndarray:
-    """Encode title and abstract using SentenceTransformers (with automatic CUDA GPU scaling and cache check)."""
-    # Instant cache verification: if embeddings.npy already exists and matches dataset length, skip!
-    if out_path and os.path.exists(out_path) and os.path.getsize(out_path) > 1000:
-        try:
-            cached_arr = np.load(out_path, mmap_mode="r")
-            if cached_arr.shape[0] == len(df) and cached_arr.shape[1] == 768:
-                print(f"Verified pre-computed embeddings at '{out_path}' ({round(os.path.getsize(out_path)/(1024*1024), 2)} MB). Skipping embedding generation!")
-                return np.load(out_path)
-        except Exception:
-            pass # Re-compute if file read fails
+) -> None:
+    """Encode title and abstract using SentenceTransformers and upsert to Pinecone."""
+    pc = Pinecone(api_key=PINECONE_API_KEY)
+
+    existing_indexes = [index.name for index in pc.list_indexes()]
+    if index_name not in existing_indexes:
+        print(f"Creating Pinecone index '{index_name}' with dimension {dimension}...")
+        pc.create_index(
+            name=index_name,
+            dimension=dimension,
+            metric="cosine", 
+            spec=ServerlessSpec(
+                cloud="aws",
+                region="us-east-1" 
+            )
+        )
+        while not pc.describe_index(index_name).status['ready']:
+            time.sleep(1)
+
+    index = pc.Index(index_name)
 
     device = "cuda" if torch.cuda.is_available() else "cpu"
     if device == "cuda":
@@ -40,10 +55,11 @@ def embed_corpus(
     
     if adapter_name and hasattr(model, "load_adapter"):
         try:
-            print(f"Attaching PEFT adapter: {adapter_name}...")
+            print(f"Attaching adapter: {adapter_name}...")
             model.load_adapter(adapter_name)
         except Exception as e:
-            print(f"Notice: Could not load adapter '{adapter_name}' ({e}). Proceeding with base model embeddings.")
+            print(f"Notice: Could not load adapter '{adapter_name}' ({e}).")
+            print("The allenai/specter2 adapter is built on an outdated framework and cannot be loaded by modern PEFT. Proceeding with base model embeddings instead.")
     
     texts = (df["title"].fillna("") + ". " + df["abstract"].fillna("")).tolist()
     print(f"Encoding {len(texts)} papers with batch size {batch_size} on {device.upper()}...")
@@ -56,29 +72,50 @@ def embed_corpus(
         convert_to_numpy=True,
     )
     res = embeddings.astype("float32")
-    if out_path:
-        Path(out_path).parent.mkdir(parents=True, exist_ok=True)
-        np.save(out_path, res)
-        print(f"Saved new embeddings (shape: {res.shape}) to {out_path}.")
-    return res
+    
+    # Upsert to Pinecone
+    print("Upserting vectors to Pinecone...")
+    vectors_to_upsert = []
+    
+    for idx, emb in enumerate(res):
+        vector_id = str(idx) # Using the integer index as string
+        vector_values = emb.tolist()
+        vectors_to_upsert.append((vector_id, vector_values))
+
+    PINECONE_BATCH_SIZE = 200
+    for i in range(0, len(vectors_to_upsert), PINECONE_BATCH_SIZE):
+        batch = vectors_to_upsert[i:i + PINECONE_BATCH_SIZE]
+        index.upsert(vectors=batch)
+        if i % (PINECONE_BATCH_SIZE * 5) == 0 and i > 0:
+            print(f"Upserted {i} vectors...")
+
+    print(f"Successfully upserted {len(vectors_to_upsert)} vectors to Pinecone index '{index_name}'.")
 
 
-def generate_embeddings(config_path="config.yaml") -> np.ndarray:
-    """Execute embedding generation directly from config with intelligent cache bypass."""
+def generate_embeddings(config_path="config.yaml") -> None:
+    """Execute embedding generation directly from config and upsert to Pinecone."""
     with open(config_path, "r", encoding="utf-8") as f:
         config = yaml.safe_load(f)
         
     interim_path = config["paths"]["interim_data"]
-    out_path = config["paths"]["embeddings"]
+    
     model_name = config["embedding"]["model_name"]
     adapter_name = config["embedding"].get("adapter_name")
     batch_size = config["embedding"].get("batch_size", 256)
+    pinecone_index = config["embedding"].get("pinecone_index", "papertrail-papers")
+    pinecone_dim = config["embedding"].get("pinecone_dimension", 768)
     
     print(f"Loading dataset from {interim_path}...")
     df = pd.read_parquet(interim_path)
     
-    embeddings = embed_corpus(df, model_name=model_name, batch_size=batch_size, adapter_name=adapter_name, out_path=out_path)
-    return embeddings
+    embed_corpus(
+        df, 
+        model_name=model_name, 
+        index_name=pinecone_index, 
+        dimension=pinecone_dim,
+        batch_size=batch_size, 
+        adapter_name=adapter_name
+    )
 
 
 if __name__ == "__main__":

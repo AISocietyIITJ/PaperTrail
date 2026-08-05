@@ -8,6 +8,8 @@ embedding:
   model_name: "allenai/specter2_base"
   adapter_name: "allenai/specter2" # Proximity adapter
   batch_size: 256                  # Scaled for NVIDIA GeForce RTX 4060 GPU (8GB VRAM)
+  pinecone_index: "papertrail-papers"
+  pinecone_dimension: 768
 
 candidate_edges:
   top_k: 15                   # Nearest neighbors per paper via FAISS inner product
@@ -25,13 +27,12 @@ query:
 paths:
   raw_data: "data/raw/arXiv_scientific_dataset.csv"
   interim_data: "data/interim/domain_filtered.parquet"
-  embeddings: "data/processed/embeddings.npy"
   candidate_edges: "data/processed/edges_candidate.parquet"
   directed_edges: "data/processed/edges_directed.parquet"
   graph_path: "data/processed/graph.gpickle"
 
 neo4j:
-  uri: "bolt://127.0.0.1:7687"
+  uri: "neo4j://127.0.0.1:7687"
   user: "neo4j"
-  password: "QZ7uW5Yc5B"  
-
+  password: "12345678"  
+

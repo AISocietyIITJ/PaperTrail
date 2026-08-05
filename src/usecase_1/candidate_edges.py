@@ -1,76 +1,77 @@
-"""Candidate edge generation via high-speed vectorized similarity search module."""
+"""Candidate edge generation via Pinecone similarity search."""
 
+import os
 from pathlib import Path
 import numpy as np
 import pandas as pd
 import yaml
+from concurrent.futures import ThreadPoolExecutor, as_completed
+from tqdm import tqdm
+from pinecone import Pinecone
+import time
 
-try:
-    import faiss
-    HAS_FAISS = True
-except ImportError:
-    HAS_FAISS = False
-    print("Notice: 'faiss' not found. Falling back to NumPy inner product exact search.")
-
-
-def build_index(embeddings: np.ndarray):
-    """Build FAISS inner product index for top-k search."""
-    if HAS_FAISS:
-        d = embeddings.shape[1]
-        index = faiss.IndexFlatIP(d)  # exact inner-product search
-        index.add(embeddings)
-        return index
-    else:
-        return embeddings  # Returning array itself for brute-force NumPy search fallback
+from src.config import PINECONE_API_KEY
 
 
-def get_candidate_edges(
-    embeddings: np.ndarray,
-    index,
+def get_candidate_edges_pinecone(
+    num_nodes: int,
+    index_name: str,
     k: int = 15,
-    sim_threshold: float = 0.55
+    sim_threshold: float = 0.55,
+    max_workers: int = 20
 ) -> pd.DataFrame:
-    """Perform top-k similarity queries with instantaneous vectorized deduplication."""
-    n = embeddings.shape[0]
-    k_actual = min(k + 1, n)  # +1 because self is always included in search results
+    """Perform top-k similarity queries against Pinecone using threaded requests."""
+    pc = Pinecone(api_key=PINECONE_API_KEY)
+    index = pc.Index(index_name)
     
-    if HAS_FAISS and isinstance(index, faiss.Index):
-        sims, idxs = index.search(embeddings, k_actual)
-    else:
-        # Fallback using matrix multiplication for exact cosine similarity
-        sim_matrix = embeddings @ embeddings.T
-        idxs = np.argsort(sim_matrix, axis=1)[:, ::-1][:, :k_actual]
-        sims = np.take_along_axis(sim_matrix, idxs, axis=1)
+    k_actual = min(k + 1, num_nodes) # +1 because self is always included
+    
+    src_nodes = []
+    dst_nodes = []
+    sim_vals = []
+    
+    def fetch_neighbors(node_id):
+        for attempt in range(3):
+            try:
+                res = index.query(id=str(node_id), top_k=k_actual)
+                return node_id, res['matches']
+            except Exception as e:
+                time.sleep(1)
+        return node_id, []
 
-    # High-speed vectorized flattening (< 0.1s for millions of edges)
-    n_rows, n_cols = sims.shape
-    src_nodes = np.repeat(np.arange(n_rows, dtype=np.int64), n_cols)
-    dst_nodes = idxs.flatten().astype(np.int64)
-    sim_vals = sims.flatten().astype(np.float32)
+    print(f"Querying Pinecone for {num_nodes} nodes using {max_workers} threads...")
     
-    # Filter invalid self-loops, negative index placeholders, and below similarity threshold
-    valid_mask = (src_nodes != dst_nodes) & (dst_nodes >= 0) & (sim_vals >= sim_threshold)
-    
-    src_clean = src_nodes[valid_mask]
-    dst_clean = dst_nodes[valid_mask]
-    sim_clean = sim_vals[valid_mask]
-    
-    if len(src_clean) == 0:
-        return pd.DataFrame(columns=["node_a", "node_b", "similarity"])
+    with ThreadPoolExecutor(max_workers=max_workers) as executor:
+        futures = {executor.submit(fetch_neighbors, i): i for i in range(num_nodes)}
         
+        for future in tqdm(as_completed(futures), total=num_nodes, desc="Pinecone queries"):
+            node_id, matches = future.result()
+            for match in matches:
+                src_nodes.append(node_id)
+                dst_nodes.append(int(match['id']))
+                sim_vals.append(float(match['score']))
+
     edges = pd.DataFrame({
-        "node_a": src_clean,
-        "node_b": dst_clean,
-        "similarity": sim_clean
+        "node_a": src_nodes,
+        "node_b": dst_nodes,
+        "similarity": sim_vals
     })
 
-    # Instantaneous 64-bit integer deduplication for symmetric pairs (a,b) vs (b,a) (< 0.3s)
-    min_node = np.minimum(src_clean, dst_clean)
-    max_node = np.maximum(src_clean, dst_clean)
-    edges["pair_key"] = min_node * 1000000000 + max_node
+    # Filter invalid self-loops and below similarity threshold
+    valid_mask = (edges["node_a"] != edges["node_b"]) & (edges["similarity"] >= sim_threshold)
+    edges = edges[valid_mask].copy()
+
+    if edges.empty:
+        return pd.DataFrame(columns=["node_a", "node_b", "similarity"])
+
+    # Fast 64-bit integer deduplication for symmetric pairs (a,b) vs (b,a)
+    edges["min_node"] = np.minimum(edges["node_a"], edges["node_b"])
+    edges["max_node"] = np.maximum(edges["node_a"], edges["node_b"])
+    edges["pair_key"] = edges["min_node"].astype(np.int64) * 1000000000 + edges["max_node"].astype(np.int64)
     
     edges = edges.sort_values("similarity", ascending=False).drop_duplicates("pair_key")
-    edges = edges.drop(columns="pair_key").reset_index(drop=True)
+    edges = edges.drop(columns=["pair_key", "min_node", "max_node"]).reset_index(drop=True)
+    
     return edges
 
 
@@ -79,19 +80,24 @@ def generate_candidate_edges(config_path="config.yaml") -> pd.DataFrame:
     with open(config_path, "r", encoding="utf-8") as f:
         config = yaml.safe_load(f)
         
-    emb_path = config["paths"]["embeddings"]
+    interim_path = config["paths"]["interim_data"]
     out_path = config["paths"]["candidate_edges"]
     top_k = config["candidate_edges"]["top_k"]
     threshold = config["candidate_edges"]["similarity_threshold"]
+    pinecone_index = config["embedding"].get("pinecone_index", "papertrail-papers")
     
-    print(f"Loading embeddings from {emb_path}...")
-    embeddings = np.load(emb_path)
+    print(f"Loading dataset to determine node count from {interim_path}...")
+    df = pd.read_parquet(interim_path)
+    num_nodes = len(df)
     
-    print("Building similarity search index...")
-    index = build_index(embeddings)
-    
-    print(f"Searching for candidate edges (k={top_k}, threshold={threshold}) with vectorized optimization...")
-    edges = get_candidate_edges(embeddings, index, k=top_k, sim_threshold=threshold)
+    print(f"Searching for candidate edges (k={top_k}, threshold={threshold}) via Pinecone...")
+    edges = get_candidate_edges_pinecone(
+        num_nodes=num_nodes, 
+        index_name=pinecone_index, 
+        k=top_k, 
+        sim_threshold=threshold,
+        max_workers=20
+    )
     print(f"Found {len(edges)} unique candidate edge pairs.")
     
     Path(out_path).parent.mkdir(parents=True, exist_ok=True)

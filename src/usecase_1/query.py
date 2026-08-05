@@ -13,14 +13,31 @@ def load_neo4j_driver(config_path="config.yaml"):
     return config, driver, model
 
 def generate_path_neo4j(query_text: str, driver, model, max_hops=4) -> pd.DataFrame:
-    """Uses Neo4j Vector Search to find the target paper, then traverses backwards for prerequisites."""
+    """Uses Pinecone Vector Search to find the target paper, then traverses backwards for prerequisites."""
     
+    from pinecone import Pinecone
+    from src.config import PINECONE_API_KEY
+    import yaml
+
+    with open("config.yaml", "r", encoding="utf-8") as f:
+        config = yaml.safe_load(f)
+
+    # 1. Embed query
     query_vector = model.encode([query_text], normalize_embeddings=True)[0].tolist()
 
+    # 2. Search Pinecone for the single closest target paper
+    pc = Pinecone(api_key=PINECONE_API_KEY)
+    index = pc.Index(config["embedding"]["pinecone_index"])
+    search_res = index.query(vector=query_vector, top_k=1, include_metadata=True)
+    
+    if not search_res.matches:
+        return pd.DataFrame()
+        
+    target_node_idx = int(search_res.matches[0].id)
+
+    # 3. Use Neo4j to trace graph path backwards from the specific node_idx
     cypher_query = """
-    MATCH (target:ResearchPaper)
-    SEARCH target IN (VECTOR INDEX paper_abstract_embeddings FOR $query_vector LIMIT 1)
-    SCORE AS score
+    MATCH (target:ResearchPaper {node_idx: $target_node_idx})
     
     MATCH p = (ancestor:ResearchPaper)-[rels:PREREQUISITE_OF*1..4]->(target)
     
@@ -44,7 +61,7 @@ def generate_path_neo4j(query_text: str, driver, model, max_hops=4) -> pd.DataFr
     """
 
     with driver.session() as session:
-        result = session.run(cypher_query, query_vector=query_vector)
+        result = session.run(cypher_query, target_node_idx=target_node_idx)
         records = [record.data() for record in result]
 
     if not records:

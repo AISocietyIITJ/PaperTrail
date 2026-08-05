@@ -12,8 +12,8 @@ def load_raw(path=RAW_PATH) -> pd.DataFrame:
     df = pd.read_csv(path, low_memory=False)
     
     # Parse dates cleanly without crashing on mixed formats or NAs
-    df["published_date"] = pd.to_datetime(df["published_date"], errors="coerce")
-    df["updated_date"] = pd.to_datetime(df["updated_date"], errors="coerce")
+    df["published_date"] = pd.to_datetime(df["published_date"], format="mixed", errors="coerce")
+    df["updated_date"] = pd.to_datetime(df["updated_date"], format="mixed", errors="coerce")
     
     # The arXiv CSV names the abstract column 'summary'. Map it to 'abstract' for downstream compatibility.
     if "abstract" not in df.columns and "summary" in df.columns:

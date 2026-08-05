@@ -77,18 +77,53 @@ def find_academic_profiles(query: str, resume_path: str):
     }
 
 
-def recommend_papers(query: str, top_n: int = 5):
-    """Use case 3: return the top matching paper records for a query."""
+def recommend_papers(query: str, top_n: int = 5, config_path="config.yaml"):
+    """Use case 3: return the top matching paper records for a query directly from Pinecone."""
     if top_n < 1:
         raise ValueError("top_n must be at least 1")
 
     from pinecone import Pinecone
     from src.config import PINECONE_API_KEY
-    from src.usecase_3.Pinecone_setup import return_output
-    from src.usecase_3.UC3 import get_recommendations
+    from sentence_transformers import SentenceTransformer
+    import yaml
 
-    index = Pinecone(api_key=PINECONE_API_KEY).Index("paper-embeds")
-    return return_output(index, get_recommendations(query, top_n))
+    with open(config_path, "r", encoding="utf-8") as f:
+        config = yaml.safe_load(f)
+        
+    model_name = config["embedding"]["model_name"]
+    pinecone_index = config["embedding"]["pinecone_index"]
+
+    print(f"Embedding query using {model_name}...")
+    model = SentenceTransformer(model_name)
+    query_vector = model.encode([query], normalize_embeddings=True)[0].tolist()
+
+    print(f"Querying top {top_n} recommendations from Pinecone index '{pinecone_index}'...")
+    pc = Pinecone(api_key=PINECONE_API_KEY)
+    index = pc.Index(pinecone_index)
+    
+    # Query pinecone and fetch metadata
+    # The vectors in Pinecone were ingested by usecase 1, but wait!
+    # In usecase 1, we ONLY pushed vectors, not metadata!
+    # Wait, earlier I discovered that `search_res.matches[0].id` is the `node_idx`.
+    # Let's just fetch the matches, get their IDs, and look up the paper titles in the parquet file!
+    search_res = index.query(vector=query_vector, top_k=top_n, include_metadata=False)
+    
+    import pandas as pd
+    df_papers = pd.read_parquet(config["paths"]["interim_data"])
+    
+    results = []
+    for match in search_res.matches:
+        node_idx = int(match.id)
+        # Look up paper info in df
+        paper_info = df_papers[df_papers["node_idx"] == node_idx].iloc[0]
+        results.append({
+            "score": match.score,
+            "title": paper_info["title"],
+            "published_date": paper_info["published_date"],
+            "abstract": paper_info["abstract"]
+        })
+        
+    return results
 
 
 
@@ -97,6 +132,8 @@ if __name__ == "__main__":
     parser.add_argument("--run-reading-pipeline", action="store_true", help="Execute complete dataset prep and graph building")
     parser.add_argument("--ingest-reading-neo4j", action="store_true", help="Push generated pipeline data into Neo4j")
     parser.add_argument("--query-reading", type=str, help="Generate an ordered foundational reading path from Neo4j")
+    parser.add_argument("--recommend-papers", type=str, help="Execute Use Case 3 to find top N most relevant papers for a query")
+    parser.add_argument("--top-n", type=int, default=5, help="Number of papers to recommend for Use Case 3")
     parser.add_argument("--run-academic-profiles-setup", action="store_true", help="Execute Use Case 2 setup (alias, embeddings, graph ingestion)")
     parser.add_argument("--get-proffesors", action="store_true", help="Execute Use Case 2 setup (alias, embeddings, graph ingestion)")
     parser.add_argument("--config", default="config.yaml", help="Path to config yaml file")
@@ -140,6 +177,17 @@ if __name__ == "__main__":
                 for key, value in pro.items():
                     print(f"  {key}: {value}")
                 print("-"*60)
+                
+    elif args.recommend_papers:
+        print(f"\n=================== PAPER RECOMMENDATIONS FOR: '{args.recommend_papers}' ===================")
+        recs = recommend_papers(args.recommend_papers, top_n=args.top_n, config_path=args.config)
+        for i, rec in enumerate(recs, 1):
+            print(f"\n[{i}] {rec['title']}")
+            print(f"Date: {str(rec['published_date']).split('T')[0]} | Similarity Score: {rec['score']:.4f}")
+            # print a snippet of abstract
+            abstract_snippet = (rec['abstract'][:200] + '...') if len(str(rec['abstract'])) > 200 else rec['abstract']
+            print(f"Abstract: {abstract_snippet}")
+        print("\n=========================================================================================\n")
     else:
         parser.print_help()
 

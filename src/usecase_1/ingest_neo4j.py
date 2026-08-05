@@ -16,12 +16,10 @@ def ingest_to_neo4j(config_path="config.yaml"):
     # Load Local Processed Artifacts
     interim_path = config["paths"]["interim_data"]
     directed_path = config["paths"]["directed_edges"]
-    emb_path = config["paths"]["embeddings"]
 
-    print("Loading Parquet data and numpy embeddings...")
+    print("Loading Parquet data...")
     df_papers = pd.read_parquet(interim_path)
     df_edges = pd.read_parquet(directed_path)
-    embeddings = np.load(emb_path)
 
     driver = GraphDatabase.driver(neo_conf["uri"], auth=(neo_conf["user"], neo_conf["password"]))
 
@@ -29,34 +27,24 @@ def ingest_to_neo4j(config_path="config.yaml"):
         print("Setting up Neo4j constraints and Vector Index...")
         session.run("CREATE CONSTRAINT unique_paper_idx IF NOT EXISTS FOR (p:ResearchPaper) REQUIRE p.node_idx IS UNIQUE;")
         
-        # Create Vector Index for 768-dim SPECTER2 embeddings
-        session.run("""
-        CREATE VECTOR INDEX paper_abstract_embeddings IF NOT EXISTS
-        FOR (p:ResearchPaper) ON (p.abstract_embedding)
-        OPTIONS { indexConfig: {
-            `vector.dimensions`: 768,
-            `vector.similarity_function`: 'cosine'
-        }}
-        """)
+
         
         # Create Standard Index on published_date for fast chronological sorting
         session.run("CREATE INDEX paper_published_date IF NOT EXISTS FOR (p:ResearchPaper) ON (p.published_date);")
 
-        print(f"Ingesting {len(df_papers)} ResearchPaper nodes with 768D embeddings...")
+        print(f"Ingesting {len(df_papers)} ResearchPaper nodes...")
         batch_size = 1000
         for i in range(0, len(df_papers), batch_size):
             batch_df = df_papers.iloc[i:i+batch_size]
-            batch_embeddings = embeddings[i:i+batch_size]
 
             payload = []
-            for (_, row), emb in zip(batch_df.iterrows(), batch_embeddings):
+            for _, row in batch_df.iterrows():
                 payload.append({
                     "node_idx": int(row["node_idx"]),
                     "title": str(row["title"]),
                     "published_date": str(row["published_date"]).split("T")[0],
                     "arxiv_id": str(row.get("arxiv_base_id", "")),
-                    "abstract": str(row.get("abstract", "")),
-                    "embedding": emb.tolist()
+                    "abstract": str(row.get("abstract", ""))
                 })
 
             session.run("""
@@ -65,8 +53,7 @@ def ingest_to_neo4j(config_path="config.yaml"):
             SET p.title = row.title,
                 p.published_date = row.published_date,
                 p.arxiv_id = row.arxiv_id,
-                p.abstract = row.abstract,
-                p.abstract_embedding = row.embedding
+                p.abstract = row.abstract
             """, batch=payload)
             print(f"  Pushed nodes {i} to {min(i+batch_size, len(df_papers))}")
 
@@ -83,7 +70,7 @@ def ingest_to_neo4j(config_path="config.yaml"):
             """, batch=batch_edges)
 
     driver.close()
-    print("Successfully ingested all nodes, edges, and vector embeddings into Neo4j!")
+    print("Successfully ingested all nodes and edges into Neo4j!")
 
 if __name__ == "__main__":
     ingest_to_neo4j()
