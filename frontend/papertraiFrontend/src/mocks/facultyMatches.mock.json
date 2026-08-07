@@ -1,0 +1,39 @@
+{
+  "matches": [
+    {
+      "facultyId": "fac_001",
+      "name": "Dr. Emily Chen",
+      "department": "Computer Science",
+      "matchScore": 0.92,
+      "summary": "Strong alignment in natural language processing and transformer architectures based on your recent work.",
+      "evidencePapers": [
+        {
+          "title": "Scaling Laws for Neural Language Models",
+          "year": 2020,
+          "overlapTopics": ["language modeling", "scaling"]
+        },
+        {
+          "title": "Efficient Transformers: A Survey",
+          "year": 2021,
+          "overlapTopics": ["transformers", "efficiency"]
+        }
+      ],
+      "profileUrl": "https://cs.university.edu/~echen"
+    },
+    {
+      "facultyId": "fac_002",
+      "name": "Dr. Marcus Johnson",
+      "department": "Information Science",
+      "matchScore": 0.78,
+      "summary": "Moderate overlap in applied machine learning, though focused more on information retrieval systems.",
+      "evidencePapers": [
+        {
+          "title": "Dense Passage Retrieval for Open-Domain Question Answering",
+          "year": 2020,
+          "overlapTopics": ["retrieval", "question answering"]
+        }
+      ],
+      "profileUrl": "https://is.university.edu/~mjohnson"
+    }
+  ]
+}

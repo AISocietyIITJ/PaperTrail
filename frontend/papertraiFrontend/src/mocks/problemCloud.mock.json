@@ -1,0 +1,77 @@
+{
+  "query": "How to align language models with human intent",
+  "papers": [
+    {
+      "nodeIdx": 101,
+      "arxivId": "2203.02155",
+      "title": "Training language models to follow instructions with human feedback",
+      "abstract": "Making language models bigger does not inherently make them better at following a user's intent. For example, large language models can generate outputs that are untruthful, toxic, or simply not helpful to the user. In other words, these models are not aligned with their users. In this paper, we show an avenue for aligning language models with user intent on a wide range of tasks by fine-tuning with human feedback.",
+      "authors": ["Long Ouyang", "Jeffrey Wu", "Xu Jiang", "Diogo Almeida", "Carroll Wainwright", "Pamela Mishkin", "Chong Zhang", "Sandhini Agarwal", "Katarina Slama", "Alex Ray", "John Schulman", "Jacob Hilton", "Fraser Kelton", "Luke Miller", "Maddie Simens", "Amanda Askell", "Peter Welinder", "Paul Christiano", "Jan Leike", "Ryan Lowe"],
+      "categoryCode": "cs.CL",
+      "publishedDate": "2022-03-04T00:00:00Z",
+      "arxivUrl": "https://arxiv.org/abs/2203.02155",
+      "pdfUrl": "https://arxiv.org/pdf/2203.02155.pdf",
+      "relevance": 0.98
+    },
+    {
+      "nodeIdx": 102,
+      "arxivId": "2009.01325",
+      "title": "Learning to summarize from human feedback",
+      "abstract": "We train a model to summarize English Reddit posts by fine-tuning a pre-trained model with human feedback. We collect a large dataset of comparisons between summaries, where humans choose which summary is better. We train a reward model to predict the human-preferred summary. Finally, we use reinforcement learning to fine-tune a policy to maximize this reward.",
+      "authors": ["Nisan Stiennon", "Long Ouyang", "Jeffrey Wu", "Daniel Ziegler", "Ryan Lowe", "Chelsea Voss", "Alec Radford", "Dario Amodei", "Paul Christiano"],
+      "categoryCode": "cs.CL",
+      "publishedDate": "2020-09-02T00:00:00Z",
+      "arxivUrl": "https://arxiv.org/abs/2009.01325",
+      "pdfUrl": "https://arxiv.org/pdf/2009.01325.pdf",
+      "relevance": 0.85
+    },
+    {
+      "nodeIdx": 103,
+      "arxivId": "2305.18290",
+      "title": "Direct Preference Optimization: Your Language Model is Secretly a Reward Model",
+      "abstract": "While RLHF has been highly successful, it is a complex and often unstable procedure, first fitting a reward model that reflects the human preferences, and then fine-tuning the large unsupervised LM using reinforcement learning to maximize this estimated reward. We propose a new parameterization of the reward model that enables the extraction of the corresponding optimal policy in closed form, allowing us to solve the standard RLHF problem with only a simple classification loss. The resulting algorithm, which we call Direct Preference Optimization (DPO), is stable, performant and computationally lightweight.",
+      "authors": ["Rafael Rafailov", "Archit Sharma", "Eric Mitchell", "Stefano Ermon", "Christopher D. Manning", "Chelsea Finn"],
+      "categoryCode": "cs.LG",
+      "publishedDate": "2023-05-29T00:00:00Z",
+      "arxivUrl": "https://arxiv.org/abs/2305.18290",
+      "pdfUrl": "https://arxiv.org/pdf/2305.18290.pdf",
+      "relevance": 0.95
+    },
+    {
+      "nodeIdx": 104,
+      "arxivId": "1909.08593",
+      "title": "Fine-Tuning Language Models from Human Preferences",
+      "abstract": "We show that reward learning from human preferences can be applied to language tasks, in particular natural language generation. We collect a dataset of human preferences between pairs of model-generated continuations of text. We train a reward model to predict these preferences, and use it as the reward signal for reinforcement learning to train the policy.",
+      "authors": ["Daniel M. Ziegler", "Nisan Stiennon", "Jeffrey Wu", "Tom B. Brown", "Alec Radford", "Dario Amodei", "Paul Christiano", "Geoffrey Irving"],
+      "categoryCode": "cs.CL",
+      "publishedDate": "2019-09-18T00:00:00Z",
+      "arxivUrl": "https://arxiv.org/abs/1909.08593",
+      "pdfUrl": "https://arxiv.org/pdf/1909.08593.pdf",
+      "relevance": 0.76
+    },
+    {
+      "nodeIdx": 105,
+      "arxivId": "2112.00861",
+      "title": "WebGPT: Browser-assisted question-answering with human feedback",
+      "abstract": "We fine-tune GPT-3 to answer long-form questions using a text-based web-browsing environment, which allows the model to search and navigate the web. We train the model on a dataset of human demonstrations of using this environment, and then optimize it to predict human preferences between answers.",
+      "authors": ["Reiichiro Nakano", "Jacob Hilton", "Suchir Balaji", "Jeff Wu", "Long Ouyang", "Christina Kim", "Christopher Hesse", "Shantanu Jain", "Vineet Kosaraju", "William Saunders", "Xu Jiang", "Karl Cobbe", "Tyna Eloundou", "Gretchen Krueger", "Kevin Button", "Matthew Knight", "Benjamin Chess", "John Schulman"],
+      "categoryCode": "cs.CL",
+      "publishedDate": "2021-12-01T00:00:00Z",
+      "arxivUrl": "https://arxiv.org/abs/2112.00861",
+      "pdfUrl": "https://arxiv.org/pdf/2112.00861.pdf",
+      "relevance": 0.70
+    },
+    {
+      "nodeIdx": 106,
+      "arxivId": "2204.05862",
+      "title": "Training a Helpful and Harmless Assistant with Reinforcement Learning from Human Feedback",
+      "abstract": "We apply preference modeling and reinforcement learning from human feedback (RLHF) to fine-tune language models to act as helpful and harmless assistants. We find that this alignment training improves performance on almost all NLP evaluations, and is fully compatible with specialized skills like Python coding.",
+      "authors": ["Yuntao Bai", "Andy Jones", "Kamal Ndousse", "Amanda Askell", "Anna Chen", "Nova DasSarma", "Dawn Drain", "Stanislav Fort", "Deep Ganguli", "Tom Henighan", "Nicholas Joseph", "Saurav Kadavath", "Jackson Kernion", "Tom Conerly", "Sheer El-Showk", "Nelson Elhage", "Zac Hatfield-Dodds", "Danny Hernandez", "Tristan Hume", "Scott Johnston", "Shauna Kravec", "Liane Lovitt", "Neel Nanda", "Catherine Olsson", "Dario Amodei", "Tom Brown", "Jack Clark", "Sam McCandlish", "Chris Olah", "Ben Mann", "Jared Kaplan"],
+      "categoryCode": "cs.CL",
+      "publishedDate": "2022-04-12T00:00:00Z",
+      "arxivUrl": "https://arxiv.org/abs/2204.05862",
+      "pdfUrl": "https://arxiv.org/pdf/2204.05862.pdf",
+      "relevance": 0.92
+    }
+  ]
+}

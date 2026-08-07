@@ -1,0 +1,40 @@
+@import './styles/fonts.css';
+@import './styles/tokens.css';
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--paper-50);
+  color: var(--ink-900);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: 600; /* Increased for better readability in dark mode */
+}
+
+a {
+  color: var(--route-blue);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+button {
+  font-family: var(--font-body);
+}
+
+/* Reset react-flow default to fit within container */
+.react-flow {
+  width: 100%;
+  height: 100%;
+}
