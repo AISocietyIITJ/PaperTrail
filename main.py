@@ -111,8 +111,10 @@ def recommend_papers(query: str, top_n: int = 5, config_path="config.yaml"):
     pinecone_index = config["embedding"]["pinecone_index"]
 
     print(f"Embedding query using {model_name}...")
-    model = SentenceTransformer(model_name)
-    query_vector = model.encode([query], normalize_embeddings=True)[0].tolist()
+    global _main_embedding_model
+    if '_main_embedding_model' not in globals() or _main_embedding_model is None:
+        _main_embedding_model = SentenceTransformer(model_name)
+    query_vector = _main_embedding_model.encode([query], normalize_embeddings=True)[0].tolist()
 
     print(f"Querying top {top_n} recommendations from Pinecone index '{pinecone_index}'...")
     pc = Pinecone(api_key=PINECONE_API_KEY)
@@ -137,7 +139,8 @@ def recommend_papers(query: str, top_n: int = 5, config_path="config.yaml"):
             "score": match.score,
             "title": paper_info["title"],
             "published_date": paper_info["published_date"],
-            "abstract": paper_info["abstract"]
+            "abstract": paper_info["abstract"],
+            "arxiv_id": str(paper_info.get("arxiv_base_id", ""))
         })
         
     return results

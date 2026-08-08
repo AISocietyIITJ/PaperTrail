@@ -10,40 +10,40 @@ const nodeTypes = {
 };
 
 const getLayoutedElements = (nodes, edges) => {
-  const dagreGraph = new dagre.graphlib.Graph();
-  dagreGraph.setDefaultEdgeLabel(() => ({}));
-  
-  // Set layout algorithm configuration
-  // rankdir: LR (Left to Right)
-  // align: UL (Up Left) or undefined to let it center nodes naturally within ranks
-  // nodesep: vertical spacing between nodes in the same rank
-  // ranksep: horizontal spacing between ranks
-  dagreGraph.setGraph({ 
-    rankdir: 'LR',
-    nodesep: 150, 
-    ranksep: 350
+  // 1. Extract year for each node and group by year
+  const nodesByYear = {};
+  nodes.forEach(node => {
+    const dateStr = node.data.paper.publishedDate;
+    const year = dateStr ? new Date(dateStr).getFullYear() : 2020;
+    if (!nodesByYear[year]) {
+      nodesByYear[year] = [];
+    }
+    nodesByYear[year].push(node);
   });
 
-  nodes.forEach((node) => {
-    // Dimensions of our PaperNode component
-    dagreGraph.setNode(node.id, { width: 300, height: 120 });
-  });
+  // 2. Sort unique years ascending (oldest on left, newest on right)
+  const sortedYears = Object.keys(nodesByYear).sort((a, b) => parseInt(a) - parseInt(b));
 
-  edges.forEach((edge) => {
-    dagreGraph.setEdge(edge.source, edge.target);
-  });
+  // 3. Position nodes based on year index (X) and stack position (Y)
+  const layoutedNodes = [];
+  const X_SPACING = 400; // Horizontal distance between years
+  const Y_SPACING = 180; // Vertical distance between papers in same year
 
-  dagre.layout(dagreGraph);
+  sortedYears.forEach((year, yearIndex) => {
+    // Within the same year, sort by hopDistance ascending (closest to target at the top)
+    // Target is hop 0, so it will be at the top of its year column
+    const nodesInYear = nodesByYear[year];
+    nodesInYear.sort((a, b) => (a.data.paper.hopDistance || 0) - (b.data.paper.hopDistance || 0));
 
-  const layoutedNodes = nodes.map((node) => {
-    const nodeWithPosition = dagreGraph.node(node.id);
-    return {
-      ...node,
-      position: {
-        x: nodeWithPosition.x - 150,
-        y: nodeWithPosition.y - 60,
-      },
-    };
+    nodesInYear.forEach((node, stackIndex) => {
+      layoutedNodes.push({
+        ...node,
+        position: {
+          x: yearIndex * X_SPACING,
+          y: stackIndex * Y_SPACING,
+        },
+      });
+    });
   });
 
   return { nodes: layoutedNodes, edges };

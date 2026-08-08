@@ -1,12 +1,21 @@
 #fastapi backend layer
 
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import List, Optional
 
 import main
 
 app = FastAPI(title="Reading Path & Academic Graph API")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # Request models
 
@@ -29,23 +38,69 @@ class RecReq(BaseModel):
 
 class AcademicProfilesRequest(BaseModel):
     query: str
-    # A path only exists on the API server, so clients should not have to send
-    # one just to use this endpoint.  They can provide either server-side path
-    # or the already extracted resume text.
     resume_path: Optional[str] = None
     resume_text: Optional[str] = None
 
 
 # Usecase 1: Reading path pipeline
 
-#@app.post("/usecase1/generate-reading-path-pipeline")
-#def generate_reading_path_pipeline(req: GenReq):
- #   return main.generate_reading_path_pipeline(req.config_path)
-
-
 @app.post("/usecase1/get-reading-path")
 def get_reading_path(req: QueryReq):
-    return main.get_reading_path(req.query_str, req.config_path)
+    records = main.get_reading_path(req.query_str, req.config_path)
+    if not records:
+        return {"query": req.query_str, "targetNodeIdx": None, "nodes": [], "edges": []}
+    
+    # Format for frontend React Flow DAG
+    # The frontend expects full nodes: {nodeIdx, title, publishedDate, hopDistance, ...}
+    # and edges: {src, dst, similarity, reason}
+    nodes = []
+    edges = []
+    
+    # We will synthesize the target node and edges since backend returns a flat list of ancestors.
+    # The target node is implied to be hop 0, but query.py doesn't return it directly.
+    # We will just map what we have into nodes.
+    targetNodeIdx = records[0]["node_idx"] if records else 0
+
+    for r in records:
+        nodes.append({
+            "nodeIdx": r["node_idx"],
+            "title": r["title"],
+            "publishedDate": r["published_date"],
+            "hopDistance": r.get("hop_distance", 0),
+            "abstract": r.get("abstract", ""),
+            "arxivId": r.get("arxiv_id", ""),
+            "arxivUrl": f"https://arxiv.org/abs/{r.get('arxiv_id', '')}",
+            "pdfUrl": f"https://arxiv.org/pdf/{r.get('arxiv_id', '')}.pdf",
+            "authors": [] # Neo4j doesn't currently store authors
+        })
+    
+    # Synthesize edges connecting n -> n-1 hop distance
+    # Group by hop distance
+    hops = {}
+    for r in records:
+        h = r.get("hop_distance", 0)
+        if h not in hops:
+            hops[h] = []
+        hops[h].append(r["node_idx"])
+        
+    for h in sorted(hops.keys(), reverse=True):
+        if h - 1 in hops:
+            # Connect all nodes at hop h to all nodes at hop h-1
+            for src in hops[h]:
+                for dst in hops[h-1]:
+                    edges.append({
+                        "src": src,
+                        "dst": dst,
+                        "similarity": 0.8,
+                        "reason": "prerequisite"
+                    })
+
+    return {
+        "query": req.query_str,
+        "targetNodeIdx": targetNodeIdx,
+        "nodes": nodes,
+        "edges": edges
+    }
 
 # Usecase 2: Academic profiles (Pinecone-backed)
 

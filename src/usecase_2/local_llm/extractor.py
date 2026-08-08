@@ -1,10 +1,6 @@
-#core logic 
-# user query -> call ollama -> recieve response -> convert json -> return python object
+import json
+import os
 
-
-import json 
-
-from .client import client
 from .prompts import SYSTEM_PROMPT
 
 
@@ -13,23 +9,52 @@ def extract_information(user_query: str, resume_content:str) -> dict:
     Extract keyphrases, aliases and interest topics
     from a research-related user query.
     """
+    gemini_api_key = os.environ.get("GEMINI_API_KEY")
+    openai_api_key = os.environ.get("OPENAI_API_KEY")
 
-    response = client.chat(
-        model="qwen2.5:3b",
-        format="json",
-        messages=[
-            {
-                "role": "system",
-                "content": SYSTEM_PROMPT
-            },
-            {
-                "role": "user",
-                "content": user_query+resume_content
-            }
-        ]
-    )
+    if gemini_api_key:
+        from google import genai
+        from google.genai import types
+        gemini_client = genai.Client(api_key=gemini_api_key)
+        response = gemini_client.models.generate_content(
+            model='gemini-2.5-flash',
+            contents=user_query + "\n\n" + resume_content,
+            config=types.GenerateContentConfig(
+                system_instruction=SYSTEM_PROMPT,
+                response_mime_type="application/json",
+            ),
+        )
+        output = response.text.strip()
+    elif openai_api_key:
+        from openai import OpenAI
+        openai_client = OpenAI(api_key=openai_api_key)
+        response = openai_client.chat.completions.create(
+            model="gpt-4o-mini",
+            response_format={"type": "json_object"},
+            messages=[
+                {"role": "system", "content": SYSTEM_PROMPT},
+                {"role": "user", "content": user_query + "\n\n" + resume_content}
+            ]
+        )
+        output = response.choices[0].message.content.strip()
+    else:
+        from .client import client
+        response = client.chat(
+            model="qwen2.5:3b",
+            format="json",
+            messages=[
+                {
+                    "role": "system",
+                    "content": SYSTEM_PROMPT
+                },
+                {
+                    "role": "user",
+                    "content": user_query + resume_content
+                }
+            ]
+        )
+        output = response["message"]["content"].strip()
 
-    output = response["message"]["content"].strip()
     if output.startswith("```json"):
         output = output[7:]
     elif output.startswith("```"):

@@ -2,22 +2,28 @@ import yaml
 import pandas as pd
 from neo4j import GraphDatabase
 from sentence_transformers import SentenceTransformer
+from pinecone import Pinecone
+from src.config import PINECONE_API_KEY
+import yaml
+
+_embedding_model = None
 
 def load_neo4j_driver(config_path="config.yaml"):
+    global _embedding_model
     with open(config_path, "r", encoding="utf-8") as f:
         config = yaml.safe_load(f)
     neo_conf = config["neo4j"]
     driver = GraphDatabase.driver(neo_conf["uri"], auth=(neo_conf["user"], neo_conf["password"]))
-    model_name = config["embedding"]["model_name"]
-    model = SentenceTransformer(model_name)
-    return config, driver, model
+    
+    if _embedding_model is None:
+        model_name = config["embedding"]["model_name"]
+        _embedding_model = SentenceTransformer(model_name)
+        
+    return config, driver, _embedding_model
 
 def generate_path_neo4j(query_text: str, driver, model, max_hops=4) -> pd.DataFrame:
     """Uses Pinecone Vector Search to find the target paper, then traverses backwards for prerequisites."""
     
-    from pinecone import Pinecone
-    from src.config import PINECONE_API_KEY
-    import yaml
 
     with open("config.yaml", "r", encoding="utf-8") as f:
         config = yaml.safe_load(f)
@@ -56,6 +62,8 @@ def generate_path_neo4j(query_text: str, driver, model, max_hops=4) -> pd.DataFr
         top_a.node.node_idx AS node_idx,
         top_a.node.title AS title,
         top_a.node.published_date AS published_date,
+        top_a.node.abstract AS abstract,
+        top_a.node.arxiv_id AS arxiv_id,
         hop_distance
     ORDER BY hop_distance DESC, published_date ASC
     """
