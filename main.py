@@ -58,16 +58,33 @@ def setup_academic_profiles_pipeline():
     print("\nSetup complete.")
 
 
-def find_academic_profiles(query: str, resume_path: str):
-    """Use case 2: return professors matching a query and resume PDF path."""
+def find_academic_profiles(
+    query: str,
+    resume_path: str | None = None,
+    resume_text: str | None = None,
+):
+    """Use case 2: return professors matching a query and optional resume data.
+
+    ``resume_path`` refers to a file on the server.  API clients can instead
+    send ``resume_text`` (or omit both) so the query works without access to
+    the server filesystem.
+    """
     from src.usecase_2.local_llm.extractor import get_interest_topics
     from src.usecase_2.utils.get_prof_info import query_graph_db
     from src.usecase_2.utils.vec_query_search import search_vector_db
     from src.usecase_2.utils.parsing_resume import extract_text_from_pdf
     
-    interests = get_interest_topics(query, extract_text_from_pdf(resume_path))
+    if resume_text is None:
+        resume_text = extract_text_from_pdf(resume_path) if resume_path else ""
+
+    interests = get_interest_topics(query, resume_text)
     if not interests:
-        return {"interests": None, "interest_ids": [], "professors": []}
+        # The local LLM can occasionally omit its expected JSON fields.  The
+        # request query is still a useful semantic-search input, so do not
+        # discard an otherwise valid API request in that case.
+        interests = query.strip()
+        if not interests:
+            return {"interests": None, "interest_ids": [], "professors": []}
 
     interest_ids = search_vector_db(interests)
     return {
@@ -166,7 +183,7 @@ if __name__ == "__main__":
     elif args.get_proffesors:
         script_dir = os.path.dirname(os.path.abspath(__file__))
         resume_path = os.path.join(script_dir, "data/Resume_HerilNMistry.pdf")
-        result = find_academic_profiles(query="Suggest me the proffs", resume_path=resume_path)
+        result = find_academic_profiles(query="Suggest me the proffs CV", resume_path=resume_path)
         print(f"Interests: {result['interests']}")
         print(f"Interest IDs: {result['interest_ids']}")
         print("-"*60)

@@ -9,7 +9,7 @@ from src.config import PINECONE_API_KEY
 script_dir = os.path.dirname(os.path.abspath(__file__))
 file_path = os.path.join(script_dir, "../../../data/interests_with_aliases.csv")
 
-INDEX_NAME = "academic-interests"
+INDEX_NAME = "academic-interest"
 VECTOR_DIMENSION = 384  
 
 

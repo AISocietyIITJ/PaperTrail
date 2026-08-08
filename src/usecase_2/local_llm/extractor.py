@@ -2,7 +2,7 @@
 # user query -> call ollama -> recieve response -> convert json -> return python object
 
 
-import json
+import json 
 
 from .client import client
 from .prompts import SYSTEM_PROMPT
