@@ -2,7 +2,7 @@
 domain:
   category_codes: []   # Empty list removes category restrictions to search any topic across all sciences
   keyword: null        # No keyword limit
-  max_papers: 10000    # Set to null for unrestricted processing across all 287k papers
+  max_papers: 10000     # Set to null for unrestricted processing across all 287k papers
 
 embedding:
   model_name: "allenai/specter2_base"

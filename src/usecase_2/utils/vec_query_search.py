@@ -4,7 +4,7 @@ import time
 from src.config import PINECONE_API_KEY
 
 
-INDEX_NAME = "academic-interests"
+INDEX_NAME = "academic-interest"
 VECTOR_DIMENSION = 384  
 
 
