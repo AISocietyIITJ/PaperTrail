@@ -1,14 +1,37 @@
 """Backend-facing functions for the three PaperTrail use cases."""
+
+#standard imports
 import argparse
 import os
 
+import pandas as pd
+import yaml
+from pinecone import Pinecone
+from sentence_transformers import SentenceTransformer
+
+#usecase1 imports
+from src.usecase_1.build_graph import assemble_graph   
+from src.usecase_1.candidate_edges import generate_candidate_edges
+from src.usecase_1.data_prep import prepare_dataset as prepare_reading_path_data
+from src.usecase_1.direction import assign_edge_directions
+from src.usecase_1.embed import generate_embeddings as generate_reading_path_embeddings
+from src.usecase_1.query import generate_path_neo4j, load_neo4j_driver
+
+#usecase2 imports
+from src.usecase_2.embedding.generate_alias import generate_phrase
+from src.usecase_2.embedding.generate_embedding import gen_res_emb_ingestion
+from src.usecase_2.embedding.generate_embedding_prof import gen_prof_emb_ingestion
+from src.usecase_2.ingestion.load_proffesor import ingest_proff_connect_edges
+from src.usecase_2.ingestion.load_reaseach_node import ingest_research_node
+from src.usecase_2.local_llm.extractor import get_interest_topics
+from src.usecase_2.utils.get_prof_info import query_graph_db
+from src.usecase_2.utils.vec_query_search import search_vector_db
+from src.usecase_2.utils.parsing_resume import extract_text_from_pdf
+#configuration
+from src.config import PINECONE_API_KEY
+
 def generate_reading_path_pipeline(config_path="config.yaml"):
     """Run the complete data prep and graph building pipeline."""
-    from src.usecase_1.build_graph import assemble_graph
-    from src.usecase_1.candidate_edges import generate_candidate_edges
-    from src.usecase_1.data_prep import prepare_dataset as prepare_reading_path_data
-    from src.usecase_1.direction import assign_edge_directions
-    from src.usecase_1.embed import generate_embeddings as generate_reading_path_embeddings
 
     prepare_reading_path_data(config_path)
     generate_reading_path_embeddings(config_path)
@@ -18,7 +41,6 @@ def generate_reading_path_pipeline(config_path="config.yaml"):
 
 def get_reading_path(query: str, config_path="config.yaml"):
     """Use case 1: return a JSON-ready foundational reading path."""
-    from src.usecase_1.query import generate_path_neo4j, load_neo4j_driver
 
     config, driver, model = load_neo4j_driver(config_path)
     try:
@@ -30,12 +52,7 @@ def get_reading_path(query: str, config_path="config.yaml"):
 
 def setup_academic_profiles_pipeline():
     """Use case 2: run setup, generating aliases, embeddings, and ingesting nodes/edges."""
-    from src.usecase_2.embedding.generate_alias import generate_phrase
-    from src.usecase_2.embedding.generate_embedding import gen_res_emb_ingestion
-    from src.usecase_2.embedding.generate_embedding_prof import gen_prof_emb_ingestion
-    from src.usecase_2.ingestion.load_proffesor import ingest_proff_connect_edges
-    from src.usecase_2.ingestion.load_reaseach_node import ingest_research_node
-
+   
     print("\n" + "=" * 60)
     print("PaperTrail Academic Profiles Setup (Use Case 2)")
     print("=" * 60)
@@ -69,10 +86,6 @@ def find_academic_profiles(
     send ``resume_text`` (or omit both) so the query works without access to
     the server filesystem.
     """
-    from src.usecase_2.local_llm.extractor import get_interest_topics
-    from src.usecase_2.utils.get_prof_info import query_graph_db
-    from src.usecase_2.utils.vec_query_search import search_vector_db
-    from src.usecase_2.utils.parsing_resume import extract_text_from_pdf
     
     if resume_text is None:
         resume_text = extract_text_from_pdf(resume_path) if resume_path else ""
@@ -99,11 +112,6 @@ def recommend_papers(query: str, top_n: int = 5, config_path="config.yaml"):
     if top_n < 1:
         raise ValueError("top_n must be at least 1")
 
-    from pinecone import Pinecone
-    from src.config import PINECONE_API_KEY
-    from sentence_transformers import SentenceTransformer
-    import yaml
-
     with open(config_path, "r", encoding="utf-8") as f:
         config = yaml.safe_load(f)
         
@@ -124,8 +132,7 @@ def recommend_papers(query: str, top_n: int = 5, config_path="config.yaml"):
     # Wait, earlier I discovered that `search_res.matches[0].id` is the `node_idx`.
     # Let's just fetch the matches, get their IDs, and look up the paper titles in the parquet file!
     search_res = index.query(vector=query_vector, top_k=top_n, include_metadata=False)
-    
-    import pandas as pd
+  
     df_papers = pd.read_parquet(config["paths"]["interim_data"])
     
     results = []
