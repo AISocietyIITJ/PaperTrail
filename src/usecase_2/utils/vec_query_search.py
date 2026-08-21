@@ -4,8 +4,8 @@ import time
 from src.config import PINECONE_API_KEY
 
 
-INDEX_NAME = "academic-interest"
-VECTOR_DIMENSION = 384  
+INDEX_NAME = "interest-no-alias"
+VECTOR_DIMENSION = 1024  
 
 
 _embedding_model = None
@@ -13,7 +13,7 @@ _embedding_model = None
 def user_query_to_embd(text: str):
     global _embedding_model
     if _embedding_model is None:
-        _embedding_model = SentenceTransformer('all-MiniLM-L6-v2')
+        _embedding_model = SentenceTransformer("Qwen/Qwen3-Embedding-0.6B")
     embeddings = _embedding_model.encode(text, normalize_embeddings=True)
     return embeddings
 

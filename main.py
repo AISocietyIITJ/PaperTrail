@@ -31,7 +31,7 @@ def get_reading_path(query: str, config_path="config.yaml"):
 def setup_academic_profiles_pipeline():
     """Use case 2: run setup, generating aliases, embeddings, and ingesting nodes/edges."""
     from src.usecase_2.embedding.generate_alias import generate_phrase
-    from src.usecase_2.embedding.generate_embedding import gen_res_emb_ingestion
+    from src.usecase_2.embedding.gen_interest_no_alias import gen_res_emb_ingestion
     from src.usecase_2.embedding.generate_embedding_prof import gen_prof_emb_ingestion
     from src.usecase_2.ingestion.load_proffesor import ingest_proff_connect_edges
     from src.usecase_2.ingestion.load_reaseach_node import ingest_research_node

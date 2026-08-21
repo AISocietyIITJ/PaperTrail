@@ -7,12 +7,13 @@ from src.config import PINECONE_API_KEY
 
 
 script_dir = os.path.dirname(os.path.abspath(__file__))
-file_path = os.path.join(script_dir, "../../../data/professor_updated1.csv")
+file_path = os.path.join(script_dir, "../../../data/interests_with_aliases.csv")
 
-INDEX_NAME = "prof-profile"
+INDEX_NAME = "interest-no-alias"
 VECTOR_DIMENSION = 1024 
 
-def gen_prof_emb_ingestion():
+
+def gen_res_emb_ingestion():
     pc = Pinecone(api_key=PINECONE_API_KEY)
 
     existing_indexes = [index.name for index in pc.list_indexes()]
@@ -32,12 +33,12 @@ def gen_prof_emb_ingestion():
     index = pc.Index(INDEX_NAME)
     df = pd.read_csv(file_path)
 
-    df['Combined_Text'] = df['Affiliation'].fillna('') + ": " + df['Interests'].fillna('')
+    df['Combined_Text'] = df['Interest'].fillna('')
 
     print("      Building sentence embeddings")
-    model = SentenceTransformer("Qwen/Qwen3-Embedding-0.6B")  
+    model = SentenceTransformer("Qwen/Qwen3-Embedding-0.6B")
+    
     embeddings = model.encode(df['Combined_Text'].tolist(), normalize_embeddings=True)
-
     vectors_to_upsert = []
     vector_ids = []
 
@@ -48,8 +49,7 @@ def gen_prof_emb_ingestion():
         vector_values = embeddings[idx].tolist()
         
         metadata = {
-            "interest": str(row['Interests']),
-            "Prof_name":str(row['Name'])
+            "interest": str(row['Interest'])
         }
         
         vectors_to_upsert.append((vector_id, vector_values, metadata))
@@ -63,9 +63,10 @@ def gen_prof_emb_ingestion():
     print("      [OK] Pinecone ingestion complete")
 
     df['vector_id'] = vector_ids
-    df_final = df[['Name','Affiliation','Interests','Cited By','Profile URL','h-index','i10-index','vector_id']]
+    df_final = df[['Interest', 'Aliases', 'vector_id']]
     df_final.to_csv(file_path, index=False)
-    print("      [OK] Updated professor_updated1.csv with vector IDs")
+    print("      [OK] Updated interests_with_aliases.csv with vector IDs")
+
 
 if __name__ == "__main__":
-    gen_prof_emb_ingestion()
+    gen_res_emb_ingestion()

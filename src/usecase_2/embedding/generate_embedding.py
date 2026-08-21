@@ -10,7 +10,7 @@ script_dir = os.path.dirname(os.path.abspath(__file__))
 file_path = os.path.join(script_dir, "../../../data/interests_with_aliases.csv")
 
 INDEX_NAME = "academic-interest"
-VECTOR_DIMENSION = 384  
+VECTOR_DIMENSION = 1024 
 
 
 def gen_res_emb_ingestion():
@@ -36,9 +36,9 @@ def gen_res_emb_ingestion():
     df['Combined_Text'] = df['Interest'].fillna('') + ": " + df['Aliases'].fillna('')
 
     print("      Building sentence embeddings")
-    embedding_model = SentenceTransformer('all-MiniLM-L6-v2')
-    embeddings = embedding_model.encode(df['Combined_Text'].tolist(), normalize_embeddings=True)
-
+    model = SentenceTransformer("Qwen/Qwen3-Embedding-0.6B")
+    
+    embeddings = model.encode(df['Combined_Text'].tolist(), normalize_embeddings=True)
     vectors_to_upsert = []
     vector_ids = []
 
