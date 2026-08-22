@@ -58,7 +58,7 @@ def search_vector_db(text: str):
     vector_ids = []
     for match in query_response['matches']:
         if(float(match['score']) >= 0.5):
-            vector_ids.append(match['id'])
+            vector_ids.append({"vector_id":match['id'], "score":match['score']})
 
-    print(f"      Selected IDs: {', '.join(vector_ids) if vector_ids else 'None'}")
+    # print(f"      Selected IDs: {', '.join(vector_ids) if vector_ids else 'None'}")
     return vector_ids
