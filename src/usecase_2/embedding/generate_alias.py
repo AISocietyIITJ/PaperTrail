@@ -98,7 +98,7 @@ def generate_phrase():
     col_name = 'Interests' if 'Interests' in df.columns else 'Interest'
 
     raw_unique = (
-        df[col_name]
+        df[col_name].str.lower()
         .dropna()
         .str.split(',')
         .explode()

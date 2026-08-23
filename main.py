@@ -46,7 +46,11 @@ def get_reading_path(query: str, config_path="config.yaml"):
 
 def setup_academic_profiles_pipeline():
     """Use case 2: run setup, generating aliases, embeddings, and ingesting nodes/edges."""
-    
+    from src.usecase_2.embedding.generate_alias import generate_phrase
+    from src.usecase_2.embedding.gen_interest_no_alias import gen_res_emb_ingestion
+    from src.usecase_2.embedding.generate_embedding_prof import gen_prof_emb_ingestion
+    from src.usecase_2.ingestion.load_proffesor import ingest_proff_connect_edges
+    from src.usecase_2.ingestion.load_reaseach_node import ingest_research_node
 
     print("\n" + "=" * 60)
     print("PaperTrail Academic Profiles Setup (Use Case 2)")
@@ -81,6 +85,10 @@ def find_academic_profiles(
     send ``resume_text`` (or omit both) so the query works without access to
     the server filesystem.
     """
+    from src.usecase_2.local_llm.testing import get_interest_topics
+    from src.usecase_2.utils.get_prof_info import query_graph_db
+    from src.usecase_2.utils.vec_query_search import search_vector_db
+    from src.usecase_2.utils.parsing_resume import extract_text_from_pdf
     
     if resume_text is None:
         resume_text = extract_text_from_pdf(resume_path) if resume_path else ""
