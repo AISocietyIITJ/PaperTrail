@@ -23,7 +23,10 @@ export async function getFacultyMatches(resumeFile, interests) {
   if (!response.ok) throw new Error('Failed to fetch faculty matches');
   const data = await response.json();
 
-  const professors = data.professors || [];
+  const professors = [...(data.professors || [])].sort(
+    (firstProfessor, secondProfessor) =>
+      (Number(secondProfessor.rank_score) || 0) - (Number(firstProfessor.rank_score) || 0)
+  );
   const mappedMatches = professors.map(prof => ({
     facultyId: prof.profile_url || prof.professor_name,
     name: prof.professor_name
@@ -32,7 +35,7 @@ export async function getFacultyMatches(resumeFile, interests) {
     department: prof.affiliation
       ? prof.affiliation.split(' ').map(n => n.charAt(0).toUpperCase() + n.slice(1)).join(' ')
       : "Affiliation Unknown",
-    matchScore: prof.matching_interest_count ? Math.min(prof.matching_interest_count * 0.15 + 0.5, 0.99) : 0.5,
+    matchScore: Number(prof.rank_score) || 0,
     summary: `Strongly matches your profile based on shared interests: ${prof.matched_interests ? prof.matched_interests.join(', ') : 'N/A'}. They have an h-index of ${prof.h_index} and ${prof.cited_by} total citations.`,
     evidencePapers: [], // Backend does not return individual evidence papers yet
     profileUrl: prof.profile_url

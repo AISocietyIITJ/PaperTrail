@@ -62,6 +62,7 @@ def query_graph_db(interest_id_list:list):
             prof['avg_score'] = sum(score_list)/len(score_list)
             prof['rank_score'] = (calculate_professor_score(prof['avg_score'],prof['h_index'],prof['cited_by']))
 
+        professors_list.sort(key=lambda professor: professor['rank_score'], reverse=True)
         return professors_list
 
     finally:
