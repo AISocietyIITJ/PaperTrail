@@ -69,7 +69,7 @@ def find_academic_profiles(
     send ``resume_text`` (or omit both) so the query works without access to
     the server filesystem.
     """
-    from src.usecase_2.local_llm.extractor import get_interest_topics
+    from src.usecase_2.local_llm.testing import get_interest_topics
     from src.usecase_2.utils.get_prof_info import query_graph_db
     from src.usecase_2.utils.vec_query_search import search_vector_db
     from src.usecase_2.utils.parsing_resume import extract_text_from_pdf

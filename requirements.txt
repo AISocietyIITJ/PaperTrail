@@ -51,6 +51,7 @@ pinecone==9.1.0
 pinecone-plugin-interface==0.0.7
 pydantic==2.13.4
 pydantic-core==2.46.4
+python-multipart==0.0.20
 pygments==2.20.0
 python-dateutil==2.9.0.post0
 python-dotenv==1.2.2
