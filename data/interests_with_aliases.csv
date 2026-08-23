@@ -1,0 +1,478 @@
+Interest,Aliases,vector_id
+2d materials,"2M, Advanced Materials, Materials Science",interest_0
+2d-polymers,2P,interest_1
+3d computer vision,"3CV, 3D Perception, 3D Scene Reconstruction, 3D Vision, Image Analysis, Point Clouds, Stereo Vision, Visual Recognition",interest_2
+3d shape analysis,"3D Geometric Modeling, 3D Mesh Processing, 3SA, Point Cloud Analysis, Shape Descriptors",interest_3
+5g and beyond,"5B, 5G Communications, 6G Networks, B5G, Next-Gen Wireless",interest_4
+6g,"6G Wireless, Next-Gen Networks, Terahertz Communications",interest_5
+additive manufacturing,"3D Printing, AM, Direct Energy Deposition, Laser Powder Bed Fusion, Rapid Prototyping",interest_6
+advanced steel design,ASD,interest_7
+agricultural transformation,AT,interest_8
+ai and stem,"AS, Artificial Intelligence, Machine Intelligence",interest_9
+ai/ml accelerator,"AI Chips, AMA, Artificial Intelligence, Edge AI Hardware, Hardware Accelerators, Machine Intelligence, NPU, TPU",interest_10
+air pollution,"AP, Aerosol Dynamics, Air Quality Monitoring, Artificial Intelligence, Emission Control, Machine Intelligence, Particulate Matter",interest_11
+alloy design,AD,interest_12
+alternative construction,AC,interest_13
+amorphous solids,AS,interest_14
+amyloids,"amyloids Research, amyloids Technology",interest_15
+analysis of partial differential equations,APDE,interest_16
+and simulation,"and simulation Research, and simulation Technology",interest_17
+and transnational history,TH,interest_18
+antenna design,"AD, Electromagnetic Radiators, Microstrip Antennas, Phased Array, RF Antennas",interest_19
+anticancer nanotechnology,"AN, Nanoscale Science, Nanotechnology",interest_20
+applied econometrics,AE,interest_21
+applied economics,AE,interest_22
+applied ethics,AE,interest_23
+applied game theory,AGT,interest_24
+applied mathematics,AM,interest_25
+applied operations research,AOR,interest_26
+appropriate technology,AT,interest_27
+approximation algorithms,AA,interest_28
+aqueous binary mixtures,ABM,interest_29
+astronomy,"astronomy Research, astronomy Technology",interest_30
+atmospheric modeling,AM,interest_31
+atom probe tomography,APT,interest_32
+bias mitigation,BM,interest_33
+bim,"3D CAD Modeling, Building Information Modeling, Digital Twin in Construction",interest_34
+bioelectronics,"Biochips, Biomedical Engineering, Biosensors, Biotechnology, Electrophysiology Devices, Implantable Electronics",interest_35
+bioenergy and biofuels,"BB, Biomedical Engineering, Biotechnology, Clean Energy, Renewable Energy Systems",interest_36
+biofilms,"Biomedical Engineering, Biotechnology",interest_37
+biofuels etc,"BE, Biomedical Engineering, Biotechnology, Clean Energy, Renewable Energy Systems",interest_38
+biomaterials,"Advanced Materials, Biomedical Engineering, Biotechnology, Materials Science",interest_39
+biometrics,"Behavioral Biometrics, Biomedical Engineering, Biotechnology, Facial Recognition, Fingerprint Verification, Iris Scanning",interest_40
+biomicrofluidics,"Biomedical Engineering, Biotechnology",interest_41
+biophotonics,"Biomedical Engineering, Biotechnology",interest_42
+brain-computer interface,"Artificial Intelligence, BCI, EEG Decoding, Machine Intelligence, Neural Interface, Neuromodulation",interest_43
+bridge engineering,BE,interest_44
+business communities,BC,interest_45
+cancer,"cancer Research, cancer Technology",interest_46
+carbon capture,CC,interest_47
+cardiovascular biology,"Biomedical Engineering, Biotechnology, CB",interest_48
+catalysis,"catalysis Research, catalysis Technology",interest_49
+cfd,"Computational Fluid Dynamics, Fluid Flow Simulation, Navier-Stokes Solvers",interest_50
+cfd with lattice boltzmann method,CLBM,interest_51
+characterization techninques,CT,interest_52
+chemical engineering,CE,interest_53
+childhood,"childhood Research, childhood Technology",interest_54
+clean technologies,CT,interest_55
+climate change,CC,interest_56
+coatings,"coatings Research, coatings Technology",interest_57
+cognitive neuroscience,CN,interest_58
+colloids & interfaces,CI,interest_59
+combinatorics,"combinatorics Research, combinatorics Technology",interest_60
+communication networking,"CN, Telecommunications, Wireless Systems",interest_61
+composite structures,CS,interest_62
+composites,"composites Research, composites Technology",interest_63
+composites manufacturing,CM,interest_64
+compressible flows,CF,interest_65
+computational chemistry for soft and bio,"Biomedical Engineering, Biotechnology, CCSB",interest_66
+computational fluid dynamics,CFD,interest_67
+computational geometry,CG,interest_68
+computational mechanics,CM,interest_69
+computational neuroscience,CN,interest_70
+computational polymer science,CPS,interest_71
+computer architecture,CA,interest_72
+computer haptics,CH,interest_73
+computer networks,"CN, Telecommunications, Wireless Systems",interest_74
+computer vision,"CNNs, CV, Image Analysis, Image Recognition, Object Detection, Visual Perception, Visual Recognition",interest_75
+connected and autonomous vehicles,CAV,interest_76
+consumer rights,CR,interest_77
+continual learning,"Artificial Intelligence, CL, Machine Intelligence",interest_78
+control of power converters,"Autonomous Systems, CPC, Robotics & Automation",interest_79
+control theory,"Autonomous Systems, CT, Robotics & Automation",interest_80
+corrosion analysis,CA,interest_81
+covalent organic frameworks,COF,interest_82
+critical digital studies,CDS,interest_83
+crystal plasticity simulations,CPS,interest_84
+crystallography,"crystallography Research, crystallography Technology",interest_85
+cultural studies,CS,interest_86
+cyber-physical systems,CPS,interest_87
+damage mechanics,DM,interest_88
+decision making,DM,interest_89
+deep learning,"Artificial Intelligence, Convolutional Networks, DL, Deep Neural Networks, Machine Intelligence, Representation Learning, Transformers",interest_90
+deformation mechanisms,DM,interest_91
+design education,DE,interest_92
+design methods,DM,interest_93
+design research,DR,interest_94
+design science,DS,interest_95
+dft,"dft Research, dft Technology",interest_96
+digital geometry processing,DGP,interest_97
+digital twin,DT,interest_98
+discrete element method,DEM,interest_99
+distributed algorithms,DA,interest_100
+drug designing,DD,interest_101
+dynamic traffic,DT,interest_102
+dynamical systems,DS,interest_103
+dynamics and control,"Autonomous Systems, DC, Robotics & Automation",interest_104
+earthquake engineering,EE,interest_105
+edge ai,"Artificial Intelligence, EA, Edge Computing, Edge Inference, Machine Intelligence, On-Device AI, TinyML",interest_106
+education,"education Research, education Technology",interest_107
+educational technology,ET,interest_108
+ejector flows,EF,interest_109
+electric vehicles,EV,interest_110
+electrical engineering,EE,interest_111
+electrocatalysis,"electrocatalysis Research, electrocatalysis Technology",interest_112
+electrochemistry,"electrochemistry Research, electrochemistry Technology",interest_113
+electrochromic material,"Advanced Materials, EM, Materials Science",interest_114
+electron microscopy,EM,interest_115
+electronic cooling,EC,interest_116
+emat,"emat Research, emat Technology",interest_117
+emerging memories,EM,interest_118
+emotional design,ED,interest_119
+energy,"Clean Energy, Renewable Energy Systems",interest_120
+energy conversion,"Clean Energy, EC, Renewable Energy Systems",interest_121
+energy geomechanics,"Clean Energy, EG, Renewable Energy Systems",interest_122
+energy infrastructure,"Clean Energy, EI, Renewable Energy Systems",interest_123
+energy materials,"Advanced Materials, Clean Energy, EM, Materials Science, Renewable Energy Systems",interest_124
+energy materials for,"Advanced Materials, Clean Energy, EM, Materials Science, Renewable Energy Systems",interest_125
+energy policy,"Clean Energy, EP, Renewable Energy Systems",interest_126
+energy storage,"Clean Energy, ES, Renewable Energy Systems",interest_127
+energy storage devices,"Clean Energy, ESD, Renewable Energy Systems",interest_128
+energy technology,"Clean Energy, ET, Renewable Energy Systems",interest_129
+engineering geology,EG,interest_130
+entrepreneurship-as-practice,EAP,interest_131
+environment,"environment Research, environment Technology",interest_132
+environmental biotechnology &,"Biomedical Engineering, Biotechnology, EB",interest_133
+environmental economics,EE,interest_134
+enzyme chemistry,EC,interest_135
+ethnic entp,EE,interest_136
+evs,"evs Research, evs Technology",interest_137
+experimental geotechnics,EG,interest_138
+experimental phy chem,EPC,interest_139
+explainable & generalization ai,"Artificial Intelligence, EGA, Machine Intelligence",interest_140
+extended reality,ER,interest_141
+extremal problems,EP,interest_142
+extremum seeking control,"Autonomous Systems, ESC, Robotics & Automation",interest_143
+fabrication,"fabrication Research, fabrication Technology",interest_144
+face recognition,FR,interest_145
+fatigue & impact,FI,interest_146
+ferrites,"ferrites Research, ferrites Technology",interest_147
+few-shot / zero-shot learning,"Artificial Intelligence, FSZSL, Machine Intelligence",interest_148
+finite frame theory and its application to,FFTIA,interest_149
+firm dynamics,FD,interest_150
+flapping wing aerodynamics,FWA,interest_151
+flexible & printed electronics,FPE,interest_152
+flexible sensors,FS,interest_153
+flim/fcs,FF,interest_154
+fluid dynamics,FD,interest_155
+fluid-structure interaction,FSI,interest_156
+fluidic,"fluidic Research, fluidic Technology",interest_157
+fluorescence spectroscopy,FS,interest_158
+form studies,FS,interest_159
+free-energy simulations,"Clean Energy, FES, Renewable Energy Systems",interest_160
+frugal design,FD,interest_161
+fso,"fso Research, fso Technology",interest_162
+functional,"functional Research, functional Technology",interest_163
+functional material- nitride & oxide,"Advanced Materials, FMNO, Materials Science",interest_164
+functional organic materials,"Advanced Materials, FOM, Materials Science",interest_165
+fundamental science,FS,interest_166
+gender,"gender Research, gender Technology",interest_167
+geosynthetics,"geosynthetics Research, geosynthetics Technology",interest_168
+geotechnical engineering,GE,interest_169
+gerontology,"gerontology Research, gerontology Technology",interest_170
+global value chains,"Artificial Intelligence, GVC, Machine Intelligence",interest_171
+gmpe,"gmpe Research, gmpe Technology",interest_172
+graph colorings,GC,interest_173
+graph theory,GT,interest_174
+graphene,"graphene Research, graphene Technology",interest_175
+grasping,"grasping Research, grasping Technology",interest_176
+green energy,"Clean Energy, GE, Renewable Energy Systems",interest_177
+green hydrgen,GH,interest_178
+green hydrogen,GH,interest_179
+green transition,GT,interest_180
+growth-defect-diffusionoxide,GDD,interest_181
+halide perovskites,HP,interest_182
+haptics,"haptics Research, haptics Technology",interest_183
+hardware design,HD,interest_184
+heat and mass transfer,HMT,interest_185
+heat transfer,HT,interest_186
+heat transfer in enclosures,HTE,interest_187
+high entropy alloys,HEA,interest_188
+high temperature alloys,HTA,interest_189
+higher education policies,HEP,interest_190
+history of mathematics,HM,interest_191
+human haptics,HH,interest_192
+human-computer interaction,HCI,interest_193
+hybrid sensors,HS,interest_194
+hydrodynamics,"hydrodynamics Research, hydrodynamics Technology",interest_195
+hydrology,"hydrology Research, hydrology Technology",interest_196
+ice calibration & testing,ICT,interest_197
+image and video coding,"IVC, Image Analysis, Visual Recognition",interest_198
+image processing,"DIP, Digital Image Processing, IP, Image Analysis, Image Enhancement, Segmentation, Visual Recognition",interest_199
+impact on crops and human health,IOCHH,interest_200
+in-plane thz photonics,PTP,interest_201
+inclusive design,ID,interest_202
+india's northeast focus on manipur,ISNFOM,interest_203
+indian modernity,IM,interest_204
+indian philosophy,IP,interest_205
+inhibitory control,"Autonomous Systems, IC, Robotics & Automation",interest_206
+inorganic physical chemistry,IPC,interest_207
+intellectual property,IP,interest_208
+interaction design,ID,interest_209
+international trade,IT,interest_210
+internet,"internet Research, internet Technology",interest_211
+interpretability,"interpretability Research, interpretability Technology",interest_212
+intertial sensors and analytical,ISA,interest_213
+ionic solvents,IS,interest_214
+joining of ceramics,JC,interest_215
+just migration,JM,interest_216
+labour,"labour Research, labour Technology",interest_217
+langauge models,LM,interest_218
+laser diagnostics,LD,interest_219
+laser materials processing,"Advanced Materials, LMP, Materials Science",interest_220
+laser sintering,LS,interest_221
+lca,"lca Research, lca Technology",interest_222
+learning analytics,"Artificial Intelligence, LA, Machine Intelligence",interest_223
+legged robots,"Autonomous Systems, LR, Robotics & Automation",interest_224
+lie group application,LGA,interest_225
+life cycle assessment,"Cradle-to-Grave Analysis, Environmental Impact Assessment, LCA",interest_226
+liquid crystals,LC,interest_227
+liquid-liquid phase separation,LLPS,interest_228
+local governance,LG,interest_229
+machine learning,"Artificial Intelligence, ML, Machine Intelligence, Pattern Recognition, Predictive Modeling, Statistical Learning, Supervised Learning",interest_230
+machine learning augmented compact,"Artificial Intelligence, MLAC, Machine Intelligence",interest_231
+macroeconomic interactions,MI,interest_232
+macroeconomic theory and policy,MTP,interest_233
+macroeconomics,"macroeconomics Research, macroeconomics Technology",interest_234
+manipulation,"manipulation Research, manipulation Technology",interest_235
+manufacturing,"manufacturing Research, manufacturing Technology",interest_236
+manuscriptology,"manuscriptology Research, manuscriptology Technology",interest_237
+marketing/branding,MB,interest_238
+materials design,"Advanced Materials, MD, Materials Science",interest_239
+materials processing,"Advanced Materials, MP, Materials Science",interest_240
+materials science,"Advanced Materials, MS, Materials Science",interest_241
+mathematical analysis,MA,interest_242
+mathematical optimization,MO,interest_243
+mathematical physics,MP,interest_244
+max phase,MP,interest_245
+md,"md Research, md Technology",interest_246
+mechanisms,"mechanisms Research, mechanisms Technology",interest_247
+mechatronics,"mechatronics Research, mechatronics Technology",interest_248
+media studies,MS,interest_249
+medical technologies,MT,interest_250
+medicinal chemistry,MC,interest_251
+memristor,"memristor Research, memristor Technology",interest_252
+mems and micro-fluidics,MMF,interest_253
+mental health,MH,interest_254
+metamaterials,"Advanced Materials, Materials Science",interest_255
+metamaterials & metasurfaces,"Advanced Materials, MM, Materials Science",interest_256
+micro nano technologies,"MNT, Nanoscale Science, Nanotechnology",interest_257
+microelectronics,"microelectronics Research, microelectronics Technology",interest_258
+microfluidics,"microfluidics Research, microfluidics Technology",interest_259
+microgrids,"microgrids Research, microgrids Technology",interest_260
+microsystems,"microsystems Research, microsystems Technology",interest_261
+microwave antennas,MA,interest_262
+modelling,"modelling Research, modelling Technology",interest_263
+mofs,"mofs Research, mofs Technology",interest_264
+molecular cages,MC,interest_265
+molecular electronics,ME,interest_266
+molecular microbiology,"Biomedical Engineering, Biotechnology, MM",interest_267
+molecular pathology of cancers,MPC,interest_268
+molecular simulations,MS,interest_269
+monte-carlo simulations,MCS,interest_270
+moving load analysis,MLA,interest_271
+multifunctional composites,MC,interest_272
+multimedia signal processing,MSP,interest_273
+multiphase flow,MF,interest_274
+multiscale modeling,MM,interest_275
+multiscale modelling,MM,interest_276
+n-heterocyclic carbene catalysis,NHCC,interest_277
+na-ion battery,"Clean Energy, NIB, Renewable Energy Systems",interest_278
+nano materials,"Advanced Materials, Materials Science, NM, Nanoscale Science, Nanotechnology",interest_279
+nano/microelectronics,"NM, Nanoscale Science, Nanotechnology",interest_280
+nanocomposites,"Nanoscale Science, Nanotechnology",interest_281
+nanomaterials,"Advanced Materials, Materials Science, Nanoscale Science, Nanotechnology",interest_282
+nanomedicine,"Nanoscale Science, Nanotechnology",interest_283
+nanophotonics,"Nanoscale Science, Nanotechnology",interest_284
+nanotechnology,"Nanoscale Science, Nanotechnology",interest_285
+natural language processing,NLP,interest_286
+natural molecules,NM,interest_287
+nde,"nde Research, nde Technology",interest_288
+network economics,"NE, Telecommunications, Wireless Systems",interest_289
+networking,"Telecommunications, Wireless Systems",interest_290
+neuro-oncology,NO,interest_291
+neurodegeneration,"neurodegeneration Research, neurodegeneration Technology",interest_292
+neurodegenrative diseases,ND,interest_293
+nir-quantum dots,NQD,interest_294
+non-linear optics,NLO,interest_295
+nonlinear analysis,,interest_296
+nonlinear optics,NO,interest_297
+nonlinear solid mechanics,NSM,interest_298
+nonlinear vibrations,NV,interest_299
+normative ethics,NE,interest_300
+nrr-her-co2rr catalysts,NHCC,interest_301
+numerical and mathematical methods,NMM,interest_302
+numerical modelling in geotechnics,NMG,interest_303
+optics-photonics,OP,interest_304
+optimization,"optimization Research, optimization Technology",interest_305
+organic and flexible electronics,OFE,interest_306
+organic electronics,OE,interest_307
+organic functional material,"Advanced Materials, Materials Science, OFM",interest_308
+organic synthesis,OS,interest_309
+oxide multiferroics,OM,interest_310
+packaging,"packaging Research, packaging Technology",interest_311
+paramaterized complexity,PC,interest_312
+parkinson's disease,PSD,interest_313
+particulate matter,PM,interest_314
+pattern recognition,PR,interest_315
+personalized learning,"Artificial Intelligence, Machine Intelligence, PL",interest_316
+phase field modeling,PFM,interest_317
+phase separation,PS,interest_318
+phase transformations,PT,interest_319
+photochemistry,"photochemistry Research, photochemistry Technology",interest_320
+photonics,"photonics Research, photonics Technology",interest_321
+photoredox catalysis,PC,interest_322
+physical layer security,PLS,interest_323
+physical metallurgy,PM,interest_324
+physics,"physics Research, physics Technology",interest_325
+pile foundations,PF,interest_326
+plant molecular biology,"Biomedical Engineering, Biotechnology, PMB",interest_327
+plasmonics,"plasmonics Research, plasmonics Technology",interest_328
+policy analytics,PA,interest_329
+polymer nanocomposites,"Nanoscale Science, Nanotechnology, PN",interest_330
+polymer physics,PP,interest_331
+polymer science,PS,interest_332
+popular culture,PC,interest_333
+porous materials,"Advanced Materials, Materials Science, PM",interest_334
+porous media,PM,interest_335
+positive psychology,PP,interest_336
+power electronics,PE,interest_337
+power quality improvement,PQI,interest_338
+power system,PS,interest_339
+probabilistic methods,PM,interest_340
+product design,PD,interest_341
+public health,PH,interest_342
+quantum computing,QC,interest_343
+quantum dots,QD,interest_344
+quantum many-body physics,QMBP,interest_345
+radiative cooling,RC,interest_346
+radical reactions,RR,interest_347
+radio localization and sensing,RLS,interest_348
+railway geotechnics,"Artificial Intelligence, Machine Intelligence, RG",interest_349
+regenerative medicine,RM,interest_350
+reliability analysis,RA,interest_351
+reliability theory,RT,interest_352
+renewable energy,"Clean Energy, RE, Renewable Energy Systems",interest_353
+reservoir geomechanics,RG,interest_354
+resistive temperature detectors,RTD,interest_355
+rf circuits,RC,interest_356
+rf mems,RM,interest_357
+riemannian geometry,RG,interest_358
+robotic & automation,"Autonomous Systems, RA, Robotics & Automation",interest_359
+robotics,"Autonomous Systems, Robotics & Automation",interest_360
+rock mechanics,RM,interest_361
+rural development,RD,interest_362
+scientific computations,"Computational Science, HPC, High-Performance Computing, Numerical Analysis, SC",interest_363
+seismic design,SD,interest_364
+semiconductor devices,SD,interest_365
+sensor,"sensor Research, sensor Technology",interest_366
+sensors,"sensors Research, sensors Technology",interest_367
+service operations,SO,interest_368
+several complex variables,SCV,interest_369
+shape control,"Autonomous Systems, Robotics & Automation, SC",interest_370
+shm,"shm Research, shm Technology",interest_371
+shock wave dynamics,SWD,interest_372
+single molecule imaging,SMI,interest_373
+smart grid,SG,interest_374
+smart materials,"Advanced Materials, Materials Science, SM",interest_375
+smfret,"smfret Research, smfret Technology",interest_376
+social justice,SJ,interest_377
+sociology of education,SE,interest_378
+sociology of knowledge,SK,interest_379
+sociology of science,SS,interest_380
+soft active materials,"Advanced Materials, Materials Science, SAM",interest_381
+soft matter physics,SMP,interest_382
+soil dynamics,SD,interest_383
+soil reinforcement,SR,interest_384
+solar cells,"Clean Energy, Renewable Energy Systems, SC",interest_385
+solar desalination,"Clean Energy, Renewable Energy Systems, SD",interest_386
+solar energy,"Clean Energy, Renewable Energy Systems, SE",interest_387
+solid state physics,SSP,interest_388
+solidification,"solidification Research, solidification Technology",interest_389
+solution and solid state magnetic resonance,SSSMR,interest_390
+solvation dynamics,SD,interest_391
+solvent-free organic liquids,SFOL,interest_392
+spark plasma sintering,SPS,interest_393
+sparse optimization,SO,interest_394
+spectral finite element method,SFEM,interest_395
+spectroscopy,"spectroscopy Research, spectroscopy Technology",interest_396
+statistical data analysis,SDA,interest_397
+statistical mechanics,SM,interest_398
+statistical modelling specialist | worked on,SMSWO,interest_399
+statistical physics,SP,interest_400
+stealth materials,"Advanced Materials, Materials Science, SM",interest_401
+strategy-as-practice,SAP,interest_402
+structural biology,"Biomedical Engineering, Biotechnology, SB",interest_403
+structural dynamics,SD,interest_404
+structural equation modelling,SEM,interest_405
+structural fire engineering,SFE,interest_406
+structural health monitoring,SHM,interest_407
+sub-2nm devices,S2D,interest_408
+supersonic mixing enhancement,SME,interest_409
+supramolecular chemistry,SC,interest_410
+surface chemistry,SC,interest_411
+surface coatings,SC,interest_412
+surrogate modelling,SM,interest_413
+sustainability,"Artificial Intelligence, Machine Intelligence",interest_414
+sustainability and civil engineering,"Artificial Intelligence, Machine Intelligence, SCE",interest_415
+sustainable architecture,"Artificial Intelligence, Machine Intelligence, SA",interest_416
+sustainable development,"Artificial Intelligence, Machine Intelligence, SD",interest_417
+syntax,"syntax Research, syntax Technology",interest_418
+synthetic materials chemistry,"Advanced Materials, Materials Science, SMC",interest_419
+synthetic organic chemistry,SOC,interest_420
+system identification,SI,interest_421
+tea,"tea Research, tea Technology",interest_422
+teacher education,TE,interest_423
+technology enhanced learning,"Artificial Intelligence, Machine Intelligence, TEL",interest_424
+terhertz spectroscopy and high harmonic,TSHH,interest_425
+testing and synthesis of reversible circuits,TSRC,interest_426
+theoretical linguistics,TL,interest_427
+theranostic systems,TS,interest_428
+thermal conversion processes,TCP,interest_429
+thermal energy storage,"Clean Energy, Renewable Energy Systems, TES",interest_430
+thermal lattice boltzmann method,TLBM,interest_431
+thermal spray coating,TSC,interest_432
+thermodynamics,"thermodynamics Research, thermodynamics Technology",interest_433
+thermoelectric materials,"Advanced Materials, Materials Science, TM",interest_434
+thermoplastic composites,TC,interest_435
+thin film,TF,interest_436
+thin film stability,TFS,interest_437
+thz communication,"TC, Telecommunications, Wireless Systems",interest_438
+tissue engineering,TE,interest_439
+trace gases,TG,interest_440
+traffic flow theory,TFT,interest_441
+transition metal-catalysis,TMC,interest_442
+transport phenomena,TP,interest_443
+tribal languages of india,TLI,interest_444
+tribology,"tribology Research, tribology Technology",interest_445
+turbomachinery,"turbomachinery Research, turbomachinery Technology",interest_446
+ultra-precision finishing,UPF,interest_447
+ultrafast devices,UD,interest_448
+ultrafast spectroscopy,US,interest_449
+ultrafast spectrosocpy,US,interest_450
+ultrasonic,"ultrasonic Research, ultrasonic Technology",interest_451
+uncertainty quantification,"Artificial Intelligence, Machine Intelligence, UQ",interest_452
+underactuated hands,UH,interest_453
+user experience design,UED,interest_454
+value chain,"Artificial Intelligence, Machine Intelligence, VC",interest_455
+visual culture and narrative systems,VCNS,interest_456
+vlc,"vlc Research, vlc Technology",interest_457
+vlsi circuits and systems,VCS,interest_458
+vr/ar,VA,interest_459
+wams,"wams Research, wams Technology",interest_460
+waste utilization in construction,WUC,interest_461
+waste valorization,WV,interest_462
+water,"water Research, water Technology",interest_463
+water and sanitation,WS,interest_464
+water electrolysers,"Electrochemical Hydrogen, Hydrogen Generation, PEM Electrolysis, WE, Water Splitting",interest_465
+wave propagation,WP,interest_466
+wear & tribology,WT,interest_467
+wearable robots,"Autonomous Systems, Robotics & Automation, WR",interest_468
+welding and joining,WJ,interest_469
+wetting,"wetting Research, wetting Technology",interest_470
+wi-fi,WF,interest_471
+wireless communication and signal,"Telecommunications, WCS, Wireless Systems",interest_472
+wireless power transfer,"Telecommunications, WPT, Wireless Systems",interest_473
+wisdom,"wisdom Research, wisdom Technology",interest_474
+x-ray detectors,XRD,interest_475
+reality and applications of machine learning,"Artificial Intelligence, Machine Intelligence, RAML",interest_476

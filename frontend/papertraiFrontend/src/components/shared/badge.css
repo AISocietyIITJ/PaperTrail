@@ -1,0 +1,36 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px; /* Standard rounded rectangle */
+  font-family: var(--font-body); /* Standard sans-serif instead of mono */
+  font-size: 0.75rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.badge-default {
+  background-color: var(--border-color);
+  color: var(--ink-900);
+}
+
+.badge-category {
+  background-color: var(--route-blue);
+  color: #FFFFFF;
+}
+
+.badge-temporal {
+  background-color: var(--highlighter-400);
+  color: #FFFFFF;
+}
+
+.badge-generality {
+  background-color: var(--graphite-600);
+  color: #FFFFFF;
+}
+
+.badge-score {
+  background-color: var(--surface-color);
+  color: var(--route-blue);
+  border: 1px solid var(--route-blue);
+}

@@ -1,0 +1,24 @@
+:root {
+  /* Color Palette - Rich Espresso/Sepia (Warm Dark) */
+  --paper-50: #2A2421; /* Deep warm espresso background */
+  --ink-900: #F5EBE1;  /* Soft warm cream text */
+  --graphite-600: #AFA199; /* Warm taupe for secondary text */
+  
+  --surface-color: #352E2B; /* Elevated warm sepia */
+  --border-color: #4A423D; /* Subtle warm border */
+
+  --route-blue: #D97706; /* Warm Amber/Gold */
+  --route-blue-hover: #B45309;
+  --route-blue-tint: rgba(217, 119, 6, 0.15);
+
+  --highlighter-400: #65A30D; /* Warm Olive/Green */
+  --highlighter-tint: rgba(101, 163, 13, 0.15);
+
+  --signal-coral: #DC2626; /* Warm Red */
+
+  /* Typography */
+  --font-display: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-body: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-paper: 'Georgia', serif; /* Standard academic serif */
+  --font-mono: 'Consolas', 'Monaco', monospace; /* Standard mono */
+}
