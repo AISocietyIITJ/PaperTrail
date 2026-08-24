@@ -11,18 +11,22 @@ export async function getResearchPath(query, maxHops = 3) {
 }
 
 export async function getFacultyMatches(resumeFile, interests) {
-  // If we have a file, we could send it as FormData, but the backend accepts resume_text or query.
-  // For simplicity based on the mocked flow, we'll send the interests array as a joined query string.
   const queryStr = interests ? (Array.isArray(interests) ? interests.join(", ") : interests) : "research interests";
+  const body = new FormData();
+  body.append('query', queryStr);
+  if (resumeFile) body.append('resume', resumeFile);
+
   const response = await fetch(`${API_BASE}/usecase2/find-academic-profiles`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ query: queryStr, resume_path: null, resume_text: null })
+    body
   });
   if (!response.ok) throw new Error('Failed to fetch faculty matches');
   const data = await response.json();
 
-  const professors = data.professors || [];
+  const professors = [...(data.professors || [])].sort(
+    (firstProfessor, secondProfessor) =>
+      (Number(secondProfessor.rank_score) || 0) - (Number(firstProfessor.rank_score) || 0)
+  );
   const mappedMatches = professors.map(prof => ({
     facultyId: prof.profile_url || prof.professor_name,
     name: prof.professor_name
@@ -31,7 +35,7 @@ export async function getFacultyMatches(resumeFile, interests) {
     department: prof.affiliation
       ? prof.affiliation.split(' ').map(n => n.charAt(0).toUpperCase() + n.slice(1)).join(' ')
       : "Affiliation Unknown",
-    matchScore: prof.matching_interest_count ? Math.min(prof.matching_interest_count * 0.15 + 0.5, 0.99) : 0.5,
+    matchScore: Number(prof.rank_score) || 0,
     summary: `Strongly matches your profile based on shared interests: ${prof.matched_interests ? prof.matched_interests.join(', ') : 'N/A'}. They have an h-index of ${prof.h_index} and ${prof.cited_by} total citations.`,
     evidencePapers: [], // Backend does not return individual evidence papers yet
     profileUrl: prof.profile_url

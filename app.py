@@ -1,9 +1,11 @@
 #fastapi backend layer
 
-from fastapi import FastAPI
+from fastapi import FastAPI, File, Form, HTTPException, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
+from pathlib import Path
 from typing import List, Optional
+from uuid import uuid4
 
 import main
 
@@ -120,12 +122,33 @@ def get_reading_path(req: QueryReq):
  #   return main.setup_academic_profiles_pipeline(req.interest_id_list)
 
 @app.post("/usecase2/find-academic-profiles")
-def find_academic_profiles(req: AcademicProfilesRequest):
-    return main.find_academic_profiles(
-        query=req.query,
-        resume_path=req.resume_path,
-        resume_text=req.resume_text,
-    )
+async def find_academic_profiles(
+    query: str = Form(...),
+    resume: UploadFile | None = File(default=None),
+):
+    resume_path = None
+    data_dir = Path(__file__).resolve().parent / "data"
+
+    if resume is not None:
+        if resume.content_type != "application/pdf":
+            raise HTTPException(status_code=415, detail="Only PDF resumes are supported")
+
+        data_dir.mkdir(exist_ok=True)
+        resume_path = data_dir / f"resume-{uuid4().hex}.pdf"
+        try:
+            with resume_path.open("wb") as destination:
+                while chunk := await resume.read(1024 * 1024):
+                    destination.write(chunk)
+
+            return main.find_academic_profiles(
+                query=query,
+                resume_path=str(resume_path),
+            )
+        finally:
+            resume_path.unlink(missing_ok=True)
+            await resume.close()
+
+    return main.find_academic_profiles(query=query)
 
 # Usecase 3: Paper recommendations (Pinecone-backed)
 

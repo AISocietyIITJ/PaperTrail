@@ -11,8 +11,7 @@ export default function ResumeUploadZone({ onFileSelect, selectedFile }) {
       }
     },
     accept: {
-      'application/pdf': ['.pdf'],
-      'application/vnd.openxmlformats-officedocument.wordprocessingml.document': ['.docx']
+      'application/pdf': ['.pdf']
     },
     maxFiles: 1
   });
@@ -39,7 +38,7 @@ export default function ResumeUploadZone({ onFileSelect, selectedFile }) {
           <p className="upload-text">
             {isDragActive ? "Drop resume here..." : "Drag & drop resume here, or click to select"}
           </p>
-          <p className="upload-hint">Supports PDF and DOCX</p>
+          <p className="upload-hint">PDF only</p>
         </div>
       )}
     </div>
