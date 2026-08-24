@@ -13,7 +13,7 @@ app = FastAPI(title="Reading Path & Academic Graph API")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://paper-trail-k7cp.vercel.app/"],
+    allow_origins=["https://paper-trail-k7cp.vercel.app"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
