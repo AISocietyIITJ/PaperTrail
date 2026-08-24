@@ -32,7 +32,7 @@ paths:
   graph_path: "data/processed/graph.gpickle"
 
 neo4j:
-  uri: "neo4j://127.0.0.1:7687"
-  user: "neo4j"
-  password: "12345678"  
+  uri: "neo4j+s://ad728d35.databases.neo4j.io"
+  user: "ad728d35"
+  password: "p1BdvlyZNHH0I2eUzHts4tiJXS56Raz-8vuNY3Fvh6w"  
 

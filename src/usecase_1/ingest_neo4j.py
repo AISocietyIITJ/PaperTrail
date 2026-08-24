@@ -4,6 +4,7 @@ import numpy as np
 import pandas as pd
 import yaml
 from neo4j import GraphDatabase
+from src.config import AURA_URI, AURA_USER, AURA_PASSWORD
 
 def load_config(config_path="config.yaml"):
     with open(config_path, "r", encoding="utf-8") as f:
@@ -11,7 +12,10 @@ def load_config(config_path="config.yaml"):
 
 def ingest_to_neo4j(config_path="config.yaml"):
     config = load_config(config_path)
-    neo_conf = config["neo4j"]
+    neo_conf = config.get("neo4j", {})
+    uri = AURA_URI or neo_conf.get("uri")
+    user = AURA_USER or neo_conf.get("user")
+    password = AURA_PASSWORD or neo_conf.get("password")
     
     # Load Local Processed Artifacts
     interim_path = config["paths"]["interim_data"]
@@ -21,7 +25,8 @@ def ingest_to_neo4j(config_path="config.yaml"):
     df_papers = pd.read_parquet(interim_path)
     df_edges = pd.read_parquet(directed_path)
 
-    driver = GraphDatabase.driver(neo_conf["uri"], auth=(neo_conf["user"], neo_conf["password"]))
+    print(f"Connecting to Neo4j AuraDB ({uri})...")
+    driver = GraphDatabase.driver(uri, auth=(user, password))
 
     with driver.session() as session:
         print("Setting up Neo4j constraints and Vector Index...")

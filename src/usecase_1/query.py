@@ -3,8 +3,7 @@ import pandas as pd
 from neo4j import GraphDatabase
 from sentence_transformers import SentenceTransformer
 from pinecone import Pinecone
-from src.config import PINECONE_API_KEY
-import yaml
+from src.config import PINECONE_API_KEY, AURA_URI, AURA_USER, AURA_PASSWORD
 
 _embedding_model = None
 
@@ -12,8 +11,12 @@ def load_neo4j_driver(config_path="config.yaml"):
     global _embedding_model
     with open(config_path, "r", encoding="utf-8") as f:
         config = yaml.safe_load(f)
-    neo_conf = config["neo4j"]
-    driver = GraphDatabase.driver(neo_conf["uri"], auth=(neo_conf["user"], neo_conf["password"]))
+    neo_conf = config.get("neo4j", {})
+    uri = AURA_URI or neo_conf.get("uri")
+    user = AURA_USER or neo_conf.get("user")
+    password = AURA_PASSWORD or neo_conf.get("password")
+    
+    driver = GraphDatabase.driver(uri, auth=(user, password))
     
     if _embedding_model is None:
         model_name = config["embedding"]["model_name"]
