@@ -1,0 +1,38 @@
+#usecase-1
+domain:
+  category_codes: []   # Empty list removes category restrictions to search any topic across all sciences
+  keyword: null        # No keyword limit
+  max_papers: null     # Set to null for unrestricted processing across all 287k papers
+
+embedding:
+  model_name: "allenai/specter2_base"
+  adapter_name: "allenai/specter2" # Proximity adapter
+  batch_size: 256                  # Scaled for NVIDIA GeForce RTX 4060 GPU (8GB VRAM)
+  pinecone_index: "papertrail-papers"
+  pinecone_dimension: 768
+
+candidate_edges:
+  top_k: 15                   # Nearest neighbors per paper via FAISS inner product
+  similarity_threshold: 0.55  # Cosine similarity threshold for link candidate generation
+
+direction:
+  temporal_gap_days: 365      # Day gap required before chronological ordering overrides vocabulary generality
+  generality_epsilon: 0.15    # Minimum difference in TF-IDF average IDF score required for directionality
+  tfidf_max_features: 5000    # Vocabulary term limit for TF-IDF generality scoring
+
+query:
+  max_hops: 4                 # Maximum prerequisite ancestor layers to include in topological reading path
+  top_n_targets: 1            # Number of focal target papers matched by query prompt
+
+paths:
+  raw_data: "data/raw/arXiv_scientific_dataset.csv"
+  interim_data: "data/interim/domain_filtered.parquet"
+  candidate_edges: "data/processed/edges_candidate.parquet"
+  directed_edges: "data/processed/edges_directed.parquet"
+  graph_path: "data/processed/graph.gpickle"
+
+neo4j:
+  uri: "neo4j+s://ad728d35.databases.neo4j.io"
+  user: "ad728d35"
+  password: "p1BdvlyZNHH0I2eUzHts4tiJXS56Raz-8vuNY3Fvh6w"  
+
