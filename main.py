@@ -38,8 +38,7 @@ def get_reading_path(query: str, config_path="config.yaml"):
 
     config, driver, model = load_neo4j_driver(config_path)
     try:
-        path = generate_path_neo4j(query, driver, model, max_hops=config["query"]["max_hops"])
-        return path.to_dict(orient="records")
+        return generate_path_neo4j(query, driver, model, max_hops=config["query"]["max_hops"])
     finally:
         driver.close()
 
@@ -115,8 +114,6 @@ def recommend_papers(query: str, top_n: int = 5, config_path="config.yaml"):
     if top_n < 1:
         raise ValueError("top_n must be at least 1")
 
-    
-
     with open(config_path, "r", encoding="utf-8") as f:
         config = yaml.safe_load(f)
         
@@ -129,32 +126,49 @@ def recommend_papers(query: str, top_n: int = 5, config_path="config.yaml"):
         _main_embedding_model = SentenceTransformer(model_name)
     query_vector = _main_embedding_model.encode([query], normalize_embeddings=True)[0].tolist()
 
-    print(f"Querying top {top_n} recommendations from Pinecone index '{pinecone_index}'...")
+    print(f"Querying top recommendations from Pinecone index '{pinecone_index}'...")
     pc = Pinecone(api_key=PINECONE_API_KEY)
     index = pc.Index(pinecone_index)
     
-    # Query pinecone and fetch metadata
-    # The vectors in Pinecone were ingested by usecase 1, but wait!
-    # In usecase 1, we ONLY pushed vectors, not metadata!
-    # Wait, earlier I discovered that `search_res.matches[0].id` is the `node_idx`.
-    # Let's just fetch the matches, get their IDs, and look up the paper titles in the parquet file!
-    search_res = index.query(vector=query_vector, top_k=top_n, include_metadata=False)
+    # Query pinecone with candidate buffer to account for missing/filtered nodes
+    fetch_k = max(top_n * 3, 20)
+    search_res = index.query(vector=query_vector, top_k=fetch_k, include_metadata=False)
     
-    df_papers = pd.read_parquet(config["paths"]["interim_data"])
+    interim_path = config["paths"]["interim_data"]
+    if not os.path.exists(interim_path):
+        return []
+
+    df_papers = pd.read_parquet(interim_path)
     
     results = []
     for match in search_res.matches:
-        node_idx = int(match.id)
-        # Look up paper info in df
-        paper_info = df_papers[df_papers["node_idx"] == node_idx].iloc[0]
+        try:
+            node_idx = int(match.id)
+        except ValueError:
+            continue
+
+        matched_df = df_papers[df_papers["node_idx"] == node_idx]
+        if matched_df.empty:
+            continue
+
+        paper_info = matched_df.iloc[0]
+        pub_date = str(paper_info.get("published_date", ""))
+        if "T" in pub_date:
+            pub_date = pub_date.split("T")[0]
+        elif " " in pub_date:
+            pub_date = pub_date.split(" ")[0]
+
         results.append({
-            "score": match.score,
-            "title": paper_info["title"],
-            "published_date": paper_info["published_date"],
-            "abstract": paper_info["abstract"],
-            "arxiv_id": str(paper_info.get("arxiv_base_id", ""))
+            "score": float(match.score),
+            "title": str(paper_info.get("title", "")),
+            "published_date": pub_date,
+            "abstract": str(paper_info.get("abstract", "")),
+            "arxiv_id": str(paper_info.get("arxiv_base_id", paper_info.get("id", "")))
         })
-        
+
+        if len(results) >= top_n:
+            break
+            
     return results
 
 
@@ -184,10 +198,11 @@ if __name__ == "__main__":
     elif args.query_reading:
         path = get_reading_path(args.query_reading, args.config)
         print(f"\n=================== NEO4J READING PATH FOR: '{args.query_reading}' ===================")
-        if not path:
+        nodes = path.get("nodes", []) if isinstance(path, dict) else (path or [])
+        if not nodes:
             print("No matching path found in domain subgraph.")
         else:
-            for r in path:
+            for r in nodes:
                 print(f"[Hop {r['hop_distance']}] {r['title']} ({r['published_date']})")
         print("===================================================================================\n")
     elif args.run_academic_profiles_setup:

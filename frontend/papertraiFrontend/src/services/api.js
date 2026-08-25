@@ -1,4 +1,4 @@
-const API_BASE = 'http://localhost:8000';
+const API_BASE = 'http://10.36.16.97:8000';
 
 export async function getResearchPath(query, maxHops = 3) {
   const response = await fetch(`${API_BASE}/usecase1/get-reading-path`, {
