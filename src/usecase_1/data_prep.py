@@ -9,7 +9,10 @@ RAW_PATH = "data/raw/arXiv_scientific_dataset.csv"
 
 def load_raw(path=RAW_PATH) -> pd.DataFrame:
     """Load raw dataset and ensure standard column names and parsed dates."""
-    df = pd.read_csv(path, low_memory=False)
+    try:
+        df = pd.read_csv(path, low_memory=False, on_bad_lines="skip")
+    except Exception:
+        df = pd.read_csv(path, engine="python", on_bad_lines="skip")
     
     # Parse dates cleanly without crashing on mixed formats or NAs
     df["published_date"] = pd.to_datetime(df["published_date"], format="mixed", errors="coerce")
