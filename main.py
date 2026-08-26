@@ -23,6 +23,8 @@ from src.usecase_2.utils.get_prof_info import query_graph_db
 from src.usecase_2.utils.vec_query_search import search_vector_db
 from src.usecase_2.utils.parsing_resume import extract_text_from_pdf
 from src.usecase_1.ingest_neo4j import ingest_to_neo4j as ingest_reading_path_to_neo4j
+from src.usecase_3.document_setter import docs_setter
+from src.usecase_3.reranker import return_reranked_docs
 
 def generate_reading_path_pipeline(config_path="config.yaml"):
     """Run the complete data prep and graph building pipeline."""
@@ -131,8 +133,18 @@ def recommend_papers(query: str, top_n: int = 5, config_path="config.yaml"):
     index = pc.Index(pinecone_index)
     
     # Query pinecone with candidate buffer to account for missing/filtered nodes
-    fetch_k = max(top_n * 3, 20)
+    fetch_k = max(top_n * 3, 30)
     search_res = index.query(vector=query_vector, top_k=fetch_k, include_metadata=False)
+
+    final_formatted_docs= [l[1] for l in docs_setter(search_res)]
+    titles=[l[0] for l in docs_setter(search_res)]
+
+    top_n_docs_and_indices= return_reranked_docs(query,final_formatted_docs)
+
+    recommended_docs= top_n_docs_and_indices[1]
+    recommended_doc_indices= top_n_docs_and_indices[0]
+
+    recommended_doc_titles= [titles[i] for i in recommended_doc_indices]
     
     interim_path = config["paths"]["interim_data"]
     if not os.path.exists(interim_path):
