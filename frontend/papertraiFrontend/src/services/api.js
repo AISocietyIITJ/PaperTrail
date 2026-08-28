@@ -36,7 +36,7 @@ export async function getFacultyMatches(resumeFile, interests) {
       ? prof.affiliation.split(' ').map(n => n.charAt(0).toUpperCase() + n.slice(1)).join(' ')
       : "Affiliation Unknown",
     matchScore: Number(prof.rank_score) || 0,
-    summary: `Strongly matches your profile based on shared interests: ${prof.matched_interests ? prof.matched_interests.join(', ') : 'N/A'}. They have an h-index of ${prof.h_index} and ${prof.cited_by} total citations.`,
+    summary: `Strongly matches your profile based on shared interests: ${prof.matched_topics ? prof.matched_topics.map(t => t.topic_name).join(', ') : 'N/A'}. They have an h-index of ${prof.h_index} and ${prof.cited_by} total citations.`,
     evidencePapers: [], // Backend does not return individual evidence papers yet
     profileUrl: prof.profile_url
   }));
