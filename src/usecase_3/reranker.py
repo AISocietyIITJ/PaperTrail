@@ -48,11 +48,11 @@ def return_reranked_docs(query, documents):
 
     pairs = [format_instruction(task, query, doc) for doc in documents]
 
-    # Tokenize the input texts
     inputs = process_inputs(pairs)
     reranked_scores = compute_logits(inputs)
+    print(f"DEBUG: Reranker scores count = {len(reranked_scores)}")
 
-    top_n_indices= np.argsort(~reranked_scores)[:4]
+    top_n_indices= np.argsort(np.array(reranked_scores))[::-1][:5]
 
     top_n_reranked_docs= [documents[i] for i in top_n_indices]
 
