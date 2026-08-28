@@ -25,3 +25,4 @@ AURA_URI = os.getenv("AURA_URI") or os.getenv("NEO4J_URI") or neo_conf.get("uri"
 AURA_USER = os.getenv("AURA_USER") or os.getenv("NEO4J_USER") or neo_conf.get("user", "neo4j")
 AURA_PASSWORD = os.getenv("AURA_PASSWORD") or os.getenv("NEO4J_PASSWORD") or neo_conf.get("password", "")
 OLLAMA_API_KEY = os.getenv("OLLAMA_API_KEY")
+REPHRASING_API_KEY=os.getenv("REPHRASING_API_KEY")
