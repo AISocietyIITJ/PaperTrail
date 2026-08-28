@@ -57,8 +57,11 @@ def get_candidate_edges_pinecone(
         "similarity": sim_vals
     })
 
-    # Filter invalid self-loops and below similarity threshold
-    valid_mask = (edges["node_a"] != edges["node_b"]) & (edges["similarity"] >= sim_threshold)
+    # Filter invalid self-loops, out-of-bounds node indices, and below similarity threshold
+    valid_mask = (edges["node_a"] != edges["node_b"]) & \
+                 (edges["node_a"] >= 0) & (edges["node_a"] < num_nodes) & \
+                 (edges["node_b"] >= 0) & (edges["node_b"] < num_nodes) & \
+                 (edges["similarity"] >= sim_threshold)
     edges = edges[valid_mask].copy()
 
     if edges.empty:

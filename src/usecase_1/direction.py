@@ -43,6 +43,12 @@ def assign_direction(
     texts = (df["title"].fillna("") + " " + df["abstract"].fillna("")).astype(str)
     is_survey = texts.str.contains(r"\bsurvey\b|\breview\b", case=False, regex=True).values
 
+    num_nodes = len(df)
+    valid_bounds = (edges["node_a"] >= 0) & (edges["node_a"] < num_nodes) & \
+                   (edges["node_b"] >= 0) & (edges["node_b"] < num_nodes)
+    if not valid_bounds.all():
+        edges = edges[valid_bounds].reset_index(drop=True)
+
     node_a = edges["node_a"].values.astype(np.int64)
     node_b = edges["node_b"].values.astype(np.int64)
     sim = edges["similarity"].values.astype(np.float32)
