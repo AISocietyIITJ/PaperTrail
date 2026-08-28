@@ -2,17 +2,19 @@ import pandas as pd
 import os
 import re
 
+from src.logger import logger
+ 
 script_dir = os.path.dirname(os.path.abspath(__file__))
 csv_path = os.path.join(script_dir, "../../../data/professor_updated1.csv")
 save_path = os.path.join(script_dir, "../../../data/interests_with_aliases.csv")
-
-
+ 
+ 
 # 1. Clean interest text (remove non-breaking spaces, trailing dots/ellipses)
 def clean_interest(text):
     text = text.replace('\xa0', ' ').strip()
     text = re.sub(r'[\.\…]+$', '', text).strip()
     return text
-
+ 
 # 2. Function to map domain aliases and generate heuristic key phrases
 def generate_aliases(interest):
     clean_text = clean_interest(interest)
@@ -48,7 +50,7 @@ def generate_aliases(interest):
     if low_text in known_mappings:
         for a in known_mappings[low_text]:
             aliases.add(a)
-
+ 
     # Automatic Acronym / Abbreviation Generation (e.g. Computer Vision -> CV)
     words = re.findall(r'\b[A-Za-z0-9]+\b', clean_text)
     if len(words) >= 2 and not clean_text.isupper():
@@ -81,22 +83,24 @@ def generate_aliases(interest):
     if 'energy' in low_text or 'solar' in low_text or 'battery' in low_text or 'fuel' in low_text:
         aliases.add('Clean Energy')
         aliases.add('Renewable Energy Systems')
-
+ 
     # Fallback to research topic phrasing if no alias was derived
     if not aliases:
         aliases.add(f"{clean_text} Research")
         aliases.add(f"{clean_text} Technology")
-
+        logger.debug(f"No known/pattern alias matched for '{clean_text}'; using research-topic fallback.")
+ 
     aliases.discard(clean_text)
     return clean_text, ", ".join(sorted(list(aliases)))
-
-
+ 
+ 
 # 4. Generate Aliases for all entries
 def generate_phrase():
     # 3. Read input CSV and extract unique interests
+    logger.info(f"Loading professor interests from {csv_path}...")
     df = pd.read_csv(csv_path)
     col_name = 'Interests' if 'Interests' in df.columns else 'Interest'
-
+ 
     raw_unique = (
         df[col_name].str.lower()
         .dropna()
@@ -106,19 +110,23 @@ def generate_phrase():
         .loc[lambda x: x != '']
         .unique()
     )
-
+    logger.info(f"Found {len(raw_unique)} unique raw interest phrases. Generating aliases...")
+ 
     results = []
     for item in raw_unique:
         cleaned, alias_str = generate_aliases(item)
         results.append({'Interest': cleaned, 'Aliases': alias_str})
-
+ 
     # 5. Create DataFrame, deduplicate and save to CSV
     df_out = pd.DataFrame(results)
+    before = len(df_out)
     df_out = df_out.drop_duplicates(subset=['Interest']).sort_values(by='Interest').reset_index(drop=True)
-
+    if before != len(df_out):
+        logger.debug(f"Dropped {before - len(df_out)} duplicate interest rows after cleaning.")
+ 
     df_out.to_csv(save_path, index=False)
-    print(f"      [OK] Exported {len(df_out)} rows to interests_with_aliases.csv")
-
-
+    logger.info(f"[OK] Exported {len(df_out)} rows to interests_with_aliases.csv")
+ 
+ 
 if __name__ == "__main__":
     generate_phrase()
