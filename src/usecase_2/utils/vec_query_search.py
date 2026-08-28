@@ -5,8 +5,8 @@ from src.config import PINECONE_API_KEY
 from src.logger import logger
 
 
-INDEX_NAME = "interest-no-alias"
-VECTOR_DIMENSION = 1024
+INDEX_NAME = "interest-granite-125m"
+VECTOR_DIMENSION = 768  
 
 
 _embedding_model = None
@@ -14,9 +14,9 @@ _embedding_model = None
 def user_query_to_embd(text: str):
     global _embedding_model
     if _embedding_model is None:
-        logger.info("Loading SentenceTransformer model: Qwen/Qwen3-Embedding-0.6B")
+        logger.info("Loading SentenceTransformer model: ibm-granite/granite-embedding-125m-english")
         try:
-            _embedding_model = SentenceTransformer("Qwen/Qwen3-Embedding-0.6B")
+            _embedding_model = SentenceTransformer("ibm-granite/granite-embedding-125m-english")
         except Exception:
             logger.exception("Failed to load embedding model")
             raise
