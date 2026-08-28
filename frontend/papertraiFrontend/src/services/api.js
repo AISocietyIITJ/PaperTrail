@@ -16,22 +16,13 @@ export async function getFacultyMatches(resumeFile, interests) {
   body.append('query', queryStr);
   if (resumeFile) body.append('resume', resumeFile);
 
-  const body = new FormData();
-  body.append('query', queryStr);
-  if (resumeFile) body.append('resume', resumeFile);
-
   const response = await fetch(`${API_BASE}/usecase2/find-academic-profiles`, {
     method: 'POST',
-    body
     body
   });
   if (!response.ok) throw new Error('Failed to fetch faculty matches');
   const data = await response.json();
 
-  const professors = [...(data.professors || [])].sort(
-    (firstProfessor, secondProfessor) =>
-      (Number(secondProfessor.rank_score) || 0) - (Number(firstProfessor.rank_score) || 0)
-  );
   const professors = [...(data.professors || [])].sort(
     (firstProfessor, secondProfessor) =>
       (Number(secondProfessor.rank_score) || 0) - (Number(firstProfessor.rank_score) || 0)
