@@ -1,478 +1,3268 @@
-Interest,Aliases,vector_id
-2d materials,"2M, Advanced Materials, Materials Science",interest_0
-2d-polymers,2P,interest_1
-3d computer vision,"3CV, 3D Perception, 3D Scene Reconstruction, 3D Vision, Image Analysis, Point Clouds, Stereo Vision, Visual Recognition",interest_2
-3d shape analysis,"3D Geometric Modeling, 3D Mesh Processing, 3SA, Point Cloud Analysis, Shape Descriptors",interest_3
-5g and beyond,"5B, 5G Communications, 6G Networks, B5G, Next-Gen Wireless",interest_4
-6g,"6G Wireless, Next-Gen Networks, Terahertz Communications",interest_5
-additive manufacturing,"3D Printing, AM, Direct Energy Deposition, Laser Powder Bed Fusion, Rapid Prototyping",interest_6
-advanced steel design,ASD,interest_7
-agricultural transformation,AT,interest_8
-ai and stem,"AS, Artificial Intelligence, Machine Intelligence",interest_9
-ai/ml accelerator,"AI Chips, AMA, Artificial Intelligence, Edge AI Hardware, Hardware Accelerators, Machine Intelligence, NPU, TPU",interest_10
-air pollution,"AP, Aerosol Dynamics, Air Quality Monitoring, Artificial Intelligence, Emission Control, Machine Intelligence, Particulate Matter",interest_11
-alloy design,AD,interest_12
-alternative construction,AC,interest_13
-amorphous solids,AS,interest_14
-amyloids,"amyloids Research, amyloids Technology",interest_15
-analysis of partial differential equations,APDE,interest_16
-and simulation,"and simulation Research, and simulation Technology",interest_17
-and transnational history,TH,interest_18
-antenna design,"AD, Electromagnetic Radiators, Microstrip Antennas, Phased Array, RF Antennas",interest_19
-anticancer nanotechnology,"AN, Nanoscale Science, Nanotechnology",interest_20
-applied econometrics,AE,interest_21
-applied economics,AE,interest_22
-applied ethics,AE,interest_23
-applied game theory,AGT,interest_24
-applied mathematics,AM,interest_25
-applied operations research,AOR,interest_26
-appropriate technology,AT,interest_27
-approximation algorithms,AA,interest_28
-aqueous binary mixtures,ABM,interest_29
-astronomy,"astronomy Research, astronomy Technology",interest_30
-atmospheric modeling,AM,interest_31
-atom probe tomography,APT,interest_32
-bias mitigation,BM,interest_33
-bim,"3D CAD Modeling, Building Information Modeling, Digital Twin in Construction",interest_34
-bioelectronics,"Biochips, Biomedical Engineering, Biosensors, Biotechnology, Electrophysiology Devices, Implantable Electronics",interest_35
-bioenergy and biofuels,"BB, Biomedical Engineering, Biotechnology, Clean Energy, Renewable Energy Systems",interest_36
-biofilms,"Biomedical Engineering, Biotechnology",interest_37
-biofuels etc,"BE, Biomedical Engineering, Biotechnology, Clean Energy, Renewable Energy Systems",interest_38
-biomaterials,"Advanced Materials, Biomedical Engineering, Biotechnology, Materials Science",interest_39
-biometrics,"Behavioral Biometrics, Biomedical Engineering, Biotechnology, Facial Recognition, Fingerprint Verification, Iris Scanning",interest_40
-biomicrofluidics,"Biomedical Engineering, Biotechnology",interest_41
-biophotonics,"Biomedical Engineering, Biotechnology",interest_42
-brain-computer interface,"Artificial Intelligence, BCI, EEG Decoding, Machine Intelligence, Neural Interface, Neuromodulation",interest_43
-bridge engineering,BE,interest_44
-business communities,BC,interest_45
-cancer,"cancer Research, cancer Technology",interest_46
-carbon capture,CC,interest_47
-cardiovascular biology,"Biomedical Engineering, Biotechnology, CB",interest_48
-catalysis,"catalysis Research, catalysis Technology",interest_49
-cfd,"Computational Fluid Dynamics, Fluid Flow Simulation, Navier-Stokes Solvers",interest_50
-cfd with lattice boltzmann method,CLBM,interest_51
-characterization techninques,CT,interest_52
-chemical engineering,CE,interest_53
-childhood,"childhood Research, childhood Technology",interest_54
-clean technologies,CT,interest_55
-climate change,CC,interest_56
-coatings,"coatings Research, coatings Technology",interest_57
-cognitive neuroscience,CN,interest_58
-colloids & interfaces,CI,interest_59
-combinatorics,"combinatorics Research, combinatorics Technology",interest_60
-communication networking,"CN, Telecommunications, Wireless Systems",interest_61
-composite structures,CS,interest_62
-composites,"composites Research, composites Technology",interest_63
-composites manufacturing,CM,interest_64
-compressible flows,CF,interest_65
-computational chemistry for soft and bio,"Biomedical Engineering, Biotechnology, CCSB",interest_66
-computational fluid dynamics,CFD,interest_67
-computational geometry,CG,interest_68
-computational mechanics,CM,interest_69
-computational neuroscience,CN,interest_70
-computational polymer science,CPS,interest_71
-computer architecture,CA,interest_72
-computer haptics,CH,interest_73
-computer networks,"CN, Telecommunications, Wireless Systems",interest_74
-computer vision,"CNNs, CV, Image Analysis, Image Recognition, Object Detection, Visual Perception, Visual Recognition",interest_75
-connected and autonomous vehicles,CAV,interest_76
-consumer rights,CR,interest_77
-continual learning,"Artificial Intelligence, CL, Machine Intelligence",interest_78
-control of power converters,"Autonomous Systems, CPC, Robotics & Automation",interest_79
-control theory,"Autonomous Systems, CT, Robotics & Automation",interest_80
-corrosion analysis,CA,interest_81
-covalent organic frameworks,COF,interest_82
-critical digital studies,CDS,interest_83
-crystal plasticity simulations,CPS,interest_84
-crystallography,"crystallography Research, crystallography Technology",interest_85
-cultural studies,CS,interest_86
-cyber-physical systems,CPS,interest_87
-damage mechanics,DM,interest_88
-decision making,DM,interest_89
-deep learning,"Artificial Intelligence, Convolutional Networks, DL, Deep Neural Networks, Machine Intelligence, Representation Learning, Transformers",interest_90
-deformation mechanisms,DM,interest_91
-design education,DE,interest_92
-design methods,DM,interest_93
-design research,DR,interest_94
-design science,DS,interest_95
-dft,"dft Research, dft Technology",interest_96
-digital geometry processing,DGP,interest_97
-digital twin,DT,interest_98
-discrete element method,DEM,interest_99
-distributed algorithms,DA,interest_100
-drug designing,DD,interest_101
-dynamic traffic,DT,interest_102
-dynamical systems,DS,interest_103
-dynamics and control,"Autonomous Systems, DC, Robotics & Automation",interest_104
-earthquake engineering,EE,interest_105
-edge ai,"Artificial Intelligence, EA, Edge Computing, Edge Inference, Machine Intelligence, On-Device AI, TinyML",interest_106
-education,"education Research, education Technology",interest_107
-educational technology,ET,interest_108
-ejector flows,EF,interest_109
-electric vehicles,EV,interest_110
-electrical engineering,EE,interest_111
-electrocatalysis,"electrocatalysis Research, electrocatalysis Technology",interest_112
-electrochemistry,"electrochemistry Research, electrochemistry Technology",interest_113
-electrochromic material,"Advanced Materials, EM, Materials Science",interest_114
-electron microscopy,EM,interest_115
-electronic cooling,EC,interest_116
-emat,"emat Research, emat Technology",interest_117
-emerging memories,EM,interest_118
-emotional design,ED,interest_119
-energy,"Clean Energy, Renewable Energy Systems",interest_120
-energy conversion,"Clean Energy, EC, Renewable Energy Systems",interest_121
-energy geomechanics,"Clean Energy, EG, Renewable Energy Systems",interest_122
-energy infrastructure,"Clean Energy, EI, Renewable Energy Systems",interest_123
-energy materials,"Advanced Materials, Clean Energy, EM, Materials Science, Renewable Energy Systems",interest_124
-energy materials for,"Advanced Materials, Clean Energy, EM, Materials Science, Renewable Energy Systems",interest_125
-energy policy,"Clean Energy, EP, Renewable Energy Systems",interest_126
-energy storage,"Clean Energy, ES, Renewable Energy Systems",interest_127
-energy storage devices,"Clean Energy, ESD, Renewable Energy Systems",interest_128
-energy technology,"Clean Energy, ET, Renewable Energy Systems",interest_129
-engineering geology,EG,interest_130
-entrepreneurship-as-practice,EAP,interest_131
-environment,"environment Research, environment Technology",interest_132
-environmental biotechnology &,"Biomedical Engineering, Biotechnology, EB",interest_133
-environmental economics,EE,interest_134
-enzyme chemistry,EC,interest_135
-ethnic entp,EE,interest_136
-evs,"evs Research, evs Technology",interest_137
-experimental geotechnics,EG,interest_138
-experimental phy chem,EPC,interest_139
-explainable & generalization ai,"Artificial Intelligence, EGA, Machine Intelligence",interest_140
-extended reality,ER,interest_141
-extremal problems,EP,interest_142
-extremum seeking control,"Autonomous Systems, ESC, Robotics & Automation",interest_143
-fabrication,"fabrication Research, fabrication Technology",interest_144
-face recognition,FR,interest_145
-fatigue & impact,FI,interest_146
-ferrites,"ferrites Research, ferrites Technology",interest_147
-few-shot / zero-shot learning,"Artificial Intelligence, FSZSL, Machine Intelligence",interest_148
-finite frame theory and its application to,FFTIA,interest_149
-firm dynamics,FD,interest_150
-flapping wing aerodynamics,FWA,interest_151
-flexible & printed electronics,FPE,interest_152
-flexible sensors,FS,interest_153
-flim/fcs,FF,interest_154
-fluid dynamics,FD,interest_155
-fluid-structure interaction,FSI,interest_156
-fluidic,"fluidic Research, fluidic Technology",interest_157
-fluorescence spectroscopy,FS,interest_158
-form studies,FS,interest_159
-free-energy simulations,"Clean Energy, FES, Renewable Energy Systems",interest_160
-frugal design,FD,interest_161
-fso,"fso Research, fso Technology",interest_162
-functional,"functional Research, functional Technology",interest_163
-functional material- nitride & oxide,"Advanced Materials, FMNO, Materials Science",interest_164
-functional organic materials,"Advanced Materials, FOM, Materials Science",interest_165
-fundamental science,FS,interest_166
-gender,"gender Research, gender Technology",interest_167
-geosynthetics,"geosynthetics Research, geosynthetics Technology",interest_168
-geotechnical engineering,GE,interest_169
-gerontology,"gerontology Research, gerontology Technology",interest_170
-global value chains,"Artificial Intelligence, GVC, Machine Intelligence",interest_171
-gmpe,"gmpe Research, gmpe Technology",interest_172
-graph colorings,GC,interest_173
-graph theory,GT,interest_174
-graphene,"graphene Research, graphene Technology",interest_175
-grasping,"grasping Research, grasping Technology",interest_176
-green energy,"Clean Energy, GE, Renewable Energy Systems",interest_177
-green hydrgen,GH,interest_178
-green hydrogen,GH,interest_179
-green transition,GT,interest_180
-growth-defect-diffusionoxide,GDD,interest_181
-halide perovskites,HP,interest_182
-haptics,"haptics Research, haptics Technology",interest_183
-hardware design,HD,interest_184
-heat and mass transfer,HMT,interest_185
-heat transfer,HT,interest_186
-heat transfer in enclosures,HTE,interest_187
-high entropy alloys,HEA,interest_188
-high temperature alloys,HTA,interest_189
-higher education policies,HEP,interest_190
-history of mathematics,HM,interest_191
-human haptics,HH,interest_192
-human-computer interaction,HCI,interest_193
-hybrid sensors,HS,interest_194
-hydrodynamics,"hydrodynamics Research, hydrodynamics Technology",interest_195
-hydrology,"hydrology Research, hydrology Technology",interest_196
-ice calibration & testing,ICT,interest_197
-image and video coding,"IVC, Image Analysis, Visual Recognition",interest_198
-image processing,"DIP, Digital Image Processing, IP, Image Analysis, Image Enhancement, Segmentation, Visual Recognition",interest_199
-impact on crops and human health,IOCHH,interest_200
-in-plane thz photonics,PTP,interest_201
-inclusive design,ID,interest_202
-india's northeast focus on manipur,ISNFOM,interest_203
-indian modernity,IM,interest_204
-indian philosophy,IP,interest_205
-inhibitory control,"Autonomous Systems, IC, Robotics & Automation",interest_206
-inorganic physical chemistry,IPC,interest_207
-intellectual property,IP,interest_208
-interaction design,ID,interest_209
-international trade,IT,interest_210
-internet,"internet Research, internet Technology",interest_211
-interpretability,"interpretability Research, interpretability Technology",interest_212
-intertial sensors and analytical,ISA,interest_213
-ionic solvents,IS,interest_214
-joining of ceramics,JC,interest_215
-just migration,JM,interest_216
-labour,"labour Research, labour Technology",interest_217
-langauge models,LM,interest_218
-laser diagnostics,LD,interest_219
-laser materials processing,"Advanced Materials, LMP, Materials Science",interest_220
-laser sintering,LS,interest_221
-lca,"lca Research, lca Technology",interest_222
-learning analytics,"Artificial Intelligence, LA, Machine Intelligence",interest_223
-legged robots,"Autonomous Systems, LR, Robotics & Automation",interest_224
-lie group application,LGA,interest_225
-life cycle assessment,"Cradle-to-Grave Analysis, Environmental Impact Assessment, LCA",interest_226
-liquid crystals,LC,interest_227
-liquid-liquid phase separation,LLPS,interest_228
-local governance,LG,interest_229
-machine learning,"Artificial Intelligence, ML, Machine Intelligence, Pattern Recognition, Predictive Modeling, Statistical Learning, Supervised Learning",interest_230
-machine learning augmented compact,"Artificial Intelligence, MLAC, Machine Intelligence",interest_231
-macroeconomic interactions,MI,interest_232
-macroeconomic theory and policy,MTP,interest_233
-macroeconomics,"macroeconomics Research, macroeconomics Technology",interest_234
-manipulation,"manipulation Research, manipulation Technology",interest_235
-manufacturing,"manufacturing Research, manufacturing Technology",interest_236
-manuscriptology,"manuscriptology Research, manuscriptology Technology",interest_237
-marketing/branding,MB,interest_238
-materials design,"Advanced Materials, MD, Materials Science",interest_239
-materials processing,"Advanced Materials, MP, Materials Science",interest_240
-materials science,"Advanced Materials, MS, Materials Science",interest_241
-mathematical analysis,MA,interest_242
-mathematical optimization,MO,interest_243
-mathematical physics,MP,interest_244
-max phase,MP,interest_245
-md,"md Research, md Technology",interest_246
-mechanisms,"mechanisms Research, mechanisms Technology",interest_247
-mechatronics,"mechatronics Research, mechatronics Technology",interest_248
-media studies,MS,interest_249
-medical technologies,MT,interest_250
-medicinal chemistry,MC,interest_251
-memristor,"memristor Research, memristor Technology",interest_252
-mems and micro-fluidics,MMF,interest_253
-mental health,MH,interest_254
-metamaterials,"Advanced Materials, Materials Science",interest_255
-metamaterials & metasurfaces,"Advanced Materials, MM, Materials Science",interest_256
-micro nano technologies,"MNT, Nanoscale Science, Nanotechnology",interest_257
-microelectronics,"microelectronics Research, microelectronics Technology",interest_258
-microfluidics,"microfluidics Research, microfluidics Technology",interest_259
-microgrids,"microgrids Research, microgrids Technology",interest_260
-microsystems,"microsystems Research, microsystems Technology",interest_261
-microwave antennas,MA,interest_262
-modelling,"modelling Research, modelling Technology",interest_263
-mofs,"mofs Research, mofs Technology",interest_264
-molecular cages,MC,interest_265
-molecular electronics,ME,interest_266
-molecular microbiology,"Biomedical Engineering, Biotechnology, MM",interest_267
-molecular pathology of cancers,MPC,interest_268
-molecular simulations,MS,interest_269
-monte-carlo simulations,MCS,interest_270
-moving load analysis,MLA,interest_271
-multifunctional composites,MC,interest_272
-multimedia signal processing,MSP,interest_273
-multiphase flow,MF,interest_274
-multiscale modeling,MM,interest_275
-multiscale modelling,MM,interest_276
-n-heterocyclic carbene catalysis,NHCC,interest_277
-na-ion battery,"Clean Energy, NIB, Renewable Energy Systems",interest_278
-nano materials,"Advanced Materials, Materials Science, NM, Nanoscale Science, Nanotechnology",interest_279
-nano/microelectronics,"NM, Nanoscale Science, Nanotechnology",interest_280
-nanocomposites,"Nanoscale Science, Nanotechnology",interest_281
-nanomaterials,"Advanced Materials, Materials Science, Nanoscale Science, Nanotechnology",interest_282
-nanomedicine,"Nanoscale Science, Nanotechnology",interest_283
-nanophotonics,"Nanoscale Science, Nanotechnology",interest_284
-nanotechnology,"Nanoscale Science, Nanotechnology",interest_285
-natural language processing,NLP,interest_286
-natural molecules,NM,interest_287
-nde,"nde Research, nde Technology",interest_288
-network economics,"NE, Telecommunications, Wireless Systems",interest_289
-networking,"Telecommunications, Wireless Systems",interest_290
-neuro-oncology,NO,interest_291
-neurodegeneration,"neurodegeneration Research, neurodegeneration Technology",interest_292
-neurodegenrative diseases,ND,interest_293
-nir-quantum dots,NQD,interest_294
-non-linear optics,NLO,interest_295
-nonlinear analysis,,interest_296
-nonlinear optics,NO,interest_297
-nonlinear solid mechanics,NSM,interest_298
-nonlinear vibrations,NV,interest_299
-normative ethics,NE,interest_300
-nrr-her-co2rr catalysts,NHCC,interest_301
-numerical and mathematical methods,NMM,interest_302
-numerical modelling in geotechnics,NMG,interest_303
-optics-photonics,OP,interest_304
-optimization,"optimization Research, optimization Technology",interest_305
-organic and flexible electronics,OFE,interest_306
-organic electronics,OE,interest_307
-organic functional material,"Advanced Materials, Materials Science, OFM",interest_308
-organic synthesis,OS,interest_309
-oxide multiferroics,OM,interest_310
-packaging,"packaging Research, packaging Technology",interest_311
-paramaterized complexity,PC,interest_312
-parkinson's disease,PSD,interest_313
-particulate matter,PM,interest_314
-pattern recognition,PR,interest_315
-personalized learning,"Artificial Intelligence, Machine Intelligence, PL",interest_316
-phase field modeling,PFM,interest_317
-phase separation,PS,interest_318
-phase transformations,PT,interest_319
-photochemistry,"photochemistry Research, photochemistry Technology",interest_320
-photonics,"photonics Research, photonics Technology",interest_321
-photoredox catalysis,PC,interest_322
-physical layer security,PLS,interest_323
-physical metallurgy,PM,interest_324
-physics,"physics Research, physics Technology",interest_325
-pile foundations,PF,interest_326
-plant molecular biology,"Biomedical Engineering, Biotechnology, PMB",interest_327
-plasmonics,"plasmonics Research, plasmonics Technology",interest_328
-policy analytics,PA,interest_329
-polymer nanocomposites,"Nanoscale Science, Nanotechnology, PN",interest_330
-polymer physics,PP,interest_331
-polymer science,PS,interest_332
-popular culture,PC,interest_333
-porous materials,"Advanced Materials, Materials Science, PM",interest_334
-porous media,PM,interest_335
-positive psychology,PP,interest_336
-power electronics,PE,interest_337
-power quality improvement,PQI,interest_338
-power system,PS,interest_339
-probabilistic methods,PM,interest_340
-product design,PD,interest_341
-public health,PH,interest_342
-quantum computing,QC,interest_343
-quantum dots,QD,interest_344
-quantum many-body physics,QMBP,interest_345
-radiative cooling,RC,interest_346
-radical reactions,RR,interest_347
-radio localization and sensing,RLS,interest_348
-railway geotechnics,"Artificial Intelligence, Machine Intelligence, RG",interest_349
-regenerative medicine,RM,interest_350
-reliability analysis,RA,interest_351
-reliability theory,RT,interest_352
-renewable energy,"Clean Energy, RE, Renewable Energy Systems",interest_353
-reservoir geomechanics,RG,interest_354
-resistive temperature detectors,RTD,interest_355
-rf circuits,RC,interest_356
-rf mems,RM,interest_357
-riemannian geometry,RG,interest_358
-robotic & automation,"Autonomous Systems, RA, Robotics & Automation",interest_359
-robotics,"Autonomous Systems, Robotics & Automation",interest_360
-rock mechanics,RM,interest_361
-rural development,RD,interest_362
-scientific computations,"Computational Science, HPC, High-Performance Computing, Numerical Analysis, SC",interest_363
-seismic design,SD,interest_364
-semiconductor devices,SD,interest_365
-sensor,"sensor Research, sensor Technology",interest_366
-sensors,"sensors Research, sensors Technology",interest_367
-service operations,SO,interest_368
-several complex variables,SCV,interest_369
-shape control,"Autonomous Systems, Robotics & Automation, SC",interest_370
-shm,"shm Research, shm Technology",interest_371
-shock wave dynamics,SWD,interest_372
-single molecule imaging,SMI,interest_373
-smart grid,SG,interest_374
-smart materials,"Advanced Materials, Materials Science, SM",interest_375
-smfret,"smfret Research, smfret Technology",interest_376
-social justice,SJ,interest_377
-sociology of education,SE,interest_378
-sociology of knowledge,SK,interest_379
-sociology of science,SS,interest_380
-soft active materials,"Advanced Materials, Materials Science, SAM",interest_381
-soft matter physics,SMP,interest_382
-soil dynamics,SD,interest_383
-soil reinforcement,SR,interest_384
-solar cells,"Clean Energy, Renewable Energy Systems, SC",interest_385
-solar desalination,"Clean Energy, Renewable Energy Systems, SD",interest_386
-solar energy,"Clean Energy, Renewable Energy Systems, SE",interest_387
-solid state physics,SSP,interest_388
-solidification,"solidification Research, solidification Technology",interest_389
-solution and solid state magnetic resonance,SSSMR,interest_390
-solvation dynamics,SD,interest_391
-solvent-free organic liquids,SFOL,interest_392
-spark plasma sintering,SPS,interest_393
-sparse optimization,SO,interest_394
-spectral finite element method,SFEM,interest_395
-spectroscopy,"spectroscopy Research, spectroscopy Technology",interest_396
-statistical data analysis,SDA,interest_397
-statistical mechanics,SM,interest_398
-statistical modelling specialist | worked on,SMSWO,interest_399
-statistical physics,SP,interest_400
-stealth materials,"Advanced Materials, Materials Science, SM",interest_401
-strategy-as-practice,SAP,interest_402
-structural biology,"Biomedical Engineering, Biotechnology, SB",interest_403
-structural dynamics,SD,interest_404
-structural equation modelling,SEM,interest_405
-structural fire engineering,SFE,interest_406
-structural health monitoring,SHM,interest_407
-sub-2nm devices,S2D,interest_408
-supersonic mixing enhancement,SME,interest_409
-supramolecular chemistry,SC,interest_410
-surface chemistry,SC,interest_411
-surface coatings,SC,interest_412
-surrogate modelling,SM,interest_413
-sustainability,"Artificial Intelligence, Machine Intelligence",interest_414
-sustainability and civil engineering,"Artificial Intelligence, Machine Intelligence, SCE",interest_415
-sustainable architecture,"Artificial Intelligence, Machine Intelligence, SA",interest_416
-sustainable development,"Artificial Intelligence, Machine Intelligence, SD",interest_417
-syntax,"syntax Research, syntax Technology",interest_418
-synthetic materials chemistry,"Advanced Materials, Materials Science, SMC",interest_419
-synthetic organic chemistry,SOC,interest_420
-system identification,SI,interest_421
-tea,"tea Research, tea Technology",interest_422
-teacher education,TE,interest_423
-technology enhanced learning,"Artificial Intelligence, Machine Intelligence, TEL",interest_424
-terhertz spectroscopy and high harmonic,TSHH,interest_425
-testing and synthesis of reversible circuits,TSRC,interest_426
-theoretical linguistics,TL,interest_427
-theranostic systems,TS,interest_428
-thermal conversion processes,TCP,interest_429
-thermal energy storage,"Clean Energy, Renewable Energy Systems, TES",interest_430
-thermal lattice boltzmann method,TLBM,interest_431
-thermal spray coating,TSC,interest_432
-thermodynamics,"thermodynamics Research, thermodynamics Technology",interest_433
-thermoelectric materials,"Advanced Materials, Materials Science, TM",interest_434
-thermoplastic composites,TC,interest_435
-thin film,TF,interest_436
-thin film stability,TFS,interest_437
-thz communication,"TC, Telecommunications, Wireless Systems",interest_438
-tissue engineering,TE,interest_439
-trace gases,TG,interest_440
-traffic flow theory,TFT,interest_441
-transition metal-catalysis,TMC,interest_442
-transport phenomena,TP,interest_443
-tribal languages of india,TLI,interest_444
-tribology,"tribology Research, tribology Technology",interest_445
-turbomachinery,"turbomachinery Research, turbomachinery Technology",interest_446
-ultra-precision finishing,UPF,interest_447
-ultrafast devices,UD,interest_448
-ultrafast spectroscopy,US,interest_449
-ultrafast spectrosocpy,US,interest_450
-ultrasonic,"ultrasonic Research, ultrasonic Technology",interest_451
-uncertainty quantification,"Artificial Intelligence, Machine Intelligence, UQ",interest_452
-underactuated hands,UH,interest_453
-user experience design,UED,interest_454
-value chain,"Artificial Intelligence, Machine Intelligence, VC",interest_455
-visual culture and narrative systems,VCNS,interest_456
-vlc,"vlc Research, vlc Technology",interest_457
-vlsi circuits and systems,VCS,interest_458
-vr/ar,VA,interest_459
-wams,"wams Research, wams Technology",interest_460
-waste utilization in construction,WUC,interest_461
-waste valorization,WV,interest_462
-water,"water Research, water Technology",interest_463
-water and sanitation,WS,interest_464
-water electrolysers,"Electrochemical Hydrogen, Hydrogen Generation, PEM Electrolysis, WE, Water Splitting",interest_465
-wave propagation,WP,interest_466
-wear & tribology,WT,interest_467
-wearable robots,"Autonomous Systems, Robotics & Automation, WR",interest_468
-welding and joining,WJ,interest_469
-wetting,"wetting Research, wetting Technology",interest_470
-wi-fi,WF,interest_471
-wireless communication and signal,"Telecommunications, WCS, Wireless Systems",interest_472
-wireless power transfer,"Telecommunications, WPT, Wireless Systems",interest_473
-wisdom,"wisdom Research, wisdom Technology",interest_474
-x-ray detectors,XRD,interest_475
-reality and applications of machine learning,"Artificial Intelligence, Machine Intelligence, RAML",interest_476
+Interest,Aliases
+(s)tem-imaging,STI
+2-dimensional materials,"2DM, Advanced Materials, Materials Science"
+2d materials,"2M, Advanced Materials, Materials Science"
+2d-polymers,2P
+3d animation compression,3AC
+3d bioprinting,"3B, Biomedical Engineering, Biotechnology"
+3d computer vision,"3CV, 3D Perception, 3D Scene Reconstruction, 3D Vision, Image Analysis, Point Clouds, Stereo Vision, Visual Recognition"
+3d ic,3I
+3d ics,3I
+3d organoids & on-chip models,3OOCM
+3d printed microfluidics for anti-cancer drugs,3PMACD
+3d printing for osteo-skeletal,3POS
+3d shape analysis,"3D Geometric Modeling, 3D Mesh Processing, 3SA, Point Cloud Analysis, Shape Descriptors"
+5g,"5g Research, 5g Technology"
+5g and beyond,"5B, 5G Communications, 6G Networks, B5G, Next-Gen Wireless"
+5g/6g,56
+6g,"6G Wireless, Next-Gen Networks, Terahertz Communications"
+6g networks,"6N, Telecommunications, Wireless Systems"
+absorbers,"absorbers Research, absorbers Technology"
+absorption,"absorption Research, absorption Technology"
+accretion physics,AP
+acoustics,"acoustics Research, acoustics Technology"
+acoustics and ultrasonics,AU
+active control,"AC, Autonomous Systems, Robotics & Automation"
+active fluids,AF
+active magnetic bearings,AMB
+active soft matter,ASM
+adaptive video streaming,AVS
+additive manufacturing,"3D Printing, AM, Direct Energy Deposition, Laser Powder Bed Fusion, Rapid Prototyping"
+additive manufacturing and machining,AMM
+adhesion,"adhesion Research, adhesion Technology"
+adsolubilization,"adsolubilization Research, adsolubilization Technology"
+adsorption,"adsorption Research, adsorption Technology"
+advanced casting,AC
+advanced control,"AC, Autonomous Systems, Robotics & Automation"
+advanced diesel combustion modes,ADCM
+advanced manufacturing,AM
+advanced manufacturing processes,AMP
+advanced nanomaterials,"AN, Advanced Materials, Materials Science, Nanoscale Science, Nanotechnology"
+advanced oxidation process,AOP
+advanced oxidation processes,AOP
+advanced steel design,ASD
+aerated concrete,AC
+aerial robotics,"AR, Autonomous Systems, Robotics & Automation"
+aerodynamics,"aerodynamics Research, aerodynamics Technology"
+aerogels,"aerogels Research, aerogels Technology"
+aerosol,"aerosol Research, aerosol Technology"
+aerosol chemistry,AC
+aerosol's role in regional climate change,ASRRCC
+aerospace structures,AS
+aerothermodynamics,"aerothermodynamics Research, aerothermodynamics Technology"
+affective computing,AC
+affordable healthcare technologies,AHT
+afterglow phosphor,AP
+agglomeration,"agglomeration Research, agglomeration Technology"
+agi,"agi Research, agi Technology"
+aging,"aging Research, aging Technology"
+agn,"agn Research, agn Technology"
+agricultural adaptations to climate change,AACC
+agricultural economics,AE
+agricultural transformation,AT
+agricultural water management,AWM
+agriculture economics,AE
+agro-geoinformatics,AG
+agronomy,"agronomy Research, agronomy Technology"
+ai,"Artificial Intelligence, Machine Intelligence"
+ai & machine learning,"AML, Artificial Intelligence, Machine Intelligence"
+ai & ml,"AM, Artificial Intelligence, Machine Intelligence"
+ai accelerator architectures,"AAA, Artificial Intelligence, Machine Intelligence"
+ai and machine learning,"AML, Artificial Intelligence, Machine Intelligence"
+ai and stem,"AS, Artificial Intelligence, Machine Intelligence"
+ai application in power system protection &,"AAPSP, Artificial Intelligence, Machine Intelligence"
+ai for social good,"ASG, Artificial Intelligence, Machine Intelligence"
+ai in healthcare,"AH, Artificial Intelligence, Machine Intelligence"
+ai infrastracture,"AI, Artificial Intelligence, Machine Intelligence"
+ai techniques applications for for power,"ATAP, Artificial Intelligence, Machine Intelligence"
+ai/ml,"AM, Artificial Intelligence, Machine Intelligence"
+ai/ml accelerator,"AI Chips, AMA, Artificial Intelligence, Edge AI Hardware, Hardware Accelerators, Machine Intelligence, NPU, TPU"
+ai/ml for cheme,"AMC, Artificial Intelligence, Machine Intelligence"
+ai/ml in manufacturing,"AMM, Artificial Intelligence, Machine Intelligence"
+ai/ml | nanoclusters | batteries | molecular,"AMNBM, Artificial Intelligence, Machine Intelligence, Nanoscale Science, Nanotechnology"
+air and water pollution,"AWP, Artificial Intelligence, Machine Intelligence"
+air conditioning,"AC, Artificial Intelligence, Machine Intelligence"
+air pollution,"AP, Aerosol Dynamics, Air Quality Monitoring, Artificial Intelligence, Emission Control, Machine Intelligence, Particulate Matter"
+air quality,"AQ, Artificial Intelligence, Machine Intelligence"
+algal biofuels & bior,"ABB, Biomedical Engineering, Biotechnology, Clean Energy, Renewable Energy Systems"
+algal biorefinery,"AB, Biomedical Engineering, Biotechnology"
+algal biotechnology,"AB, Biomedical Engineering, Biotechnology"
+algebra,"algebra Research, algebra Technology"
+algebraic combinatorics,"AC, Artificial Intelligence, Machine Intelligence"
+algebraic geometry,"AG, Artificial Intelligence, Machine Intelligence"
+algorithm designing,AD
+algorithm development,AD
+algorithmic bias and fairness,"ABF, Artificial Intelligence, Machine Intelligence"
+algorithms,"algorithms Research, algorithms Technology"
+alkb,"alkb Research, alkb Technology"
+alkbh2,"alkbh2 Research, alkbh2 Technology"
+alkbh3,"alkbh3 Research, alkbh3 Technology"
+all solid-state batteries,ASSB
+alloy design,AD
+alloy development,AD
+alternative construction,AC
+alternative fuel,"AF, Clean Energy, Renewable Energy Systems"
+alternative fuels,"AF, Clean Energy, Renewable Energy Systems"
+alzheimer's and other amyloid diseases,ASOAD
+amorphous and nanocrystalline ma,"ANM, Nanoscale Science, Nanotechnology"
+amorphous solids,AS
+amr,"amr Research, amr Technology"
+amr · ser and metallo-β-lactamase,ASML
+amyloid,"amyloid Research, amyloid Technology"
+amyloids,"amyloids Research, amyloids Technology"
+anaerobic digestion,AD
+analog and rf ic design,ARID
+analog mixed signal integrated circuit design,AMSICD
+analysis of partial differential equations,APDE
+analytic number theory,ANT
+analytical chemistry,AC
+analytical modelling,AM
+analytical photochemistry,AP
+and biomass valorization,"BV, Biomedical Engineering, Biotechnology"
+and computational materials science,"Advanced Materials, CMS, Materials Science"
+and data mining,DM
+and energy systems,"Clean Energy, ES, Renewable Energy Systems"
+and materials chemistry,"Advanced Materials, MC, Materials Science"
+and simulation,"and simulation Research, and simulation Technology"
+and transnational history,TH
+angio-osteo-genesis,AOG
+ann,"ann Research, ann Technology"
+antarctic ozone hole,AOH
+antenna design,"AD, Electromagnetic Radiators, Microstrip Antennas, Phased Array, RF Antennas"
+antennas,"antennas Research, antennas Technology"
+anthropology,"anthropology Research, anthropology Technology"
+anti-cancer compounds,ACC
+antibiotic resistance,"AR, Biomedical Engineering, Biotechnology"
+anticancer nanotechnology,"AN, Nanoscale Science, Nanotechnology"
+antimicrobial ceramics and delivery systems,ACDS
+antimicrobial peptides,AP
+aops,"aops Research, aops Technology"
+aos,"aos Research, aos Technology"
+application of amine polymer,AAP
+applied,"applied Research, applied Technology"
+applied aerodynamics,AA
+applied algorithms,AA
+applied econometrics,AE
+applied economics,AE
+applied ethics,AE
+applied game theory,AGT
+applied geology,AG
+applied mathematics,AM
+applied mechanics,AM
+applied operations research,AOR
+applied statistics,AS
+appropriate technology,AT
+approximate reasoning,AR
+approximation algorithms,AA
+approximation theory,AT
+aquatic ecology,AE
+aqueous binary mixtures,ABM
+array signal processing,ASP
+arsenic fluoride and heavy metal removal,AFHMR
+artifical intelligence,"AI, Artificial Intelligence, Machine Intelligence"
+artificial intellegence,AI
+artificial intelligence,"AI, Artificial Intelligence, Machine Intelligence"
+artificial intelligence & machine learning,"AIML, Artificial Intelligence, Machine Intelligence"
+artificial intelligence and machine learning,"AIML, Artificial Intelligence, Machine Intelligence"
+artificial neural networks and learning,"ANNL, Artificial Intelligence, Machine Intelligence, Telecommunications, Wireless Systems"
+artificial recharge,AR
+asm gan hemt,AGH
+assembly of molecules,AM
+asset pricing,AP
+assistive technologies,AT
+assistive technology,AT
+astronomical image processing,"AIP, Image Analysis, Visual Recognition"
+astronomy,"astronomy Research, astronomy Technology"
+astronomy & astrophysics,AA
+astroparticle physics,AP
+astrophysical transients,AT
+astrophysics,"astrophysics Research, astrophysics Technology"
+asymmetric catalysis,AC
+asymmetric synthesis,AS
+atmospheric chemistry,AC
+atmospheric chemistry and pollution,ACP
+atmospheric emissions,AE
+atmospheric modeling,AM
+atmospheric radiation,AR
+atmospheric science,AS
+atom probe tomography,APT
+atomic and molecular physics,AMP
+atomic physics,AP
+atomistic simulations,AS
+attention,"attention Research, attention Technology"
+augmented reality,AR
+automated planning,AP
+automation,"automation Research, automation Technology"
+automation in condition monitoring,ACM
+automotive engineering,AE
+automotive systems,AS
+autonomous aerospace systems,AAS
+autonomous driving,AD
+autonomous navigations,AN
+autonomous vehicles,AV
+autonomous vehicles/drones,AVD
+autophagy,"autophagy Research, autophagy Technology"
+b2b marketing,BM
+bamboo reinforced concrete,BRC
+batteries,"batteries Research, batteries Technology"
+batteries & supercapacitors,BS
+battery,"Clean Energy, Renewable Energy Systems"
+battery & fuel cell,"BFC, Clean Energy, Renewable Energy Systems"
+battery cooling,"BC, Clean Energy, Renewable Energy Systems"
+battery recycling,"BR, Clean Energy, Renewable Energy Systems"
+bayesian statistics,BS
+bci,"bci Research, bci Technology"
+bci for robot control,"Autonomous Systems, BRC, Robotics & Automation"
+bci in manuf,BM
+beamforming,"beamforming Research, beamforming Technology"
+behavioural finance,BF
+bentonite-chemical interaction,BCI
+bias mitigation,BM
+bifurcation,"bifurcation Research, bifurcation Technology"
+bifurcation theory,BT
+big data,BD
+big data analytics,BDA
+bim,"3D CAD Modeling, Building Information Modeling, Digital Twin in Construction"
+binary mergers+gw emission,BMGE
+bio & gas sensors,"BGS, Biomedical Engineering, Biotechnology"
+bio active molecule,"BAM, Biomedical Engineering, Biotechnology"
+bio energy,"BE, Biomedical Engineering, Biotechnology, Clean Energy, Renewable Energy Systems"
+bio process engineering,"BPE, Biomedical Engineering, Biotechnology"
+bio-chemical sensing,"BCS, Biomedical Engineering, Biotechnology"
+bio-chips,"BC, Biomedical Engineering, Biotechnology"
+bio-crypto system,"BCS, Biomedical Engineering, Biotechnology"
+bio-electricity,"BE, Biomedical Engineering, Biotechnology"
+bio-electrodes,"BE, Biomedical Engineering, Biotechnology"
+bio-energy,"BE, Biomedical Engineering, Biotechnology, Clean Energy, Renewable Energy Systems"
+bio-fluid,"BF, Biomedical Engineering, Biotechnology"
+bio-fluid mechanics,"BFM, Biomedical Engineering, Biotechnology"
+bio-fuel,"BF, Biomedical Engineering, Biotechnology, Clean Energy, Renewable Energy Systems"
+bio-geotechnics,"BG, Biomedical Engineering, Biotechnology"
+bio-geotechnology,"BG, Biomedical Engineering, Biotechnology"
+bio-inorganic chemistry,"BIC, Biomedical Engineering, Biotechnology"
+bio-interfaces and biomaterials,"Advanced Materials, BIB, Biomedical Engineering, Biotechnology, Materials Science"
+bio-material,"Advanced Materials, BM, Biomedical Engineering, Biotechnology, Materials Science"
+bio-materials,"Advanced Materials, BM, Biomedical Engineering, Biotechnology, Materials Science"
+bio-nems/mems,"BNM, Biomedical Engineering, Biotechnology"
+bio-organic,"BO, Biomedical Engineering, Biotechnology"
+bio-sensors,"BS, Biomedical Engineering, Biotechnology"
+bio-signals & image processing,"BSIP, Biomedical Engineering, Biotechnology, Image Analysis, Visual Recognition"
+bioactive and nutraceuticals extraction,"BNE, Biomedical Engineering, Biotechnology"
+biocatalysis,"Biomedical Engineering, Biotechnology"
+biocatalysis and enzyme mechanisms,"BEM, Biomedical Engineering, Biotechnology"
+biochar,"Biomedical Engineering, Biotechnology"
+biochemical eng,"BE, Biomedical Engineering, Biotechnology"
+biochemical engineering,"BE, Biomedical Engineering, Biotechnology"
+biochemical/bioprocess engineering,"BBE, Biomedical Engineering, Biotechnology"
+biochemistry,"Biomedical Engineering, Biotechnology"
+biocomposites,"Biomedical Engineering, Biotechnology"
+biodegradable polymers,"BP, Biomedical Engineering, Biotechnology"
+biodegradation of organics,"BO, Biomedical Engineering, Biotechnology"
+biodiagnostics,"Biomedical Engineering, Biotechnology"
+biodiesel,"Biomedical Engineering, Biotechnology"
+bioelectronics,"Biochips, Biomedical Engineering, Biosensors, Biotechnology, Electrophysiology Devices, Implantable Electronics"
+bioenergy,"Biomedical Engineering, Biotechnology, Clean Energy, Renewable Energy Systems"
+bioenergy and biofuels,"BB, Biomedical Engineering, Biotechnology, Clean Energy, Renewable Energy Systems"
+bioengineering,"Biomedical Engineering, Biotechnology"
+biof,"Biomedical Engineering, Biotechnology"
+biofertilizer,"Biomedical Engineering, Biotechnology"
+biofilms,"Biomedical Engineering, Biotechnology"
+biofluid mechanics,"BM, Biomedical Engineering, Biotechnology"
+biofuel,"Biomedical Engineering, Biotechnology, Clean Energy, Renewable Energy Systems"
+biofuel and enzyme production,"BEP, Biomedical Engineering, Biotechnology, Clean Energy, Renewable Energy Systems"
+biofuel cell,"BC, Biomedical Engineering, Biotechnology, Clean Energy, Renewable Energy Systems"
+biofuels,"Biomedical Engineering, Biotechnology, Clean Energy, Renewable Energy Systems"
+biofuels (gaseous/liquid),"BGL, Biomedical Engineering, Biotechnology, Clean Energy, Renewable Energy Systems"
+biofuels etc,"BE, Biomedical Engineering, Biotechnology, Clean Energy, Renewable Energy Systems"
+biogas,"Biomedical Engineering, Biotechnology"
+biogas technology,"BT, Biomedical Engineering, Biotechnology"
+biohydrogen,"Biomedical Engineering, Biotechnology"
+biohythane,"Biomedical Engineering, Biotechnology"
+bioimaging,"Biomedical Engineering, Biotechnology"
+bioimpedance,"Biomedical Engineering, Biotechnology"
+bioinformatics,"Biomedical Engineering, Biotechnology"
+bioinorganic,"Biomedical Engineering, Biotechnology"
+bioinorganic & biomimetic,"BB, Biomedical Engineering, Biotechnology"
+bioinorganic chemistry,"BC, Biomedical Engineering, Biotechnology"
+bioinstrumentation,"Biomedical Engineering, Biotechnology"
+biological and ecological processes,"BEP, Biomedical Engineering, Biotechnology"
+biological chemistry,"BC, Biomedical Engineering, Biotechnology"
+biological networks,"BN, Biomedical Engineering, Biotechnology, Telecommunications, Wireless Systems"
+biological physics,"BP, Biomedical Engineering, Biotechnology"
+biological wastewater treatment,"BWT, Biomedical Engineering, Biotechnology"
+biology,"Biomedical Engineering, Biotechnology"
+biomacromolecules structure,"BS, Biomedical Engineering, Biotechnology"
+biomass,"Biomedical Engineering, Biotechnology"
+biomass and bioenergy,"BB, Biomedical Engineering, Biotechnology, Clean Energy, Renewable Energy Systems"
+biomass conversion,"BC, Biomedical Engineering, Biotechnology"
+biomass energy,"BE, Biomedical Engineering, Biotechnology, Clean Energy, Renewable Energy Systems"
+biomass pyrolysis,"BP, Biomedical Engineering, Biotechnology"
+biomass transformation,"BT, Biomedical Engineering, Biotechnology"
+biomass valorisation,"BV, Biomedical Engineering, Biotechnology"
+biomaterial,"Advanced Materials, Biomedical Engineering, Biotechnology, Materials Science"
+biomaterials,"Advanced Materials, Biomedical Engineering, Biotechnology, Materials Science"
+biomaterials : nano technology,"Advanced Materials, BNT, Biomedical Engineering, Biotechnology, Materials Science, Nanoscale Science, Nanotechnology"
+biomaterials and tissue,"Advanced Materials, BT, Biomedical Engineering, Biotechnology, Materials Science"
+biomaterials and tissue engineering,"Advanced Materials, BTE, Biomedical Engineering, Biotechnology, Materials Science"
+biomechanics,"Biomedical Engineering, Biotechnology"
+biomechnics,"Biomedical Engineering, Biotechnology"
+biomedical,"Biomedical Engineering, Biotechnology"
+biomedical engineering,"BE, Biomedical Engineering, Biotechnology"
+biomedical fluid flow,"BFF, Biomedical Engineering, Biotechnology"
+biomedical instrumentation,"BI, Biomedical Engineering, Biotechnology"
+biomedical materials and devices,"Advanced Materials, BMD, Biomedical Engineering, Biotechnology, Materials Science"
+biomedical nanotechnology,"BN, Biomedical Engineering, Biotechnology, Nanoscale Science, Nanotechnology"
+biomedical optics,"BO, Biomedical Engineering, Biotechnology"
+biomedical sensors,"BS, Biomedical Engineering, Biotechnology"
+biomedical signal and image processing,"BSIP, Biomedical Engineering, Biotechnology, Image Analysis, Visual Recognition"
+biomedical signal processing,"BSP, Biomedical Engineering, Biotechnology"
+biomedical signal processing & analysis,"BSPA, Biomedical Engineering, Biotechnology"
+biomems,"Biomedical Engineering, Biotechnology"
+biometrics,"Behavioral Biometrics, Biomedical Engineering, Biotechnology, Facial Recognition, Fingerprint Verification, Iris Scanning"
+biomicrofluidics,"Biomedical Engineering, Biotechnology"
+biomimetic design,"BD, Biomedical Engineering, Biotechnology"
+bioorganic and medicinal chemistry,"BMC, Biomedical Engineering, Biotechnology"
+bioorganic chemistry,"BC, Biomedical Engineering, Biotechnology"
+biopharmaceuticals and material design,"Advanced Materials, BMD, Biomedical Engineering, Biotechnology, Materials Science"
+biophotonics,"Biomedical Engineering, Biotechnology"
+biophysics,"Biomedical Engineering, Biotechnology"
+biophysics of collagen,"BC, Biomedical Engineering, Biotechnology"
+biopolymer,"Biomedical Engineering, Biotechnology"
+biopolymers,"Biomedical Engineering, Biotechnology"
+bioprinting,"Biomedical Engineering, Biotechnology"
+bioprocess analytical technology,"BAT, Biomedical Engineering, Biotechnology"
+bioprocess development,"BD, Biomedical Engineering, Biotechnology"
+bioprocess engineering,"BE, Biomedical Engineering, Biotechnology"
+bioprocess modeling and control,"Autonomous Systems, BMC, Biomedical Engineering, Biotechnology, Robotics & Automation"
+bioprocess optimization,"BO, Biomedical Engineering, Biotechnology"
+bioprocessing data analytics,"BDA, Biomedical Engineering, Biotechnology"
+biorefinery,"Biomedical Engineering, Biotechnology"
+biorefinery with carbon capture & waste,"BCCW, Biomedical Engineering, Biotechnology"
+bioremediation,"Biomedical Engineering, Biotechnology"
+biorememdiation,"Biomedical Engineering, Biotechnology"
+biosensing,"Biomedical Engineering, Biotechnology"
+biosensor,"Biomedical Engineering, Biotechnology"
+biosensor and cell and tissue engineering,"BCTE, Biomedical Engineering, Biotechnology"
+biosensors,"Biomedical Engineering, Biotechnology"
+bioseparation,"Biomedical Engineering, Biotechnology"
+biosorption,"Biomedical Engineering, Biotechnology"
+biosurfactants & biopolymers,"BB, Biomedical Engineering, Biotechnology"
+biotechnology,"Biomedical Engineering, Biotechnology"
+biotherapeutics manufacturing,"BM, Biomedical Engineering, Biotechnology"
+biped locomotion,BL
+bituminous binders,BB
+bituminous materials,"Advanced Materials, BM, Materials Science"
+black hole,BH
+black holes,BH
+blast,"blast Research, blast Technology"
+blend,"blend Research, blend Technology"
+blind source separation,BSS
+blockchain,"Artificial Intelligence, Machine Intelligence"
+bluff body flow,BBF
+boiling,"boiling Research, boiling Technology"
+boiling heat transfer,BHT
+bond graph,BG
+bone biology,"BB, Biomedical Engineering, Biotechnology"
+bone remodelling,BR
+boron,"boron Research, boron Technology"
+boundary layer theory,BLT
+brain computer interface,"Artificial Intelligence, BCI, Machine Intelligence"
+brain computer interfaces,"Artificial Intelligence, BCI, Machine Intelligence"
+brain-computer interface,"Artificial Intelligence, BCI, EEG Decoding, Machine Intelligence, Neural Interface, Neuromodulation"
+branding,"branding Research, branding Technology"
+breakwaters,"breakwaters Research, breakwaters Technology"
+bridge engineering,BE
+brillouin light scattering,BLS
+brown carbon,BC
+bsim spice model,BSM
+bubbles,"bubbles Research, bubbles Technology"
+bubbles/drops/particles,BDP
+buckling and postbuckling analysis,BPA
+building materials,"Advanced Materials, BM, Materials Science"
+built environment,BE
+business administration,BA
+business analytics,BA
+business communities,BC
+business management,BM
+business process reengineering & supply,BPRS
+butanol production,BP
+c accounting,CA
+ca/ma storage,CMS
+cad,"cad Research, cad Technology"
+cad cam,CC
+calcium phosphate,CP
+calcium signalling,CS
+cancer,"cancer Research, cancer Technology"
+cancer biology,"Biomedical Engineering, Biotechnology, CB"
+cancer biomarkers,"Biomedical Engineering, Biotechnology, CB"
+cancer gene therapy,CGT
+cancer genomics,CG
+cancer genomics and transcriptomics,CGT
+cancer therapy,CT
+capacitors,"capacitors Research, capacitors Technology"
+capacity building,CB
+capillarity and wetting,CW
+carbohydrate synthesis,CS
+carbon base nano-materials,"Advanced Materials, CBNM, Materials Science, Nanoscale Science, Nanotechnology"
+carbon capture,CC
+carbon dioxide capture and sequestration,CDCS
+carbon dioxide capture and utilization,CDCU
+carbon footprint,CF
+carbon nanotube,"CN, Nanoscale Science, Nanotechnology"
+carbon nanotube reinforced composites,"CNRC, Nanoscale Science, Nanotechnology"
+carbon nanotubes and graph,"CNG, Nanoscale Science, Nanotechnology"
+carbon-dioxide sequestration,CDS
+cardiovascular biology,"Biomedical Engineering, Biotechnology, CB"
+cardiovascular mechanics,CM
+cardiovascular/metabolic diseases,CMD
+casting and welding,CW
+catalysis,"catalysis Research, catalysis Technology"
+catalysis - her oer nrr co2rr lohc,CHONCL
+catalysis at electrified interfaces,CAEI
+catalysis over metal and metal oxide,COMMO
+catalytic membrane reactor,CMR
+catalytic membrane reactors,CMR
+cathodes,"cathodes Research, cathodes Technology"
+cavitation-aided processes,"Artificial Intelligence, CAP, Machine Intelligence"
+ccus,"ccus Research, ccus Technology"
+cell,"cell Research, cell Technology"
+cell and molecular biology,"Biomedical Engineering, Biotechnology, CMB"
+cell biology,"Biomedical Engineering, Biotechnology, CB"
+cell division and chromosome biology,"Biomedical Engineering, Biotechnology, CDCB, Image Analysis, Visual Recognition"
+cellular manufacturing,CM
+cellular networks,"CN, Telecommunications, Wireless Systems"
+cement chemistry and microstructure,CCM
+ceramic gas sensors,CGS
+ceramic membrane,CM
+ceramic shell,CS
+ceramics,"ceramics Research, ceramics Technology"
+ceramics and composites,CC
+ceramics from molecular precursors,CFMP
+cfb combustion and gasification,CCG
+cfd,"Computational Fluid Dynamics, Fluid Flow Simulation, Navier-Stokes Solvers"
+cfd & heat transfer,CHT
+cfd for multiphase f,CMF
+cfd simulation,CS
+cfd with lattice boltzmann method,CLBM
+cfrp,"cfrp Research, cfrp Technology"
+ch activation,CA
+ch functionalization,CF
+channel and fluvial hydraulics,CFH
+channel modelling,CM
+chaperones,"chaperones Research, chaperones Technology"
+characterization,"characterization Research, characterization Technology"
+characterization of materials,"Advanced Materials, CM, Materials Science"
+characterization techninques,CT
+charge storage,CS
+charge-magnetisation dynamics,CMD
+chargers,"chargers Research, chargers Technology"
+chemical,"chemical Research, chemical Technology"
+chemical biology,"Biomedical Engineering, Biotechnology, CB"
+chemical engg,CE
+chemical engineering,CE
+chemical evolution,CE
+chemical kinetics,CK
+chemical physics,CP
+chemical sciences,CS
+chemical sensors,CS
+chemical vapor deposition,CVD
+chemical/bio sensing,"Biomedical Engineering, Biotechnology, CBS"
+chemistry,"chemistry Research, chemistry Technology"
+chemometrics,"chemometrics Research, chemometrics Technology"
+chemosensory system,CS
+childhood,"childhood Research, childhood Technology"
+chiral recognition,CR
+chronic diseases,CD
+chronomedicine,"chronomedicine Research, chronomedicine Technology"
+circadian biology,"Biomedical Engineering, Biotechnology, CB"
+circularly polarized and broadband,CPB
+civil engineering,CE
+clean technologies,CT
+climate,"climate Research, climate Technology"
+climate change,CC
+climate change analysis and applications in,CCAA
+climate change impact,CCI
+climate networks,"CN, Telecommunications, Wireless Systems"
+climate smart agriculture,CSA
+clinical data mining,CDM
+clinical diagnostics,CD
+cloaking,"cloaking Research, cloaking Technology"
+cloud computing,CC
+cloud computing economics,CCE
+cloud resource broker,CRB
+cluster,"cluster Research, cluster Technology"
+cnt,"cnt Research, cnt Technology"
+cnts),"cnts) Research, cnts) Technology"
+co-infection biology sars-cov-2 cancer,"Biomedical Engineering, Biotechnology, CIBSC2C"
+co-ordination chemistry,COC
+co2 based adsorption cooling system,CBACS
+co2 capture & sequestration,CCS
+co2 capture & utilization,CCU
+co2 capture and conversion,CCC
+co2 capture and sequestration,CCS
+co2 capture and utilization,CCU
+co2 reduction,CR
+co2 utilization,CU
+co2 utilization & alternative fuels,"CUAF, Clean Energy, Renewable Energy Systems"
+coastal and ocean engineering,COE
+coastal engineering,CE
+coating,"coating Research, coating Technology"
+coatings,"coatings Research, coatings Technology"
+cobalt-free,CF
+coding theory,CT
+cof,"cof Research, cof Technology"
+cofs,"cofs Research, cofs Technology"
+cognitive neuroscience,CN
+cognitive radio,CR
+cognitive science,CS
+cognitive systems,CS
+coherent control,"Autonomous Systems, CC, Robotics & Automation"
+cold storage,CS
+collective dynamics,CD
+colloid and interface science,CIS
+colloidal self assembly,CSA
+colloids,"colloids Research, colloids Technology"
+colloids & interfaces,CI
+colloids and interface science,CIS
+colloids and nanomaterials,"Advanced Materials, CN, Materials Science, Nanoscale Science, Nanotechnology"
+combinatorial alloy design,CAD
+combinatorics,"combinatorics Research, combinatorics Technology"
+combustion,"combustion Research, combustion Technology"
+combustion & flow diagnostics,CFD
+commercial banking,CB
+communication,"Telecommunications, Wireless Systems"
+communication networking,"CN, Telecommunications, Wireless Systems"
+communication systems,"CS, Telecommunications, Wireless Systems"
+communications,"Telecommunications, Wireless Systems"
+comp. chem,CC
+compact model,CM
+compact modeling,CM
+complex approximation,CA
+complex fluids,CF
+complex fluids rheology,CFR
+complex networks,"CN, Telecommunications, Wireless Systems"
+complex oxides,CO
+complex systems,CS
+complex systems and dynamics,CSD
+complex systems and networks,"CSN, Telecommunications, Wireless Systems"
+complex systems theory,CST
+complex variables and hyperbolic geometry,CVHG
+complexity theory,CT
+compliant mechanisms,CM
+compliant mechanisms and robotic systems,"Autonomous Systems, CMRS, Robotics & Automation"
+composite material,"Advanced Materials, CM, Materials Science"
+composite materials,"Advanced Materials, CM, Materials Science"
+composite nanofibrous materials,"Advanced Materials, CNM, Materials Science, Nanoscale Science, Nanotechnology"
+composite structures,CS
+composites,"composites Research, composites Technology"
+composites and nanomaterials for structural,"Advanced Materials, CNS, Materials Science, Nanoscale Science, Nanotechnology"
+composites manufacturing,CM
+composting,"composting Research, composting Technology"
+compound extremes,CE
+compound semiconductor heterostructures,CSH
+compressed sensing,CS
+compressible flows,CF
+computation intelligence applications,"Artificial Intelligence, CIA, Machine Intelligence"
+computational,"computational Research, computational Technology"
+computational and experimental,CE
+computational and topological fluid,CTF
+computational biology,"Biomedical Engineering, Biotechnology, CB"
+computational biophysics,"Biomedical Engineering, Biotechnology, CB"
+computational cardiology,CC
+computational chemistry,CC
+computational chemistry and biophysics,"Biomedical Engineering, Biotechnology, CCB"
+computational chemistry for soft and bio,"Biomedical Engineering, Biotechnology, CCSB"
+computational crystal plasticity,CCP
+computational finance,CF
+computational fluid dynamics,CFD
+computational fluid dynamics (cfd),CFDC
+computational fluid dynamics and heat,CFDH
+computational geometry,CG
+computational heat transfer and fluid flow,CHTFF
+computational imaging,CI
+computational intelliegnce,CI
+computational intelligence,"Artificial Intelligence, CI, Machine Intelligence"
+computational linguistics,CL
+computational material science,"Advanced Materials, CMS, Materials Science"
+computational materials,"Advanced Materials, CM, Materials Science"
+computational materials science,"Advanced Materials, CMS, Materials Science"
+computational mathematics,CM
+computational mechanics,CM
+computational methods,CM
+computational modelling of multiphasic,CMM
+computational neuroscience,CN
+computational polymer science,CPS
+computational social science,CSS
+computational solid mechanics,CSM
+computational structural mechanics,CSM
+computational thermo-fluids,CTF
+compute-in memory,CM
+compute-in-memory,CM
+computer aided engineering,"Artificial Intelligence, CAE, Machine Intelligence"
+computer aided process and plant design,"Artificial Intelligence, CAPPD, Machine Intelligence"
+computer architecture,CA
+computer haptics,CH
+computer integrated project delivery,CIPD
+computer networks,"CN, Telecommunications, Wireless Systems"
+computer science,CS
+computer science and engineering,CSE
+computer security,CS
+computer simulation,CS
+computer systems and networking,"CSN, Telecommunications, Wireless Systems"
+computer vision,"CNNs, CV, Image Analysis, Image Recognition, Object Detection, Visual Perception, Visual Recognition"
+computer-aided design,"Artificial Intelligence, CAD, Machine Intelligence"
+computing,"computing Research, computing Technology"
+concrete,"concrete Research, concrete Technology"
+concrete durability,CD
+concrete filled tubes,CFT
+concrete technology,CT
+condensation,"condensation Research, condensation Technology"
+condensed matter,CM
+condensed matter physics,CMP
+condensed matter physics (theory),CMPT
+condition assessment,CA
+condition monitoring,CM
+condition monitoring & fault diagnosis of,CMFD
+condition monitoring of mechanical,CMM
+conductive polymers,CP
+confined water,CW
+connected and autonomous vehicles,CAV
+connectives in multivalued logic,CML
+consciousness,"consciousness Research, consciousness Technology"
+conservation of lakes and rivers,CLR
+constitutive modeling and,CM
+construction management,CM
+construction project management,CPM
+consumer behaviour,CB
+consumer rights,CR
+contaminant transport,CT
+contamination,"contamination Research, contamination Technology"
+continual learning,"Artificial Intelligence, CL, Machine Intelligence"
+continuum micromechanics,CM
+control,"Autonomous Systems, Robotics & Automation"
+control application in power systems,"Autonomous Systems, CAPS, Robotics & Automation"
+control of power converters,"Autonomous Systems, CPC, Robotics & Automation"
+control system,"Autonomous Systems, CS, Robotics & Automation"
+control systems,"Autonomous Systems, CS, Robotics & Automation"
+control theory,"Autonomous Systems, CT, Robotics & Automation"
+controlled release,"Autonomous Systems, CR, Robotics & Automation"
+convection  in porous media,CPM
+convection in porous media,CPM
+convection-bifurcation,CB
+convection-energy flow,"CEF, Clean Energy, Renewable Energy Systems"
+convective heat and mass transfer,CHMT
+conventional and non conventional,CNC
+conventional and unconventional machining,CUM
+cooperative and cognitive radio techniques,CCRT
+cooperative c,CC
+cooperative relaying systems,CRS
+coordination chemistry,CC
+coordination clusters,CC
+coordination polymer,CP
+coordination polymers,CP
+copula,"copula Research, copula Technology"
+corossion engineering,CE
+corporate finance,CF
+corporate governance,CG
+correlated electrons,CE
+corrosion,"corrosion Research, corrosion Technology"
+corrosion analysis,CA
+cosmic dawn,CD
+cosmo-rs,CR
+cosmochemistry,"cosmochemistry Research, cosmochemistry Technology"
+cosmology,"cosmology Research, cosmology Technology"
+cost optimisation,CO
+covalent organic frameworks,COF
+co₂ utilization,"co₂ utilization Research, co₂ utilization Technology"
+cps,"cps Research, cps Technology"
+cps-iot & smart environments,CISE
+crash,"crash Research, crash Technology"
+creep,"creep Research, creep Technology"
+critical digital studies,CDS
+critical metals,CM
+crop improvement,CI
+crop modeling and simulation,CMS
+crop modelling,CM
+crop monitoring,CM
+cross-coupling reactions,CCR
+crustal evolution,CE
+cryogenic insulation,CI
+cryogenic transistor modeling,CTM
+cryptography,"cryptography Research, cryptography Technology"
+cryptography and network security,"CNS, Telecommunications, Wireless Systems"
+cryptology,"cryptology Research, cryptology Technology"
+crysophere,"crysophere Research, crysophere Technology"
+crystal engineering,CE
+crystal plasticity,CP
+crystal plasticity simulations,CPS
+crystallographic texture,CT
+crystallography,"crystallography Research, crystallography Technology"
+csi in flexible body motion,CFBM
+cuffless blood pressure,CBP
+cultural studies,CS
+cyber physical systems,CPS
+cyber security,CS
+cyber-physical systems,CPS
+dam break analysis,DBA
+dam engineering,DE
+damage,"damage Research, damage Technology"
+damage mechanics,DM
+data analyis,DA
+data analytics,DA
+data compression,DC
+data driven models,DDM
+data mining,DM
+data mining computer vision,"DMCV, Image Analysis, Visual Recognition"
+data science,DS
+data science and analytics,DSA
+data science and engineering,DSE
+data-driven design,DDD
+database,"database Research, database Technology"
+databases,"databases Research, databases Technology"
+dearomatisation,"dearomatisation Research, dearomatisation Technology"
+debris flows,DF
+decision making,DM
+decision modeling and analytics,DMA
+deep eutectic solvents,DES
+deep learniing,DL
+deep learning,"Artificial Intelligence, Convolutional Networks, DL, Deep Neural Networks, Machine Intelligence, Representation Learning, Transformers"
+deep neural networks,"DNN, Telecommunications, Wireless Systems"
+defect-structure property correlations,DSPC
+deformation,"deformation Research, deformation Technology"
+deformation mechanisms,DM
+delay and fractional differential equations,DFDE
+delay differential equations,DDE
+demand respose,DR
+dense membranes,DM
+density functional theory,DFT
+density-functional theory,DFT
+desalination,"desalination Research, desalination Technology"
+desiccant cooling,DC
+design and analysis,DA
+design and analysis of algorithms,DAA
+design and manufacturing,DM
+design education,DE
+design for additive manufacturing,DAM
+design methods,DM
+design of rolling element bearings for,DREB
+design optimization,DO
+design research,DR
+design science,DS
+desulfurization,"desulfurization Research, desulfurization Technology"
+detector development and instrumentation,DDI
+deuteration,"deuteration Research, deuteration Technology"
+developental biology,"Biomedical Engineering, Biotechnology, DB"
+development economics,DE
+developmental biology,"Biomedical Engineering, Biotechnology, DB"
+device physics,DP
+devices,"devices Research, devices Technology"
+dewetting,"dewetting Research, dewetting Technology"
+dft,"dft Research, dft Technology"
+diagnosis and therapeutics,DT
+diagnostic ultrasound,DU
+diagnostics,"diagnostics Research, diagnostics Technology"
+diamond,"diamond Research, diamond Technology"
+diamond coatings for tec,DCT
+diamondtronics and oxide electronics,DOE
+dielectric resonator antenna,DRA
+dielectric resonator antennas,DRA
+dielectrics,"dielectrics Research, dielectrics Technology"
+differential equations,DE
+diffraction,"diffraction Research, diffraction Technology"
+digital agriculture,DA
+digital communication,"DC, Telecommunications, Wireless Systems"
+digital fabrication,DF
+digital geometry processing,DGP
+digital health,DH
+digital image forensics,"DIF, Image Analysis, Visual Recognition"
+digital image processing,"DIP, Image Analysis, Visual Recognition"
+digital photoelasticity,DP
+digital protection & automation,DPA
+digital signal processing,DSP
+digital soil mapping,DSM
+digital twin,DT
+digital twins,DT
+digital-numerical protection,DNP
+dimond like carbon films,DLCF
+dinsar,"dinsar Research, dinsar Technology"
+diode lasers,DL
+direct air capture,"Artificial Intelligence, DAC, Machine Intelligence"
+direct digital manufacturing,DDM
+direct energy deposition,"Clean Energy, DED, Renewable Energy Systems"
+discrete element method,DEM
+displays,"displays Research, displays Technology"
+distributed algorithms,DA
+distributed computing,DC
+distributed control,"Autonomous Systems, DC, Robotics & Automation"
+distributed generation,DG
+distribution automation,DA
+distribution system improvemen,DSI
+distribution systems,DS
+distribution theory,DT
+distributued algorithm,DA
+dithiocarbamates,"dithiocarbamates Research, dithiocarbamates Technology"
+dmfc,"dmfc Research, dmfc Technology"
+dna alkylation,DA
+dna nanotechnology,"DN, Nanoscale Science, Nanotechnology"
+dna repair,"Artificial Intelligence, DR, Machine Intelligence"
+dna repair and protein engineering,"Artificial Intelligence, DRPE, Machine Intelligence"
+domain adaptation,"Artificial Intelligence, DA, Machine Intelligence"
+domain generalization,"Artificial Intelligence, DG, Machine Intelligence"
+domain specific ai hardware accelerators,"Artificial Intelligence, DSAHA, Machine Intelligence"
+donor acceptor systems,DAS
+downstream processing,DP
+drainage engineering,"Artificial Intelligence, DE, Machine Intelligence"
+driver bahviour,DB
+drives,"drives Research, drives Technology"
+driving behavior,DB
+droplet combustion,DC
+drops,"drops Research, drops Technology"
+drr and adaptation policy strategies,DAPS
+drug,"drug Research, drug Technology"
+drug delivery,DD
+drug design,DD
+drug designing,DD
+drug development,DD
+drug discovery,DD
+drug discovery and cancer immunotherapy,DDCI
+drug formulations,DF
+drug resistance and bioremediation,"Biomedical Engineering, Biotechnology, DRB"
+drug target and discovery,DTD
+drug targets,DT
+dsp techniques in communications,"DTC, Telecommunications, Wireless Systems"
+dsscs and perovskite solar cells,"Clean Energy, DPSC, Renewable Energy Systems"
+dual catalysis,DC
+durability,"durability Research, durability Technology"
+dye,"dye Research, dye Technology"
+dye removal,DR
+dynamic fracture,DF
+dynamic soil properties,DSP
+dynamic system,DS
+dynamic traffic,DT
+dynamic traffic assignment,DTA
+dynamical system theory,DST
+dynamical systems,DS
+dynamics,"dynamics Research, dynamics Technology"
+dynamics and control,"Autonomous Systems, DC, Robotics & Automation"
+e-business,EB
+e-waste,EW
+ear recognition,ER
+early warning systems,EWS
+earth sciences,ES
+earthquake,"earthquake Research, earthquake Technology"
+earthquake early warning,EEW
+earthquake engineering,EE
+ecdm,"ecdm Research, ecdm Technology"
+ecological climatology,EC
+econometrics,"econometrics Research, econometrics Technology"
+economic geography,EG
+economics of information systems,EIS
+edge ai,"Artificial Intelligence, EA, Edge Computing, Edge Inference, Machine Intelligence, On-Device AI, TinyML"
+edge computing,EC
+edge-cloud continuum,ECC
+edm,"edm Research, edm Technology"
+education,"education Research, education Technology"
+education for sustainability,"Artificial Intelligence, ES, Machine Intelligence"
+educational psychology,EP
+educational technology,ET
+eeg,"eeg Research, eeg Technology"
+efficient deep learning,"Artificial Intelligence, EDL, Machine Intelligence"
+ehealth,"ehealth Research, ehealth Technology"
+eia/emp studies,EES
+eis,"eis Research, eis Technology"
+ejector flows,EF
+elastocapillary effect,EE
+elastodynamics,"elastodynamics Research, elastodynamics Technology"
+elastography,"elastography Research, elastography Technology"
+electric vehicles,EV
+electrical and thermal transport,ETT
+electrical engineering,EE
+electrical engineering and energy,"Clean Energy, EEE, Renewable Energy Systems"
+electrical machinery,EM
+electro-a,EA
+electro-and bio-remediation,"Biomedical Engineering, Biotechnology, EBR"
+electroanalytical chemistry,EC
+electrocaloric,"electrocaloric Research, electrocaloric Technology"
+electrocaloric elastocaloric,EE
+electrocatalysis,"electrocatalysis Research, electrocatalysis Technology"
+electrocatalyst for energy systems,"Clean Energy, EES, Renewable Energy Systems"
+electrochemical devices,ED
+electrochemical energy conversion and,"Clean Energy, EEC, Renewable Energy Systems"
+electrochemical energy storage,"Clean Energy, EES, Renewable Energy Systems"
+electrochemical energy systems,"Clean Energy, EES, Renewable Energy Systems"
+electrochemistry,"electrochemistry Research, electrochemistry Technology"
+electrochromic device,ED
+electrochromic devices,ED
+electrochromic material,"Advanced Materials, EM, Materials Science"
+electrochromics,"electrochromics Research, electrochromics Technology"
+electrodeposition,"electrodeposition Research, electrodeposition Technology"
+electrohydrodynamics,"electrohydrodynamics Research, electrohydrodynamics Technology"
+electrokinetic flows,EF
+electromagnetic theory,ET
+electromagnetics,"electromagnetics Research, electromagnetics Technology"
+electromembrane drug delivery phase,EDDP
+electron microscopy,EM
+electronic cooling,EC
+electronic design automation,EDA
+electronic materials,"Advanced Materials, EM, Materials Science"
+electronic materials & devices,"Advanced Materials, EMD, Materials Science"
+electronic packaging,EP
+electronic structure,ES
+electronic waste recycling,EWR
+electronic-skin,ES
+electronics,"electronics Research, electronics Technology"
+electronics cooling,EC
+electrophoresis,"electrophoresis Research, electrophoresis Technology"
+electrospinning,"electrospinning Research, electrospinning Technology"
+electrospun nanofibers,"EN, Nanoscale Science, Nanotechnology"
+ellipsometry,"ellipsometry Research, ellipsometry Technology"
+emat,"emat Research, emat Technology"
+embedded hardware,EH
+embedded systems,ES
+embedded systems for renewable energy sources and storage,"Clean Energy, ESRESS, Renewable Energy Systems"
+embedded systesm for health care,ESHC
+emerging contaminants,EC
+emerging contaminat removal,ECR
+emerging memories,EM
+emissions,"emissions Research, emissions Technology"
+emotional design,ED
+emotions,"emotions Research, emotions Technology"
+empirical macroeconomics,EM
+enantioselective synthesis,ES
+enantioseparation,"enantioseparation Research, enantioseparation Technology"
+end-fire antennas,EFA
+endocrinology,"endocrinology Research, endocrinology Technology"
+energetic oxidizers propalents,EOP
+energy,"Clean Energy, Renewable Energy Systems"
+energy & environment,"Clean Energy, EE, Renewable Energy Systems"
+energy - electrode electrolyte,"Clean Energy, EEE, Renewable Energy Systems"
+energy analysis of,"Clean Energy, EA, Renewable Energy Systems"
+energy and fuels,"Clean Energy, EF, Renewable Energy Systems"
+energy co,"Clean Energy, EC, Renewable Energy Systems"
+energy conversion,"Clean Energy, EC, Renewable Energy Systems"
+energy conversion & storage,"Clean Energy, ECS, Renewable Energy Systems"
+energy conversion and storage,"Clean Energy, ECS, Renewable Energy Systems"
+energy devices,"Clean Energy, ED, Renewable Energy Systems"
+energy efficiency,"Clean Energy, EE, Renewable Energy Systems"
+energy efficient,"Clean Energy, EE, Renewable Energy Systems"
+energy generation,"Clean Energy, EG, Renewable Energy Systems"
+energy generation and storage,"Clean Energy, EGS, Renewable Energy Systems"
+energy geomechanics,"Clean Energy, EG, Renewable Energy Systems"
+energy harvesting,"Clean Energy, EH, Renewable Energy Systems"
+energy harvesting and storage,"Clean Energy, EHS, Renewable Energy Systems"
+energy harvesting based on 2d/hybrid,"Clean Energy, EHBO2H, Renewable Energy Systems"
+energy harvesting system,"Clean Energy, EHS, Renewable Energy Systems"
+energy infrastructure,"Clean Energy, EI, Renewable Energy Systems"
+energy management systems,"Clean Energy, EMS, Renewable Energy Systems"
+energy materials,"Advanced Materials, Clean Energy, EM, Materials Science, Renewable Energy Systems"
+energy materials for,"Advanced Materials, Clean Energy, EM, Materials Science, Renewable Energy Systems"
+energy policy,"Clean Energy, EP, Renewable Energy Systems"
+energy science & engineering,"Clean Energy, ESE, Renewable Energy Systems"
+energy storage,"Clean Energy, ES, Renewable Energy Systems"
+energy storage and,"Clean Energy, ES, Renewable Energy Systems"
+energy storage and conversion materials,"Advanced Materials, Clean Energy, ESCM, Materials Science, Renewable Energy Systems"
+energy storage capacitors,"Clean Energy, ESC, Renewable Energy Systems"
+energy storage devices,"Clean Energy, ESD, Renewable Energy Systems"
+energy storage materials,"Advanced Materials, Clean Energy, ESM, Materials Science, Renewable Energy Systems"
+energy storage/conversion devices,"Clean Energy, ESCD, Renewable Energy Systems"
+energy storage/harvesting,"Clean Energy, ESH, Renewable Energy Systems"
+energy systems,"Clean Energy, ES, Renewable Energy Systems"
+energy technology,"Clean Energy, ET, Renewable Energy Systems"
+engine control,"Autonomous Systems, EC, Robotics & Automation"
+engineering,"engineering Research, engineering Technology"
+engineering (water and waste water treatment,EWWWT
+engineering behaviour of jointed rocks and,EBJR
+engineering geology,EG
+engineering geology and rock mechanics,EGRM
+engineering hydrology,EH
+engineering seismology,ES
+enhanced oil recovery,EOR
+entrepreneurship-as-practice,EAP
+environment,"environment Research, environment Technology"
+environment & health,EH
+environment and development,ED
+environment and economics,EE
+environment and resource economics,ERE
+environment microbiology,"Biomedical Engineering, Biotechnology, EM"
+environmental and water resources,EWR
+environmental bioprocess,"Biomedical Engineering, Biotechnology, EB"
+environmental biotechnology,"Biomedical Engineering, Biotechnology, EB"
+environmental biotechnology &,"Biomedical Engineering, Biotechnology, EB"
+environmental chemistry,EC
+environmental economics,EE
+environmental engineering,EE
+environmental engneering,EE
+environmental flow,EF
+environmental microbiology,"Biomedical Engineering, Biotechnology, EM"
+environmental nanotechnology,"EN, Nanoscale Science, Nanotechnology"
+environmental pollution,EP
+environmental remediation,ER
+environmental science and egg,ESE
+environmental sciences,ES
+environmental sustainability,"Artificial Intelligence, ES, Machine Intelligence"
+enzyme,"enzyme Research, enzyme Technology"
+enzyme and microbial technology,EMT
+enzyme chemistry,EC
+enzyme engineering,EE
+enzymes,"enzymes Research, enzymes Technology"
+epigenetics,"epigenetics Research, epigenetics Technology"
+epitaxial thin films,ETF
+epitaxy,"epitaxy Research, epitaxy Technology"
+ergonomics,"ergonomics Research, ergonomics Technology"
+erosion wear,EW
+estimation theory,ET
+etc,"etc Research, etc Technology"
+ethnic entp,EE
+ev chargers & motors,ECM
+ev integration,EI
+evaporation/condensation of drops,ECD
+evolution,"evolution Research, evolution Technology"
+evolution of multipartite chromosome,EMC
+evolutionary algorithms,EA
+evop,"evop Research, evop Technology"
+evs,"evs Research, evs Technology"
+excited state prototropism,ESP
+exoplanets,"exoplanets Research, exoplanets Technology"
+experimental aerodynamics,EA
+experimental condensed matter physics,ECMP
+experimental fluid dynamics,EFD
+experimental fluid mechanics,EFM
+experimental geotechnics,EG
+experimental high energy physics,"Clean Energy, EHEP, Renewable Energy Systems"
+experimental mechanics,EM
+experimental methods,EM
+experimental phy chem,EPC
+experimental physics,EP
+explainable & generalization ai,"Artificial Intelligence, EGA, Machine Intelligence"
+exposure assessment,EA
+expt and num analyses in manuf,ENAM
+extended reality,ER
+extents of reaction,ER
+extraction separation and recovery of metals,ESRM
+extractive metallurgy,EM
+extremal problems,EP
+extremum seeking control,"Autonomous Systems, ESC, Robotics & Automation"
+fabrication,"fabrication Research, fabrication Technology"
+face recognition,FR
+facility design,FD
+faecal sludge management,FSM
+fame,"fame Research, fame Technology"
+farm machinery,FM
+fast algorithms,FA
+fast radio bursts,FRB
+fatigue,"fatigue Research, fatigue Technology"
+fatigue & fracture mechanics,FFM
+fatigue & impact,FI
+fatigue and fracture,FF
+fault diagnosis,FD
+fault diagnostic and prognostic,FDP
+fault tolerance,FT
+fdi,"fdi Research, fdi Technology"
+fe analysis,FA
+fea,"fea Research, fea Technology"
+fecal sludge and septage management,FSSM
+federated learning,"Artificial Intelligence, FL, Machine Intelligence"
+fem,"fem Research, fem Technology"
+femtosecond pulse shaping,FPS
+ferrites,"ferrites Research, ferrites Technology"
+ferroelectric,"ferroelectric Research, ferroelectric Technology"
+ferroelectric fet,FF
+ferroelectric liquid crystals,FLC
+ferroelectric thin films,FTF
+ferroelectrics,"ferroelectrics Research, ferroelectrics Technology"
+ferroics,"ferroics Research, ferroics Technology"
+ferrous extraction,FE
+fes for stroke & cp children,FSCC
+few-shot / zero-shot learning,"Artificial Intelligence, FSZSL, Machine Intelligence"
+fiber optics,FO
+fiber reinforced,FR
+field emission,FE
+field ion microscopy and atom probe,FIMAP
+film studies,FS
+filt,"filt Research, filt Technology"
+filters,"filters Research, filters Technology"
+finance,"finance Research, finance Technology"
+finance and accounting,FA
+financial cryptography,FC
+financial management,FM
+financial markets,FM
+finite element,FE
+finite element analysis,FEA
+finite element method,FEM
+finite element methods,FEM
+finite element model,FEM
+finite frame theory and its application to,FFTIA
+fire dynamics,FD
+fire structural engineering,FSE
+firm dynamics,FD
+first principles calculations,FPC
+fixed point theory,FPT
+flapping wing aerodynamics,FWA
+flexible & printed electronics,FPE
+flexible devices and sensors,FDS
+flexible electronics,FE
+flexible photodetector,FP
+flexible sensors,FS
+flexible solar,"Clean Energy, FS, Renewable Energy Systems"
+flexoelectricity,"flexoelectricity Research, flexoelectricity Technology"
+flight control,"Autonomous Systems, FC, Robotics & Automation"
+flight dynamics,FD
+flight mechanics,FM
+flim/fcs,FF
+flipped classroom,FC
+flood forecasting using ai/ml,"Artificial Intelligence, FFUAM, Machine Intelligence"
+flood hydrology,FH
+flood risk analysis,FRA
+flouroscense,"flouroscense Research, flouroscense Technology"
+flow instability,FI
+flow measurement,FM
+flow past deformable solid surfaces,FPDSS
+flow through fractured reservoirs  -  eor,FTFRE
+flow through porous media,FTPM
+fluid dynamics,FD
+fluid flow,FF
+fluid machinery,FM
+fluid mechanics,FM
+fluid mechanics and heat transfer,FMHT
+fluid turbulence,FT
+fluid-structure interaction,FSI
+fluidic,"fluidic Research, fluidic Technology"
+fluidization,"fluidization Research, fluidization Technology"
+fluidized bed,FB
+fluidized bed technology,FBT
+fluorescence,"fluorescence Research, fluorescence Technology"
+fluorescence spectroscopy,FS
+fluorinated polymers,FP
+fluorogenic drug delivery,FDD
+fmpe,"fmpe Research, fmpe Technology"
+foam concrete,FC
+focused ion beams,FIB
+fog and edge computing,FEC
+food engineering,FE
+food packaging,FP
+food process engineering,FPE
+food safety,FS
+food science & technology,FST
+food science and technology,FST
+forecasting,"forecasting Research, forecasting Technology"
+forest informatics,FI
+forest management & food laws,FMFL
+form studies,FS
+formal language,FL
+formal methods,FM
+formative assessment,FA
+foundation,"foundation Research, foundation Technology"
+foundation engineering,FE
+fractional calculus,FC
+fractional differential equations,FDE
+fractional order element,FOE
+fracture,"fracture Research, fracture Technology"
+fracture and damage mechanics,FDM
+fracture and fatigue mechanics,FFM
+fracture behaviour,FB
+fracture mechanics,FM
+free-energy simulations,"Clean Energy, FES, Renewable Energy Systems"
+frequency selective surface,FSS
+freshwater macroinvertebrates,FM
+fretting,"fretting Research, fretting Technology"
+friction,"friction Research, friction Technology"
+friction stir processing,FSP
+frp composites,FC
+frugal design,FD
+fsi,"fsi Research, fsi Technology"
+fso,"fso Research, fso Technology"
+fss,"fss Research, fss Technology"
+fsw/fsp,FF
+fuel cell,"Clean Energy, FC, Renewable Energy Systems"
+fuels and chemicals from renewable,"Clean Energy, FCFR, Renewable Energy Systems"
+full-duplex radios,FDR
+functional,"functional Research, functional Technology"
+functional biomaterials,"Advanced Materials, Biomedical Engineering, Biotechnology, FB, Materials Science"
+functional genomics,FG
+functional genomics of rice,FGR
+functional material- nitride & oxide,"Advanced Materials, FMNO, Materials Science"
+functional materials,"Advanced Materials, FM, Materials Science"
+functional organic materials,"Advanced Materials, FOM, Materials Science"
+fundamental science,FS
+fuzzy data envelopment analysis,FDEA
+fuzzy geometry,FG
+fuzzy logic,FL
+fuzzy logic & approximate reasoning,FLAR
+fuzzy reliability,FR
+galaxy formation and evolution,GFE
+gan,"gan Research, gan Technology"
+gas adsorption and separation,GAS
+gas dynamics,GD
+gas hydrates,GH
+gas sensing,GS
+gas sensors,GS
+gas separation,GS
+gas separation: membranes,GSM
+gear engineering,GE
+gear fault diagnosis,GFD
+gelation and rheology,GR
+genai,"Artificial Intelligence, Machine Intelligence"
+gender,"gender Research, gender Technology"
+gene therapy,GT
+gene therapy: neuro-ophthalmic & blood,GTNOB
+general relativity,GR
+general theory of relativity and black holes,GTRBH
+genetic agorithms,GA
+genetics,"genetics Research, genetics Technology"
+genomics and hiv pathogenesis,GHP
+geo-energy systems,"Clean Energy, GES, Renewable Energy Systems"
+geo-environmental engineering,GEE
+geo-mechanics,GM
+geoai,"Artificial Intelligence, Machine Intelligence"
+geochemistry,"geochemistry Research, geochemistry Technology"
+geochronology,"geochronology Research, geochronology Technology"
+geoenvironmental eng,GE
+geohazards,"geohazards Research, geohazards Technology"
+geohydrology,"geohydrology Research, geohydrology Technology"
+geohydrology),"geohydrology) Research, geohydrology) Technology"
+geoinformatics,"geoinformatics Research, geoinformatics Technology"
+geology,"geology Research, geology Technology"
+geometric function theory,GFT
+geomorphology,"geomorphology Research, geomorphology Technology"
+geophysical investigation,GI
+geopolymer concrete,GC
+geospatial modeling,GM
+geosynthetic engineering,GE
+geosynthetics,"geosynthetics Research, geosynthetics Technology"
+geotechnical and geoenvironmental,GG
+geotechnical earthquake engineering,GEE
+geotechnical eng,GE
+geotechnical engineering,GE
+gerontology,"gerontology Research, gerontology Technology"
+gesocience,"gesocience Research, gesocience Technology"
+gis,"gis Research, gis Technology"
+gis and remote sensing,GRS
+glaciology,"glaciology Research, glaciology Technology"
+glass-ceramics,GC
+glasses and glass-ceramics,GGC
+global value chains,"Artificial Intelligence, GVC, Machine Intelligence"
+glycoscience,"glycoscience Research, glycoscience Technology"
+gmpe,"gmpe Research, gmpe Technology"
+gnss remote sensing,GRS
+gps,"gps Research, gps Technology"
+gradient nanostructured alloys,"GNA, Nanoscale Science, Nanotechnology"
+graft copolymers,GC
+grain boundaries,"Artificial Intelligence, GB, Machine Intelligence"
+granular flows,GF
+graph analytics,GA
+graph colorings,GC
+graph neural network (gnn),"GNNG, Telecommunications, Wireless Systems"
+graph theory,GT
+graphene,"graphene Research, graphene Technology"
+graphene & 2d systems,G2S
+graphene microscopy,GM
+graphs and matrices,GM
+grasping,"grasping Research, grasping Technology"
+gravitation and cosmology,GC
+gravitational waves,GW
+gravity,"gravity Research, gravity Technology"
+grbs,"grbs Research, grbs Technology"
+green chemistry,GC
+green composites,GC
+green energy,"Clean Energy, GE, Renewable Energy Systems"
+green finance & green energy,"Clean Energy, GFGE, Renewable Energy Systems"
+green hydrgen,GH
+green hydrogen,GH
+green materials,"Advanced Materials, GM, Materials Science"
+green technology,GT
+green transition,GT
+greenhouse,"greenhouse Research, greenhouse Technology"
+greenhouse gas,GG
+grid 2 vehicle,G2V
+grinding,"grinding Research, grinding Technology"
+ground improvement,GI
+ground motion simulation,GMS
+ground motion studies,GMS
+ground water,GW
+groundwater,"groundwater Research, groundwater Technology"
+groundwater management,GM
+groundwater modeling,GM
+group dynamics,GD
+group technology,GT
+growth-defect-diffusionoxide,GDD
+guidance & navigation,GN
+gut-brain axis,"Artificial Intelligence, GBA, Machine Intelligence"
+h2 production,HP
+h2 storage,HS
+halide perovskite,HP
+halide perovskites,HP
+hand and leg exoskeletons,HLE
+haptics,"haptics Research, haptics Technology"
+harbour,"harbour Research, harbour Technology"
+hardware,"hardware Research, hardware Technology"
+hardware design,HD
+hardware security,HS
+hardware security and trust,HST
+harmonic analysis,HA
+harmonic mappings,HM
+hcci,"hcci Research, hcci Technology"
+hci,"hci Research, hci Technology"
+health,"health Research, health Technology"
+health delivery,HD
+health monitoring of hydraulic,HMH
+health psychology,HP
+health risk,HR
+healthcare delivery models for low resource,HDMLR
+healthcare interoperability,HI
+healthcare management,HM
+healthcare nanotechnology,"HN, Nanoscale Science, Nanotechnology"
+healthcare technology,HT
+heat and mass transfer,HMT
+heat and moisture transport through saturated,HMTTS
+heat exchangers,HE
+heat pipes,HP
+heat t,HT
+heat transfer,HT
+heat transfer - radiation,HTR
+heat transfer and fluid dynamics,HTFD
+heat transfer enhancement,HTE
+heat transfer in enclosures,HTE
+heat transfer in manufacturing,HTM
+heat transfer in microchannels,HTM
+heat transfer through insulation systems,HTTIS
+heat transport at nanoscale,"HTAN, Nanoscale Science, Nanotechnology"
+heavy fermions,HF
+heavy metal adsorption,HMA
+heavy metal removal,HMR
+heterocyclic chemistry,HC
+heterocylic synthesis,HS
+heterogeneous catalysis,HC
+heterogeneous photocatalysis,HP
+hetrogeneous catalysis,HC
+heuristic method in optimization,HMO
+hho methods,HM
+high energy materials,"Advanced Materials, Clean Energy, HEM, Materials Science, Renewable Energy Systems"
+high energy particle physics,"Clean Energy, HEPP, Renewable Energy Systems"
+high energy physics,"Clean Energy, HEP, Renewable Energy Systems"
+high energy physics phenomenology,"Clean Energy, HEPP, Renewable Energy Systems"
+high energy theoretical physics,"Clean Energy, HETP, Renewable Energy Systems"
+high eneryg physics,HEP
+high enthalpy flows,HEF
+high entropy alloys,HEA
+high entropy alloys & intermetallics,HEAI
+high entropy oxides,HEO
+high entropy oxides (heos),HEOH
+high entropy thinfilms,HET
+high level synthesis,HLS
+high performance computing,HPC
+high strain rate deformation,"Artificial Intelligence, HSRD, Machine Intelligence"
+high strain rate response,"Artificial Intelligence, HSRR, Machine Intelligence"
+high temperature alloys,HTA
+high temperature materials,"Advanced Materials, HTM, Materials Science"
+high voltage and wireless power transfer,"HVWPT, Telecommunications, Wireless Systems"
+high-energy astrophysics,"Clean Energy, HEA, Renewable Energy Systems"
+high-energy phenomena,"Clean Energy, HEP, Renewable Energy Systems"
+high-k and low loss ceramics and thin films,HKLLCTF
+high-speed flows,HSF
+high-speed jets,HSJ
+high-temperature deformation,HTD
+high-throughput dft,HTD
+higher education policies,HEP
+highly correleted electron,HCE
+highway construction and quality control,"Autonomous Systems, HCQC, Robotics & Automation"
+highway geometric design,HGD
+highway materials,"Advanced Materials, HM, Materials Science"
+highway safety,HS
+himalayan tectonics,HT
+history of mathematics,HM
+hiv-1,H1
+holography,"holography Research, holography Technology"
+homogeneous catalysis,HC
+host pathogen interaction,HPI
+host-pathogens interactions,HPI
+hpc,"hpc Research, hpc Technology"
+hrm,"hrm Research, hrm Technology"
+human body thermodynamics and cognition,HBTC
+human computer interaction,HCI
+human exposure,HE
+human factors in transportation,HFT
+human haptics,HH
+human molecular genetics,HMG
+human resource management,HRM
+human-centric risk-aware analytics,HCRAA
+human-computer interaction,HCI
+humanitarian supply chain management,"Artificial Intelligence, HSCM, Machine Intelligence"
+hybrid,"hybrid Research, hybrid Technology"
+hybrid nanomaterials,"Advanced Materials, HN, Materials Science, Nanoscale Science, Nanotechnology"
+hybrid sensors,HS
+hybrid supercapacitors,HS
+hydraulic control,"Autonomous Systems, HC, Robotics & Automation"
+hydraulic engineering,HE
+hydraulic machines,HM
+hydraulic structures,HS
+hydraulics,"hydraulics Research, hydraulics Technology"
+hydro-climatology and extreme events,HCEE
+hydroclimate,"hydroclimate Research, hydroclimate Technology"
+hydroclimatology,"hydroclimatology Research, hydroclimatology Technology"
+hydrodynamic machines,HM
+hydrodynamic stabiilty,HS
+hydrodynamics,"hydrodynamics Research, hydrodynamics Technology"
+hydroelasticity,"hydroelasticity Research, hydroelasticity Technology"
+hydrogels,"hydrogels Research, hydrogels Technology"
+hydrogen membrane,HM
+hydrogen production,HP
+hydrogen storage,HS
+hydrogenation,"hydrogenation Research, hydrogenation Technology"
+hydrogeology,"hydrogeology Research, hydrogeology Technology"
+hydrologic modeling,HM
+hydrological modelling,HM
+hydrological processes,HP
+hydrology,"hydrology Research, hydrology Technology"
+hydropower,"hydropower Research, hydropower Technology"
+hydrovoltaics,"Artificial Intelligence, Machine Intelligence"
+hyperspectral remote sensing,HRS
+hypervalent iodine,HI
+i/o psychology,IOP
+ibm,"ibm Research, ibm Technology"
+ic engine,IE
+ic engines,IE
+ice calibration & testing,ICT
+icme,"icme Research, icme Technology"
+igneous petrology,IP
+iit kharagpur,IK
+image and video coding,"IVC, Image Analysis, Visual Recognition"
+image and video quality assessment,"IVQA, Image Analysis, Visual Recognition"
+image processing,"DIP, Digital Image Processing, IP, Image Analysis, Image Enhancement, Segmentation, Visual Recognition"
+image processing and computer vision,"IPCV, Image Analysis, Visual Recognition"
+image processing of digital data,"IPDD, Image Analysis, Visual Recognition"
+image/video content analysis,"IVCA, Image Analysis, Visual Recognition"
+image/video processing,"IVP, Image Analysis, Visual Recognition"
+imaging,"imaging Research, imaging Technology"
+imapct of led on plant morphogenesis,ILOPM
+immunology,"immunology Research, immunology Technology"
+immunoncology,"immunoncology Research, immunoncology Technology"
+impact evaluation,IE
+impact mechanics,IM
+impact of climate change,ICC
+impact of distributed generation,IDG
+impact on crops and human health,IOCHH
+imultiphase flow,IF
+in,"in Research, in Technology"
+in-plane thz photonics,PTP
+in-situ composites,SC
+in-situ tem studies,STS
+in-vivo models,VM
+inclusive design,ID
+incremental identification,II
+india's northeast focus on manipur,ISNFOM
+indian modernity,IM
+indian monsoon,IM
+indian philosophy,IP
+indoor air quality,"Artificial Intelligence, IAQ, Machine Intelligence"
+induction generators,IG
+industrial ai,"Artificial Intelligence, IA, Machine Intelligence"
+industrial automation,IA
+industrial ecology,IE
+industrial economics,IE
+industrial engineering,IE
+industrial microbiology,"Biomedical Engineering, Biotechnology, IM"
+industrial psychology,IP
+industry 4.0,I40
+inelasticity of materials,"Advanced Materials, IM, Materials Science"
+infection associated cancer,IAC
+infection biology,"Biomedical Engineering, Biotechnology, IB"
+infectious diseases,ID
+inflammasome,"inflammasome Research, inflammasome Technology"
+inflammation,"inflammation Research, inflammation Technology"
+information retrieval,IR
+information security,IS
+information theory,IT
+informational retrieval,IR
+infrared thermography,IT
+infrastructure planning and management,IPM
+inhibitory control,"Autonomous Systems, IC, Robotics & Automation"
+injectable bone cements and value added,IBCVA
+innate immune response,IIR
+innovation,"innovation Research, innovation Technology"
+innovative material processing,"Advanced Materials, IMP, Materials Science"
+inorganic and organometallic chemistry,IOC
+inorganic biochemistry,"Biomedical Engineering, Biotechnology, IB"
+inorganic chemistry,IC
+inorganic nanostructures,"IN, Nanoscale Science, Nanotechnology"
+inorganic physical chemistry,IPC
+inorganic synthesis,IS
+insitu micro-mechanical testing,IMMT
+instability at soft interfaces,IASI
+instability-thin film-soft matter,ITFSM
+instrumentation,"instrumentation Research, instrumentation Technology"
+integrated energy systems,"Clean Energy, IES, Renewable Energy Systems"
+integrated photonics,IP
+integrated water management,IWM
+integrative genomics,IG
+intellectual property,IP
+intellectual property management,IPM
+intelligent control,"Autonomous Systems, IC, Robotics & Automation"
+intelligent sensing,IS
+intelligent system design,ISD
+intelligent systems and control,"Autonomous Systems, ISC, Robotics & Automation"
+intelligent transportation,IT
+intelligent transportation system,ITS
+intelligent transportation systems,ITS
+interaction design,ID
+interconnects,"interconnects Research, interconnects Technology"
+interface electronics,IE
+interfaces,"interfaces Research, interfaces Technology"
+interfacial electron transfer,IET
+interfacial mechanics,IM
+interfacial phenomena,IP
+interfacial phenomena and phase change,IPPC
+interfacial solar steam generation,"Clean Energy, ISSG, Renewable Energy Systems"
+intergalactic medium,IM
+interlayer coupling in multilayers,ICM
+internal combustion engines,ICE
+international economics,IE
+international finance and econometric,IFE
+international finance and housing economics,IFHE
+international finance and trade,IFT
+international trade,IT
+internet,"internet Research, internet Technology"
+internet and blockchain,"Artificial Intelligence, IB, Machine Intelligence"
+internet of things,IT
+internet of things (iot),ITI
+internet-of-things,IT
+interpretability,"interpretability Research, interpretability Technology"
+intertial sensors and analytical,ISA
+inventory & scm,IS
+inventory control,"Autonomous Systems, IC, Robotics & Automation"
+inventory management,IM
+inverse problems,IP
+investment casting,IC
+io psychology,IP
+ion beam physics,IBP
+ion channel biology,"Biomedical Engineering, Biotechnology, ICB"
+ion transport,IT
+ionic conductors,IC
+ionic liquids,IL
+ionic polymer membranes,IPM
+ionic solvents,IS
+ionosphere,"ionosphere Research, ionosphere Technology"
+ionotronics,"ionotronics Research, ionotronics Technology"
+iot,"iot Research, iot Technology"
+iot networks,"IN, Telecommunications, Wireless Systems"
+iot/cps communications,"ICC, Telecommunications, Wireless Systems"
+ip protection,IP
+irrigation,"irrigation Research, irrigation Technology"
+irrigation management,IM
+isotope production,IP
+issues in high dimensional data analysis,IHDDA
+its,"its Research, its Technology"
+ivd,"ivd Research, ivd Technology"
+ivhm,"ivhm Research, ivhm Technology"
+jet impingement,JI
+joining of ceramics,JC
+just migration,JM
+kinetic theory,KT
+kinetics,"kinetics Research, kinetics Technology"
+km,"km Research, km Technology"
+knowledge representation and reasoning,KRR
+kohn sham,KS
+l,"l Research, l Technology"
+lab on chip,LOC
+lab-on-a-chip,LOAC
+lab-on-a-chip devices,LOACD
+label-free imaging,LFI
+labour,"labour Research, labour Technology"
+labour economics,LE
+land and water resource management,LWRM
+landslide hazard,LH
+landslides,"landslides Research, landslides Technology"
+langauge models,LM
+language dynamics,LD
+lanthanides,"lanthanides Research, lanthanides Technology"
+large deformations,LD
+large scale structures,LSS
+laser ablation,LA
+laser and photonics,LP
+laser assisted manufacturing and surface,LAMS
+laser assisted sensing,LAS
+laser diagnostics,LD
+laser ignition,LI
+laser material processing,"Advanced Materials, LMP, Materials Science"
+laser material processing & laser additive,"Advanced Materials, LMPLA, Materials Science"
+laser materials processing,"Advanced Materials, LMP, Materials Science"
+laser plasma,LP
+laser processing,LP
+laser processing of alloys,LPA
+laser sintering,LS
+lasers,"lasers Research, lasers Technology"
+lattice boltzmann simulations,LBS
+lattice dynamics,LD
+lattice structure,LS
+law,"law Research, law Technology"
+layered oxide cathodes,LOC
+lca,"lca Research, lca Technology"
+leachate,"leachate Research, leachate Technology"
+lead free piezoceramics,LFP
+leadership and entrepren,LE
+learning analytics,"Artificial Intelligence, LA, Machine Intelligence"
+legal ai,"Artificial Intelligence, LA, Machine Intelligence"
+legal analytics,LA
+legged robots,"Autonomous Systems, LR, Robotics & Automation"
+lens,"lens Research, lens Technology"
+les and dns,LD
+leukemia,"leukemia Research, leukemia Technology"
+li ion batteries,LIB
+li-ion battery,"Clean Energy, LIB, Renewable Energy Systems"
+lidar,"lidar Research, lidar Technology"
+lie group application,LGA
+life cycle analysis,LCA
+life cycle assessment,"Cradle-to-Grave Analysis, Environmental Impact Assessment, LCA"
+light alloys,LA
+light scattering,LS
+light weight aggregate concrete,LWAC
+light-emitting diodes,LED
+linear algebra,LA
+linear and nonlinear stability analsysis,LNSA
+lipid bilayers,LB
+lipid metabolism,LM
+liposomes,"liposomes Research, liposomes Technology"
+liquefaction,"liquefaction Research, liquefaction Technology"
+liquefaction hazard,LH
+liquid chromatography,LC
+liquid crystal thin films,LCTF
+liquid crystals,LC
+liquid liquid phase separation,LLPS
+liquid-liquid phase separation,LLPS
+liquid/liquid separation,LLS
+lithium,"lithium Research, lithium Technology"
+llms,"llms Research, llms Technology"
+local governance,LG
+logistics management,LM
+low coherence microscopy,LCM
+low power,LP
+low power design,LPD
+low power vlsi,LPV
+luminescent probes,LP
+machine design,MD
+machine intelligence,"Artificial Intelligence, MI, Machine Intelligence"
+machine learning,"Artificial Intelligence, ML, Machine Intelligence, Pattern Recognition, Predictive Modeling, Statistical Learning, Supervised Learning"
+machine learning and complex network,"Artificial Intelligence, MLCN, Machine Intelligence, Telecommunications, Wireless Systems"
+machine learning and deep learning,"Artificial Intelligence, MLDL, Machine Intelligence"
+machine learning and pattern recognition,"Artificial Intelligence, MLPR, Machine Intelligence"
+machine learning applications,"Artificial Intelligence, MLA, Machine Intelligence"
+machine learning augmented compact,"Artificial Intelligence, MLAC, Machine Intelligence"
+machine learning based life time prediction,"Artificial Intelligence, MLBLTP, Machine Intelligence"
+machine learning for cad,"Artificial Intelligence, MLC, Machine Intelligence"
+machine learning in process systems,"Artificial Intelligence, MLPS, Machine Intelligence"
+machine tools vibration and control,"Autonomous Systems, MTVC, Robotics & Automation"
+machining,"machining Research, machining Technology"
+machining (conventional & ntm),MCN
+macrocyclic synthesis,MS
+macroeconomic interactions,MI
+macroeconomic theory and policy,MTP
+macroeconomics,"macroeconomics Research, macroeconomics Technology"
+macroeconomics and policies,MP
+magnetic materials,"Advanced Materials, MM, Materials Science"
+magnetic materials and devices,"Advanced Materials, MMD, Materials Science"
+magnetic nanoparticles,"MN, Nanoscale Science, Nanotechnology"
+magnetic nanostructures,"MN, Nanoscale Science, Nanotechnology"
+magnetic refrigeration,MR
+magnetism,"magnetism Research, magnetism Technology"
+magnetism and spintronics,MS
+magneto-transport,MT
+magneto-transport properties,MTP
+magnetoelectrics,"magnetoelectrics Research, magnetoelectrics Technology"
+magnetofluidics,"magnetofluidics Research, magnetofluidics Technology"
+magnon spintronics,MS
+magnonics,"magnonics Research, magnonics Technology"
+main group,"Artificial Intelligence, MG, Machine Intelligence"
+main group chemistry,"Artificial Intelligence, MGC, Machine Intelligence"
+maintenance,"Artificial Intelligence, Machine Intelligence"
+maintenance engineering,"Artificial Intelligence, ME, Machine Intelligence"
+malaria,"malaria Research, malaria Technology"
+mammalian cell line development,MCLD
+management,"management Research, management Technology"
+manipulation,"manipulation Research, manipulation Technology"
+manufacturing,"manufacturing Research, manufacturing Technology"
+manufacturing automation,MA
+manufacturing processes,MP
+manufacturing science,MS
+manuscriptology,"manuscriptology Research, manuscriptology Technology"
+marine hydrodynamics,MH
+market microstructure,MM
+marketing,"marketing Research, marketing Technology"
+marketing  leadership,ML
+marketing/branding,MB
+mass transfer,MT
+material,"Advanced Materials, Materials Science"
+material chemistry,"Advanced Materials, MC, Materials Science"
+material forming and joining,"Advanced Materials, MFJ, Materials Science"
+material physics,"Advanced Materials, MP, Materials Science"
+material science,"Advanced Materials, MS, Materials Science"
+material science and engineering,"Advanced Materials, MSE, Materials Science"
+materials,"Advanced Materials, Materials Science"
+materials chemistry,"Advanced Materials, MC, Materials Science"
+materials design,"Advanced Materials, MD, Materials Science"
+materials discovery,"Advanced Materials, MD, Materials Science"
+materials engineering,"Advanced Materials, ME, Materials Science"
+materials for functional liquid wettability,"Advanced Materials, MFLW, Materials Science"
+materials informatics,"Advanced Materials, MI, Materials Science"
+materials modeling,"Advanced Materials, MM, Materials Science"
+materials modelling,"Advanced Materials, MM, Materials Science"
+materials physics,"Advanced Materials, MP, Materials Science"
+materials processing,"Advanced Materials, MP, Materials Science"
+materials science,"Advanced Materials, MS, Materials Science"
+materials science and engineering,"Advanced Materials, MSE, Materials Science"
+materials thermodynamics,"Advanced Materials, MT, Materials Science"
+maternal/fetal health,MFH
+mathematical analysis,MA
+mathematical biology,"Biomedical Engineering, Biotechnology, MB"
+mathematical data science,MDS
+mathematical ecology,ME
+mathematical ecology and epidemiology,MEE
+mathematical epidemiology,ME
+mathematical logic,ML
+mathematical modeling,MM
+mathematical optimization,MO
+mathematical physics,MP
+mathematical simulation,MS
+mathematics education,ME
+max phase,MP
+max phases & composites,MPC
+md,"md Research, md Technology"
+measurement-error,ME
+mechanical bahaviour of materials,"Advanced Materials, MBM, Materials Science"
+mechanical behavior,MB
+mechanical behavior of materials,"Advanced Materials, MBM, Materials Science"
+mechanical behaviour,MB
+mechanical behaviour of materials,"Advanced Materials, MBM, Materials Science"
+mechanical properties,MP
+mechanics,"mechanics Research, mechanics Technology"
+mechanics of deformation and failure in solids,"Artificial Intelligence, MDFS, Machine Intelligence"
+mechanisms,"mechanisms Research, mechanisms Technology"
+mechano-electrochemistry,ME
+mechanochromism,"mechanochromism Research, mechanochromism Technology"
+mechatroni,"mechatroni Research, mechatroni Technology"
+mechatronics,"mechatronics Research, mechatronics Technology"
+mechinterp,"mechinterp Research, mechinterp Technology"
+mechnical behavior of materials,"Advanced Materials, MBM, Materials Science"
+media studies,MS
+medical diagnostics,MD
+medical image processing,"Image Analysis, MIP, Visual Recognition"
+medical imaging,MI
+medical technologies,MT
+medicinal chemistry,MC
+medicinal inorganic chemistry,MIC
+meg,"meg Research, meg Technology"
+membrane,"membrane Research, membrane Technology"
+membrane biogenesis and signalling,"Biomedical Engineering, Biotechnology, MBS"
+membrane biology,"Biomedical Engineering, Biotechnology, MB"
+membrane processes,MP
+membrane reactors,MR
+membrane sc & technology,MST
+membrane science and separation,MSS
+membrane separation,MS
+membrane technology,MT
+memories,"memories Research, memories Technology"
+memory circuits,MC
+memory devices,MD
+memristo,"memristo Research, memristo Technology"
+memristor,"memristor Research, memristor Technology"
+mems,"mems Research, mems Technology"
+mems /nems,MN
+mems and micro-fluidics,MMF
+mems-based sensors,MBS
+mental health,MH
+mercury,"mercury Research, mercury Technology"
+meshless analysis,MA
+mesoionic carbene,MC
+metabolic engineering,ME
+metabolic modelling,MM
+metabolomics,"metabolomics Research, metabolomics Technology"
+metagenomics,"metagenomics Research, metagenomics Technology"
+metal additive manufacturing,MAM
+metal and ceramic matrix composites,MCMC
+metal casting,MC
+metal foam,MF
+metal foams,MF
+metal forming,MF
+metal forming and sheet ma,MFSM
+metal hydrides,MH
+metal matrix composites,MMC
+metal oxides,MO
+metal recycling,MR
+metal-air & metal-ion batteries,"Artificial Intelligence, MAMIB, Machine Intelligence"
+metal-organic frameworks,MOF
+metallaborane,"metallaborane Research, metallaborane Technology"
+metallic alloys and thin films,MATF
+metallic glasses,MG
+metallic materials,"Advanced Materials, MM, Materials Science"
+metallogels,"metallogels Research, metallogels Technology"
+metallurgical thermodynamics,MT
+metallurgy,"metallurgy Research, metallurgy Technology"
+metals,"metals Research, metals Technology"
+metamaterial,"Advanced Materials, Materials Science"
+metamaterials,"Advanced Materials, Materials Science"
+metamaterials & metasurfaces,"Advanced Materials, MM, Materials Science"
+metamaterials for mri,"Advanced Materials, MM, Materials Science"
+metastable and nanostructured alloys,"MNA, Nanoscale Science, Nanotechnology"
+metastasis,"metastasis Research, metastasis Technology"
+metasurface,"metasurface Research, metasurface Technology"
+metasurfaces,"metasurfaces Research, metasurfaces Technology"
+method of characteristics,MC
+metric learning,"Artificial Intelligence, ML, Machine Intelligence"
+mg and al technologies,MAT
+mhd turbulence,MT
+micro & nano fludic,"MNF, Nanoscale Science, Nanotechnology"
+micro 3d printing,M3P
+micro and nano manufacturing,"MNM, Nanoscale Science, Nanotechnology"
+micro manufacturing,MM
+micro nano technologies,"MNT, Nanoscale Science, Nanotechnology"
+micro-irrigation,MI
+micro-manufacturing,MM
+micro-nanofabrication,"MN, Nanoscale Science, Nanotechnology"
+micro-robotic systems,"Autonomous Systems, MRS, Robotics & Automation"
+microalgae,"microalgae Research, microalgae Technology"
+microbial biotechnology,"Biomedical Engineering, Biotechnology, MB"
+microbial enzyme production,MEP
+microbial f,MF
+microbial fuel cell,"Clean Energy, MFC, Renewable Energy Systems"
+microbial methods for value added products,MMVAP
+microbial surfactants,MS
+microbial technology,MT
+microbiology,"Biomedical Engineering, Biotechnology"
+microelectronics,"microelectronics Research, microelectronics Technology"
+microelectronics nanoelectronics,"MN, Nanoscale Science, Nanotechnology"
+microfabrication,"microfabrication Research, microfabrication Technology"
+microfluidics,"microfluidics Research, microfluidics Technology"
+microfluidics and nanofluidics,"MN, Nanoscale Science, Nanotechnology"
+microfluidics-microrheology,MM
+microgrid,"microgrid Research, microgrid Technology"
+microgrids,"microgrids Research, microgrids Technology"
+micromachining,"micromachining Research, micromachining Technology"
+micromanufacturing,"micromanufacturing Research, micromanufacturing Technology"
+micromechanics,"micromechanics Research, micromechanics Technology"
+microporous and mesoporous materials,"Advanced Materials, MMM, Materials Science"
+microscopy,"microscopy Research, microscopy Technology"
+microstrip antennas,MA
+microstructural modeling,MM
+microstructure,"microstructure Research, microstructure Technology"
+microstructure engineering,ME
+microsystems,"microsystems Research, microsystems Technology"
+microwave,"microwave Research, microwave Technology"
+microwave absorbers,MA
+microwave and mm waves technique,MMWT
+microwave antenna,MA
+microwave antennas,MA
+microwave circuits,MC
+microwave imaging and remote sensing,MIRS
+microwave materials processing,"Advanced Materials, MMP, Materials Science"
+microwave-thermal transport,MTT
+microwaves,"microwaves Research, microwaves Technology"
+migration studies,MS
+millets,"millets Research, millets Technology"
+mimo,"mimo Research, mimo Technology"
+mimo antenna,MA
+mimo antennas,MA
+mimo channels,MC
+mineral beneficiation,MB
+mineral processing,MP
+mining,"mining Research, mining Technology"
+ml,"ml Research, ml Technology"
+ml in thermal sciences,MTS
+mmc&coating,MC
+mobile networks (5g),"MN5, Telecommunications, Wireless Systems"
+modal logic,ML
+model order reduction,MOR
+modeling,"modeling Research, modeling Technology"
+modeling & management of water systems,MMWS
+modeling & simulation,MS
+modeling and optimization of novel,MON
+modeling and simulation of energy systems,"Clean Energy, MSES, Renewable Energy Systems"
+modelling,"modelling Research, modelling Technology"
+modelling and optimization,MO
+modelling and simulation,MS
+modelling and simulation in free surface,MSFS
+modelling and simulation of chemical,MSC
+modified binders,MB
+modular forms,MF
+mof,"mof Research, mof Technology"
+mofs,"mofs Research, mofs Technology"
+molecular and cellular parasitology,MCP
+molecular and nanoscale materials,"Advanced Materials, MNM, Materials Science, Nanoscale Science, Nanotechnology"
+molecular biology,"Biomedical Engineering, Biotechnology, MB"
+molecular biophysics,"Biomedical Engineering, Biotechnology, MB"
+molecular cages,MC
+molecular cell and cancer biology,"Biomedical Engineering, Biotechnology, MCCB"
+molecular communica,MC
+molecular docking,MD
+molecular dynamics,MD
+molecular electronics,ME
+molecular epigenetics,ME
+molecular immunology,MI
+molecular machines,MM
+molecular magnetism,MM
+molecular microbiology,"Biomedical Engineering, Biotechnology, MM"
+molecular motors,MM
+molecular pathology of cancers,MPC
+molecular self-assembly,MSA
+molecular simulation,MS
+molecular simulations,MS
+molecular spectroscopy,MS
+molecular structural biology,"Biomedical Engineering, Biotechnology, MSB"
+molecular virology,MV
+monsoon,"monsoon Research, monsoon Technology"
+monte-carlo simulations,MCS
+morphogenesis,"morphogenesis Research, morphogenesis Technology"
+mos2,"mos2 Research, mos2 Technology"
+mosfets and ofets and photovoltaics,"Artificial Intelligence, MOP, Machine Intelligence"
+motion planning in 3d,MP3
+motor current,MC
+motor drives,MD
+moving boundary problems,MBP
+moving load analysis,MLA
+msk disorders,MD
+multi-armed bandits,MAB
+multi-group multicasting,MGM
+multi-messenger astronomy,MMA
+multi-omics,MO
+multi-phase,MP
+multi-physics problems,MPP
+multi-scale,MS
+multi-scale modelling,MSM
+multi-wavelength astronomy,MWA
+multicomponent alloys,MA
+multicomponent reaction,MR
+multicomponent reactions,MR
+multiferroic,"multiferroic Research, multiferroic Technology"
+multiferroics,"multiferroics Research, multiferroics Technology"
+multiferroics and micromagnetics,MM
+multiferroics and strongly correlated systems,MSCS
+multifunctional composites,MC
+multifunctional oxides and devices,MOD
+multiheme proteins and enzymes,MPE
+multilevel pwm inverters,MPI
+multimedia signal processing,MSP
+multinuclear complexes,MC
+multiobjective optimization,MO
+multiphase flow,MF
+multiphase flow in microsystems,MFM
+multiphase flows,MF
+multiphase machines,MM
+multiphysics problems,MP
+multiscale,"multiscale Research, multiscale Technology"
+multiscale modeling,MM
+multiscale modelling,MM
+multivariate and deep learning,"Artificial Intelligence, MDL, Machine Intelligence"
+municipal solid waste,MSW
+music processing,MP
+n-heterocyclic carbene catalysis,NHCC
+na ion batteries,NIB
+na-ion battery,"Clean Energy, NIB, Renewable Energy Systems"
+nano & energy materials lab,"Advanced Materials, Clean Energy, Materials Science, NEML, Nanoscale Science, Nanotechnology, Renewable Energy Systems"
+nano and micro indentation,"NMI, Nanoscale Science, Nanotechnology"
+nano and micro structuring,"NMS, Nanoscale Science, Nanotechnology"
+nano heterostructures,"NH, Nanoscale Science, Nanotechnology"
+nano material,"Advanced Materials, Materials Science, NM, Nanoscale Science, Nanotechnology"
+nano materials,"Advanced Materials, Materials Science, NM, Nanoscale Science, Nanotechnology"
+nano science,"NS, Nanoscale Science, Nanotechnology"
+nano technology,"NT, Nanoscale Science, Nanotechnology"
+nano-hetero-architectures,"NHA, Nanoscale Science, Nanotechnology"
+nano-materials,"Advanced Materials, Materials Science, NM, Nanoscale Science, Nanotechnology"
+nano-mechanics,"NM, Nanoscale Science, Nanotechnology"
+nano/micro machining,"NMM, Nanoscale Science, Nanotechnology"
+nano/microelectronics,"NM, Nanoscale Science, Nanotechnology"
+nanobiology,"Biomedical Engineering, Biotechnology, Nanoscale Science, Nanotechnology"
+nanobiosensing,"Biomedical Engineering, Biotechnology, Nanoscale Science, Nanotechnology"
+nanobiosensors,"Biomedical Engineering, Biotechnology, Nanoscale Science, Nanotechnology"
+nanobiotechnology,"Biomedical Engineering, Biotechnology, Nanoscale Science, Nanotechnology"
+nanocarbons (graphene,"NG, Nanoscale Science, Nanotechnology"
+nanocellulose,"Nanoscale Science, Nanotechnology"
+nanoceramics,"Nanoscale Science, Nanotechnology"
+nanochemistry,"Nanoscale Science, Nanotechnology"
+nanoclusters,"Nanoscale Science, Nanotechnology"
+nanocomposite,"Nanoscale Science, Nanotechnology"
+nanocomposites,"Nanoscale Science, Nanotechnology"
+nanocrystalline materials,"Advanced Materials, Materials Science, NM, Nanoscale Science, Nanotechnology"
+nanocrystals,"Nanoscale Science, Nanotechnology"
+nanoemulsionsroc,"Nanoscale Science, Nanotechnology"
+nanofabrication,"Nanoscale Science, Nanotechnology"
+nanoferroelectrics,"Nanoscale Science, Nanotechnology"
+nanofibers physics education electronics,"NPEE, Nanoscale Science, Nanotechnology"
+nanofinishing,"Nanoscale Science, Nanotechnology"
+nanofluids,"Nanoscale Science, Nanotechnology"
+nanoindentation,"Nanoscale Science, Nanotechnology"
+nanomagnetic devices,"ND, Nanoscale Science, Nanotechnology"
+nanomagnetic materials,"Advanced Materials, Materials Science, NM, Nanoscale Science, Nanotechnology"
+nanomagnetism,"Nanoscale Science, Nanotechnology"
+nanomaterials,"Advanced Materials, Materials Science, Nanoscale Science, Nanotechnology"
+nanomaterials for electronic and energy and,"Advanced Materials, Clean Energy, Materials Science, NEE, Nanoscale Science, Nanotechnology, Renewable Energy Systems"
+nanomechanics,"Nanoscale Science, Nanotechnology"
+nanomedicine,"Nanoscale Science, Nanotechnology"
+nanomedicine & theranostics,"NT, Nanoscale Science, Nanotechnology"
+nanoparticles,"Nanoscale Science, Nanotechnology"
+nanopatterning,"Nanoscale Science, Nanotechnology"
+nanophotonics,"Nanoscale Science, Nanotechnology"
+nanopores,"Nanoscale Science, Nanotechnology"
+nanoporous materials,"Advanced Materials, Materials Science, NM, Nanoscale Science, Nanotechnology"
+nanoscale device design and modeling,"NDDM, Nanoscale Science, Nanotechnology"
+nanoscale device modelling,"NDM, Nanoscale Science, Nanotechnology"
+nanoscale magnetic imaging,"NMI, Nanoscale Science, Nanotechnology"
+nanoscale objects and phenomena,"NOP, Nanoscale Science, Nanotechnology"
+nanoscale physics,"NP, Nanoscale Science, Nanotechnology"
+nanoscale science,"NS, Nanoscale Science, Nanotechnology"
+nanoscience,"Nanoscale Science, Nanotechnology"
+nanoscience and nanotechnology,"NN, Nanoscale Science, Nanotechnology"
+nanostructured biomaterials,"Advanced Materials, Biomedical Engineering, Biotechnology, Materials Science, NB, Nanoscale Science, Nanotechnology"
+nanostructured materials,"Advanced Materials, Materials Science, NM, Nanoscale Science, Nanotechnology"
+nanostructures,"Nanoscale Science, Nanotechnology"
+nanotechnology,"Nanoscale Science, Nanotechnology"
+naomaterials,"Advanced Materials, Materials Science"
+natural and mixed convection flows,NMCF
+natural dyes,ND
+natural fiber reinforced composites,NFRC
+natural gas engineering,NGE
+natural language processing,NLP
+natural language progrssing,NLP
+natural language technology,NLT
+natural molecules,NM
+natural resources management,NRM
+nature based solution,NBS
+nature inspired optimization techniques,NIOT
+nature-based solutions (nbs),NBSN
+navigation and control,"Autonomous Systems, NC, Robotics & Automation"
+ncds,"ncds Research, ncds Technology"
+nde,"nde Research, nde Technology"
+ndt,"ndt Research, ndt Technology"
+negative-imaginary systems,NIS
+network analysis,"NA, Telecommunications, Wireless Systems"
+network economics,"NE, Telecommunications, Wireless Systems"
+network information theory,"NIT, Telecommunications, Wireless Systems"
+network science,"NS, Telecommunications, Wireless Systems"
+network security,"NS, Telecommunications, Wireless Systems"
+network security using ai/ml,"Artificial Intelligence, Machine Intelligence, NSUAM, Telecommunications, Wireless Systems"
+networking,"Telecommunications, Wireless Systems"
+neural / retinal prosthesis,NRP
+neural networks,"NN, Telecommunications, Wireless Systems"
+neuro-oncology,NO
+neurodegeneration,"neurodegeneration Research, neurodegeneration Technology"
+neurodegenrative diseases,ND
+neuroimaging,"neuroimaging Research, neuroimaging Technology"
+neuroinflammation,"neuroinflammation Research, neuroinflammation Technology"
+neuromorphic computing,NC
+neuronal signal processing,NSP
+neuropsychology,"neuropsychology Research, neuropsychology Technology"
+neurorehabilitati,"neurorehabilitati Research, neurorehabilitati Technology"
+neuroscience,"neuroscience Research, neuroscience Technology"
+neutrino physics,NP
+neutron star,NS
+new product and process development,NPPD
+new technologies,NT
+nir imaging,NI
+nir-quantum dots,NQD
+nlp,"nlp Research, nlp Technology"
+nmr spectroscopy,NS
+noc,"noc Research, noc Technology"
+noise,"noise Research, noise Technology"
+noise and vibration,NV
+non linear dynamics,NLD
+non linear vibration,NLV
+non local elasticity,NLE
+non traditional machining,NTM
+non volatile memories,NVM
+non-coding rnas,NCR
+non-conventional manufacturing,NCM
+non-destructive evaluation,NDE
+non-equilibrium quantum statistical physics,NEQSP
+non-invasive biomarkers and sensors,"Biomedical Engineering, Biotechnology, NIBS"
+non-linear optics,NLO
+non-newtonian fluid flow and heat transfer,NNFFHT
+non-newtonian fluids,NNF
+non-precious metal catalysis,NPMC
+non-stationarity,NS
+non-traditional manufacturing,NTM
+non-volatile memory,NVM
+nonequlibrium processing,NP
+nonlinear analysis,NA
+nonlinear computational mechanics,NCM
+nonlinear dynamics,ND
+nonlinear dynamics & vibrations,NDV
+nonlinear optics,NO
+nonlinear solid mechanics,NSM
+nonlinear spectroscopy,NS
+nonlinear vibrations,NV
+nonlocal elasticity,NE
+non‑contact sensing,NCS
+normative ethics,NE
+novel antibacterial drug discovery and,NADD
+novel materials for magnetism and energy,"Advanced Materials, Clean Energy, Materials Science, NMME, Renewable Energy Systems"
+novel semiconductors,NS
+nrr-her-co2rr catalysts,NHCC
+nuclear chemistry,NC
+nuclear data,ND
+nuclear engineering,NE
+nuclear physics,NP
+nuclear reaction,NR
+nuclear reactor thermal hydraulics,NRTH
+nuclear safety,NS
+nuclear thermalhydraulics,NT
+number theory,NT
+numerical analysis,NA
+numerical and mathematical methods,NMM
+numerical linear algebra,NLA
+numerical methods for pdes,NMP
+numerical modeling,NM
+numerical modelling in geotechnics,NMG
+numerical optimization,NO
+numerical schemes for singular perturbation,NSSP
+numerical simulation,NS
+numerical/digital relays,NDR
+nutraceuticals,"nutraceuticals Research, nutraceuticals Technology"
+nutrient recycling,NR
+nv-centres in diamond,NCD
+oam,"oam Research, oam Technology"
+ob,"ob Research, ob Technology"
+ocean engineering,OE
+ocean optics and imaging,OOI
+oceanography,"oceanography Research, oceanography Technology"
+ods alloys,OA
+off-road vehicle traction mechanics,ORVTM
+offshore structures,OS
+oleds,"oleds Research, oleds Technology"
+olfaction,"olfaction Research, olfaction Technology"
+oncology,"oncology Research, oncology Technology"
+online learning,"Artificial Intelligence, Machine Intelligence, OL"
+open channel flow,OCF
+opensource software,OS
+operational inflow forecasting,OIF
+operational research,OR
+operations research,OR
+optical coherence,OC
+optical communictions,OC
+optical imaging,OI
+optical interconnects,OI
+optical measurements,OM
+optical networks,"ON, Telecommunications, Wireless Systems"
+optical properties,OP
+optical spectroscopy,OS
+optics,"optics Research, optics Technology"
+optics-photonics,OP
+optimal control theory,"Autonomous Systems, OCT, Robotics & Automation"
+optimization,"optimization Research, optimization Technology"
+optimization modelling,OM
+optimization of composite structures,OCS
+optimization of thermal systems,OTS
+optimization theory,OT
+opto-electronics,OE
+opto-mechatronics system design,OMSD
+optoelectronic devices,OD
+optoelectronics,"optoelectronics Research, optoelectronics Technology"
+optogenetics,"optogenetics Research, optogenetics Technology"
+optomechatronics,"optomechatronics Research, optomechatronics Technology"
+orbital free density functional theory,OFDFT
+organ-on-a-chip,OOAC
+organic,"organic Research, organic Technology"
+organic aerosols,OA
+organic and flexible electronics,OFE
+organic chemistry,OC
+organic chemistry synthesis,OCS
+organic electronics,OE
+organic farming,OF
+organic fluorophores,OF
+organic functional material,"Advanced Materials, Materials Science, OFM"
+organic light-emitting diod,OLED
+organic materials chemistry,"Advanced Materials, Materials Science, OMC"
+organic materials for electronic applications,"Advanced Materials, Materials Science, OMEA"
+organic optoelectronics,OO
+organic photochemistry and supramolecular,OPS
+organic semiconductors,OS
+organic solar cells,"Clean Energy, OSC, Renewable Energy Systems"
+organic synthesis,OS
+organic synthesis & catalysis,OSC
+organisational behaviour,OB
+organisational psychology,OP
+organizational behavior,OB
+organizational behaviour,OB
+organizations,"organizations Research, organizations Technology"
+organometallic chemistry,OC
+organometallic chemistry & catalysis,OCC
+organometallic chemistry and catalysis,OCC
+organometallics,"organometallics Research, organometallics Technology"
+organometallics and nanoparticle based,"Nanoscale Science, Nanotechnology, ONB"
+organomettalics and catalysis,OC
+organotin chemistry,OC
+orthopaedic biomaterial,"Advanced Materials, Biomedical Engineering, Biotechnology, Materials Science, OB"
+overlaid multicasting,"Artificial Intelligence, Machine Intelligence, OM"
+oxide multiferroics,OM
+oxide semiconductors,OS
+oxides,"oxides Research, oxides Technology"
+p2p networks,"PN, Telecommunications, Wireless Systems"
+p4,"p4 Research, p4 Technology"
+packaging,"packaging Research, packaging Technology"
+packaging technology,PT
+paleo-tsunami,PT
+paleobiogeography,"Biomedical Engineering, Biotechnology"
+paleoceanography,"paleoceanography Research, paleoceanography Technology"
+paleoclimatology,"paleoclimatology Research, paleoclimatology Technology"
+paleontology,"paleontology Research, paleontology Technology"
+paleoseismology,"paleoseismology Research, paleoseismology Technology"
+paper technology,PT
+paramaterized complexity,PC
+parasitology,"parasitology Research, parasitology Technology"
+parkinson's disease,PSD
+parkinsons disease,PD
+participating medium,PM
+particle physics,PP
+particle physics theory and phenomenology,PPTP
+particle science & technology,PST
+particle swarm optimization,PSO
+particulate matter,PM
+partition theory,PT
+passive microwave devices,PMD
+passivity and dissipativity,PD
+patent policy,PP
+patenting,"patenting Research, patenting Technology"
+pathogenesis and antibiotic resistance,"Biomedical Engineering, Biotechnology, PAR"
+pattern formation,PF
+pattern recognition,PR
+patterned interfaces,PI
+pavement analysis and design,PAD
+pavement engineering,PE
+pavement geotechnics,PG
+pavement materials,"Advanced Materials, Materials Science, PM"
+pe-catalysis,PC
+pedagogy,"pedagogy Research, pedagogy Technology"
+pedestrian safety,PS
+penetration,"penetration Research, penetration Technology"
+peptide chemistry,PC
+peptides and proteins in diseases,PPD
+perception stack,PS
+performance engineering,PE
+performance modelling,PM
+peridynamics,"peridynamics Research, peridynamics Technology"
+perovskite,"perovskite Research, perovskite Technology"
+perovskite and dye-sensitized solar cells,"Clean Energy, PDSSC, Renewable Energy Systems"
+perovskite and organic solar photovoltaics,"Artificial Intelligence, Clean Energy, Machine Intelligence, POSP, Renewable Energy Systems"
+perovskite solar cell,"Clean Energy, PSC, Renewable Energy Systems"
+perovskite solar cells,"Clean Energy, PSC, Renewable Energy Systems"
+perovskites,"perovskites Research, perovskites Technology"
+personalized learning,"Artificial Intelligence, Machine Intelligence, PL"
+perturbative quantum chromodynamics,PQC
+pervious concrete,PC
+pesticides,"pesticides Research, pesticides Technology"
+pet degradation,PD
+petroleum engineering,PE
+petrology,"petrology Research, petrology Technology"
+pharmacology,"pharmacology Research, pharmacology Technology"
+phase change materials,"Advanced Materials, Materials Science, PCM"
+phase field modeling,PFM
+phase separation,PS
+phase transformation behavior of materials,"Advanced Materials, Materials Science, PTBM"
+phase transformations,PT
+phase-field models,PFM
+phenol,"phenol Research, phenol Technology"
+phenomenological modeling of ferroelectrics,PMF
+philosophy of language,PL
+phm,"phm Research, phm Technology"
+phononics,"phononics Research, phononics Technology"
+phonons,"phonons Research, phonons Technology"
+phosphorous containing polymers,"Artificial Intelligence, Machine Intelligence, PCP"
+phosphors,"phosphors Research, phosphors Technology"
+photo detectors,PD
+photo/electro-catalysis,PEC
+photobiology,"Biomedical Engineering, Biotechnology"
+photocatalysis,"photocatalysis Research, photocatalysis Technology"
+photocatalysis and nanoparticles,"Nanoscale Science, Nanotechnology, PN"
+photochemistry,"photochemistry Research, photochemistry Technology"
+photodetectors,"photodetectors Research, photodetectors Technology"
+photoelectrocatalysis,"photoelectrocatalysis Research, photoelectrocatalysis Technology"
+photoelectrochemical water splitting,PWS
+photoelectrochemistry,"photoelectrochemistry Research, photoelectrochemistry Technology"
+photogrammetry,"photogrammetry Research, photogrammetry Technology"
+photonics,"photonics Research, photonics Technology"
+photophysics,"photophysics Research, photophysics Technology"
+photoredox,"photoredox Research, photoredox Technology"
+photoredox catalysis,PC
+photosupercapacitors,"photosupercapacitors Research, photosupercapacitors Technology"
+photovoltaic,"Artificial Intelligence, Machine Intelligence"
+photovoltaics,"Artificial Intelligence, Machine Intelligence"
+physical chemistry,PC
+physical chemistry of macomolecules,PCM
+physical layer security,PLS
+physical metallurgy,PM
+physical metallurgy of steels,PMS
+physical organic chemistry,POC
+physical sicneces   magnetic resonancne,PSMR
+physicochemical,"physicochemical Research, physicochemical Technology"
+physics,"physics Research, physics Technology"
+physics of graphene and its multilayers,PGIM
+physiochemical treatments,PT
+physiological modelling,PM
+phytofluidics,"phytofluidics Research, phytofluidics Technology"
+phytomedicine,"phytomedicine Research, phytomedicine Technology"
+phytoremediation,"phytoremediation Research, phytoremediation Technology"
+piezoelectric materials,"Advanced Materials, Materials Science, PM"
+piezoelectric nanogenerator,"Nanoscale Science, Nanotechnology, PN"
+piezoelectrics,"piezoelectrics Research, piezoelectrics Technology"
+pile foundations,PF
+pinch & techno-economic analysis,PTEA
+plant biotechnology,"Biomedical Engineering, Biotechnology, PB"
+plant functional genomics,PFG
+plant image analysis,"Image Analysis, PIA, Visual Recognition"
+plant metabolomics,PM
+plant molecular biology,"Biomedical Engineering, Biotechnology, PMB"
+plant natural product biotechnology,"Biomedical Engineering, Biotechnology, PNPB"
+plant pathology,PP
+plant science,PS
+plant secondary metabolism,PSM
+plant tissue culture,PTC
+plant tissue culture engineering,PTCE
+plant water uptake,PWU
+plasma physics,PP
+plasma spraying,PS
+plasma technology,PT
+plasmodium biology,"Biomedical Engineering, Biotechnology, PB"
+plasmonics,"plasmonics Research, plasmonics Technology"
+plasmonics & metamaterials,"Advanced Materials, Materials Science, PM"
+plate girders,PG
+polarimetric sar,PS
+policy analytics,PA
+policy evaluation,PE
+polinsar,"polinsar Research, polinsar Technology"
+pollution abatement,PA
+polsar,"polsar Research, polsar Technology"
+polymer,"polymer Research, polymer Technology"
+polymer and carbon nanomaterials,"Advanced Materials, Materials Science, Nanoscale Science, Nanotechnology, PCN"
+polymer blends,PB
+polymer blends and alloys,PBA
+polymer chemistry,PC
+polymer nanocomposites,"Nanoscale Science, Nanotechnology, PN"
+polymer physics,PP
+polymer processing and characterization,PPC
+polymer reaction engineering,PRE
+polymer science,PS
+polymer science & engineering,PSE
+polymer science and engineering,PSE
+polymer solar cells,"Clean Energy, PSC, Renewable Energy Systems"
+polymer technology,PT
+polymeric biomaterials,"Advanced Materials, Biomedical Engineering, Biotechnology, Materials Science, PB"
+polymeric materials,"Advanced Materials, Materials Science, PM"
+polymeric nanofiberous membrane,"Nanoscale Science, Nanotechnology, PNM"
+polymers,"polymers Research, polymers Technology"
+polymers and composite materials,"Advanced Materials, Materials Science, PCM"
+polymorphism,"polymorphism Research, polymorphism Technology"
+popular culture,PC
+porous hofs,PH
+porous materials,"Advanced Materials, Materials Science, PM"
+porous media,PM
+porous media combustion,PMC
+porous mofs,PM
+porous organic frameworks,POF
+porous organic materials,"Advanced Materials, Materials Science, POM"
+porphyrin chemistry,PC
+positive psychology,PP
+post harvest technology,PHT
+post quantum cryptography,PQC
+potential energy surface,"Clean Energy, PES, Renewable Energy Systems"
+powder metallurgy,PM
+powder metallurgy & sintering,PMS
+power and energy system,"Clean Energy, PES, Renewable Energy Systems"
+power control centers,"Autonomous Systems, PCC, Robotics & Automation"
+power electronics,PE
+power electronics and drives,PED
+power electronics and electric drives,PEED
+power electronics applications to power,PEAP
+power quality improvement,PQI
+power system,PS
+power system analysis,PSA
+power system control,"Autonomous Systems, PSC, Robotics & Automation"
+power system monitoring,PSM
+power system optimization,PSO
+power system protection,PSP
+power system security analysis,PSSA
+power system state estimation,PSSE
+power systems,PS
+prebiotics,"Biomedical Engineering, Biotechnology"
+precipitation microphysics,PM
+precision machining,PM
+precoding,"precoding Research, precoding Technology"
+predictions in ungauged basins,PUB
+predictive analytics,PA
+preparation of block,PB
+prestresed concrete,PC
+prestressed and reinforced concrete design,PRCD
+pricing,"pricing Research, pricing Technology"
+pricing models in cloud,PMC
+printable and flexible electronics,PFE
+printable batteries,PB
+printed electronics,PE
+privacy,"privacy Research, privacy Technology"
+privacy and security,PS
+probabilistic machine learning,"Artificial Intelligence, Machine Intelligence, PML"
+probabilistic methods,PM
+probability and statistics,PS
+probiotics,"Biomedical Engineering, Biotechnology"
+proces simulation & control,"Autonomous Systems, PSC, Robotics & Automation"
+process biotechnology,"Biomedical Engineering, Biotechnology, PB"
+process control,"Autonomous Systems, PC, Robotics & Automation"
+process design and operation of membrane,PDOM
+process intensification,PI
+process intensifications,PI
+process modeling and simulation,PMS
+process optimization,PO
+process safety,PS
+process scale-up,PSU
+process systems engineering,PSE
+process systems engineering - fuel cell,"Clean Energy, PSEFC, Renewable Energy Systems"
+processing and characterization of ceramic,PCC
+processing machineries development,PMD
+product design,PD
+product development,PD
+production and operations management,POM
+productivity,"productivity Research, productivity Technology"
+program analysis and testing,PAT
+project,"project Research, project Technology"
+project finance,PF
+project management,PM
+prompt engineering,PE
+propulsion,"propulsion Research, propulsion Technology"
+prostate cancer,PC
+protein aggregation,PA
+protein and cell patterning,PCP
+protein bio-battery,"Biomedical Engineering, Biotechnology, Clean Energy, PBB, Renewable Energy Systems"
+protein biochemistry,"Biomedical Engineering, Biotechnology, PB"
+protein biochemistry and biophysics,"Biomedical Engineering, Biotechnology, PBB"
+protein chemistry,PC
+protein misfolding,PM
+protein nmr,PN
+protein's adsorption and aggregation,PSAA
+proteins,"proteins Research, proteins Technology"
+proteomics,"proteomics Research, proteomics Technology"
+protocol engineering,PE
+proton exchange membranes,PEM
+psychobiotics,"Biomedical Engineering, Biotechnology"
+psychology,"psychology Research, psychology Technology"
+public health,PH
+public health economics,PHE
+public private partnerships,PPP
+pulp & paper technology,PPT
+pulsar,"pulsar Research, pulsar Technology"
+pulsars,"pulsars Research, pulsars Technology"
+pv/t spectral splitters,PTSS
+pyrolysis,"pyrolysis Research, pyrolysis Technology"
+qnde,"qnde Research, qnde Technology"
+quality,"quality Research, quality Technology"
+quality and reliability engineerin,QRE
+quality control,"Autonomous Systems, QC, Robotics & Automation"
+quality engineering and management,QEM
+quality management,QM
+quantitative finance,QF
+quantitative microscopy,QM
+quantum & energy materials,"Advanced Materials, Clean Energy, Materials Science, QEM, Renewable Energy Systems"
+quantum calculus,QC
+quantum chaos,QC
+quantum communications,"QC, Telecommunications, Wireless Systems"
+quantum computation,QC
+quantum computing,QC
+quantum correlations,QC
+quantum cryptography,QC
+quantum devices,QD
+quantum dots,QD
+quantum entanglement,QE
+quantum field theory,QFT
+quantum foundations,QF
+quantum information,QI
+quantum information theory,QIT
+quantum magnetism,QM
+quantum many-body physics,QMBP
+quantum materials and superconductors,"Advanced Materials, Materials Science, QMS"
+quantum networks,"QN, Telecommunications, Wireless Systems"
+quantum optics,QO
+quantum optics        quantum computing,QOQC
+quantum photonics,QP
+quantum physics,QP
+quantum technology,QT
+quantum transport,QT
+quaternary geology,QG
+queueing &  reliability,QR
+r&d,RD
+radiation hard ics and devices,RHID
+radiative cooling,RC
+radical chemistry,RC
+radical reactions,RR
+radio astronomy,RA
+radio localization and sensing,RLS
+radio transients,RT
+radiogenomics,"radiogenomics Research, radiogenomics Technology"
+railway geotechnics,"Artificial Intelligence, Machine Intelligence, RG"
+rain attenuation,"Artificial Intelligence, Machine Intelligence, RA"
+raindrops,"Artificial Intelligence, Machine Intelligence"
+rainfall thresholds,"Artificial Intelligence, Machine Intelligence, RT"
+rainfall-runoff-sediment yield modelling,"Artificial Intelligence, Machine Intelligence, RRSYM"
+rainwater harvesting,"Artificial Intelligence, Machine Intelligence, RH"
+raman spectroscopy,RS
+random matrix theory,RMT
+random vector functional link (rvfl),RVFLR
+random vibration,RV
+ranking and selection,RS
+rapid prototyping,RP
+rapid prototyping and its applications,RPIA
+rapid prototyping and tooling/ 3d printing,RPT3P
+rarefied gas dynamics,RGD
+reaction dynamics,RD
+reaction engineering,RE
+reaction kinetics,RK
+reactive force field simulations,RFFS
+reactor modeling,RM
+real time vehicle exhaust emission,RTVEE
+reality and applications of machine learning,"Artificial Intelligence, Machine Intelligence, RAML"
+receptor biology,"Biomedical Engineering, Biotechnology, RB"
+reclaimed asphalt pavement,"Artificial Intelligence, Machine Intelligence, RAP"
+recombinant dna technology,RDT
+recommendation systems,RS
+recommender systems,RS
+recycled,"recycled Research, recycled Technology"
+recycled aggregate,RA
+recycled aggregate concrete,RAC
+recycling,"recycling Research, recycling Technology"
+recycling/recovery,RR
+reduced order modeling,ROM
+reflectance spectroscopy,RS
+refrigeration,"refrigeration Research, refrigeration Technology"
+regenerative biomaterials,"Advanced Materials, Biomedical Engineering, Biotechnology, Materials Science, RB"
+regenerative medicine,RM
+regression,"regression Research, regression Technology"
+reinforced concrete,RC
+reinforced concrete and cementitious,RCC
+reinforcement learning,"Artificial Intelligence, Machine Intelligence, RL"
+reionization,"reionization Research, reionization Technology"
+reliability,"reliability Research, reliability Technology"
+reliability analysis,RA
+reliability and risk assessment,RRA
+reliability based design,RBD
+reliability engineering,RE
+reliability theory,RT
+remanufacturing,"remanufacturing Research, remanufacturing Technology"
+remediation,"remediation Research, remediation Technology"
+remote lab,RL
+remote sensing,RS
+remote sensing & gis,RSG
+remote sensing and gis,RSG
+renewable chemical,RC
+renewable energy,"Clean Energy, RE, Renewable Energy Systems"
+renewable energy in agriculture,"Clean Energy, REA, Renewable Energy Systems"
+renewable energy integration,"Clean Energy, REI, Renewable Energy Systems"
+renewable energy systems,"Clean Energy, RES, Renewable Energy Systems"
+renewable fuels,"Clean Energy, RF, Renewable Energy Systems"
+renewable power,RP
+repair,"Artificial Intelligence, Machine Intelligence"
+representation learning,"Artificial Intelligence, Machine Intelligence, RL"
+reram,"reram Research, reram Technology"
+research (remote sensing,RRS
+reservoir geology,RG
+reservoir geomechanics,RG
+reservoir operation,RO
+resilient systems,RS
+resistive switching,RS
+resistive temperature detectors,RTD
+resource allocation,RA
+resource recovery,RR
+resource recovery from waste,RRFW
+resources and energy economics,"Clean Energy, REE, Renewable Energy Systems"
+respiratory disorders,RD
+responsible ai,"Artificial Intelligence, Machine Intelligence, RA"
+retaining structures,"Artificial Intelligence, Machine Intelligence, RS"
+retrofitting of steel structures,RSS
+reuse and recycle,RR
+reversible and quantum computing,RQC
+rf,"rf Research, rf Technology"
+rf circuits,RC
+rf mems,RM
+rf metamaterial inspired sensors,"Advanced Materials, Materials Science, RMIS"
+rheology,"rheology Research, rheology Technology"
+rheology of complex fluids,RCF
+riemannian geometry,RG
+risc-v soc,RVS
+river basin management,RBM
+river engineering,RE
+river mechanics,RM
+river science,RS
+riverine floods,RF
+rl,"rl Research, rl Technology"
+rna biology,"Biomedical Engineering, Biotechnology, RB"
+road safety,RS
+road user behaviour,RUB
+robotic & automation,"Autonomous Systems, RA, Robotics & Automation"
+robotic neurorehabilitation,"Autonomous Systems, RN, Robotics & Automation"
+robotics,"Autonomous Systems, Robotics & Automation"
+robotics and automation in agriculture,"Autonomous Systems, RAA, Robotics & Automation"
+robust control,"Autonomous Systems, RC, Robotics & Automation"
+rock mechanics,RM
+rolling element bearings,REB
+rotor dynamics,RD
+rough set theory,RST
+rough set theory and applications,RSTA
+rubber,"rubber Research, rubber Technology"
+rubber and tpes,RT
+rubber nano composites,"Nanoscale Science, Nanotechnology, RNC"
+rubber technology,RT
+rural development,RD
+rural roads,RR
+safety,"safety Research, safety Technology"
+safety management,SM
+saltwater intrusion,SI
+sampling,"sampling Research, sampling Technology"
+sams,"sams Research, sams Technology"
+sanitation,"sanitation Research, sanitation Technology"
+sanskrit computational linguistics,SCL
+sar remote sensing,SRS
+satellite observational analysis,SOA
+satellite oceanography,SO
+scheduling,"scheduling Research, scheduling Technology"
+schrodinger equation,SE
+scientific computations,"Computational Science, HPC, High-Performance Computing, Numerical Analysis, SC"
+scientific computing,SC
+sdn,"sdn Research, sdn Technology"
+sdn/nfv in 5g and beyond,SN5B
+seawater intrusion,SI
+secondary batteries,SB
+security,"security Research, security Technology"
+sediment transport,ST
+sedimentology,"sedimentology Research, sedimentology Technology"
+seepage,"seepage Research, seepage Technology"
+seismic,"seismic Research, seismic Technology"
+seismic design,SD
+seismic hazard,SH
+seismic hazard assessment,SHA
+seismic microzonation,SM
+seismic risk,SR
+seismic vulnerability,SV
+self compacting concrete,SCC
+self healing,SH
+self-assembly of amino acids,SAAA
+self-healing materials,"Advanced Materials, Materials Science, SHM"
+semiconducting oxide glasses,SOG
+semiconductor,"semiconductor Research, semiconductor Technology"
+semiconductor devices,SD
+semiconductors,"semiconductors Research, semiconductors Technology"
+sensing,"sensing Research, sensing Technology"
+sensing applications,SA
+sensor,"sensor Research, sensor Technology"
+sensor array signal processing,SASP
+sensor development,SD
+sensor fusion,SF
+sensor interface electronics,SIE
+sensors,"sensors Research, sensors Technology"
+sensors based on zno,SBOZ
+sensors for healthcare and environmental,SHE
+sensors( bio- and chemical),"Biomedical Engineering, Biotechnology, SBC"
+sensors-biomedical devices,"Biomedical Engineering, Biotechnology, SBD"
+separation processes & catalysis,SPC
+separation science,SS
+sers,"sers Research, sers Technology"
+service level agreement,SLA
+service life,SL
+service operations,SO
+services computing,SC
+services marketing,SM
+several complex variables,SCV
+shape control,"Autonomous Systems, Robotics & Automation, SC"
+shape memory,SM
+shm,"shm Research, shm Technology"
+shock wave dynamics,SWD
+si heterostructures,SH
+si nanodevices,"Nanoscale Science, Nanotechnology, SN"
+sic mosfet gate driver,SMGD
+side channel analysis,SCA
+side-channel attacks,SCA
+sige,"sige Research, sige Technology"
+sign language,SL
+signal and image processing,"Image Analysis, SIP, Visual Recognition"
+signal processing,SP
+signal processing and embedded systems,SPES
+signal transduction,ST
+silicate earth evolution,SEE
+silicon,"silicon Research, silicon Technology"
+silicon & glass micromachining,SGM
+silicon photonics,SP
+simulation,"simulation Research, simulation Technology"
+simulation optimization,SO
+simultaneous wireless information and,"SWI, Telecommunications, Wireless Systems"
+single cell / single molecule,SCSM
+single molecule imaging,SMI
+single molecule spectroscopy,SMS
+single source molecular precursors,SSMP
+single-molecule imaging,SMI
+sleep,"sleep Research, sleep Technology"
+slope stability,SS
+sloshing,"sloshing Research, sloshing Technology"
+sludge,"sludge Research, sludge Technology"
+small hydro,SH
+small hydro power,SHP
+small hydropower,SH
+small rna in acinetobacter baumannii,SRAB
+small-molecule antioxidants,SMA
+smart cell technology,SCT
+smart cities,SC
+smart grid,SG
+smart grid/ micro and its application,SGMIA
+smart grids,SG
+smart manufacturing,SM
+smart material and structure and nan,"Advanced Materials, Materials Science, SMSN"
+smart material structures,"Advanced Materials, Materials Science, SMS"
+smart materials,"Advanced Materials, Materials Science, SM"
+smart materials and structures,"Advanced Materials, Materials Science, SMS"
+smart nanomaterials,"Advanced Materials, Materials Science, Nanoscale Science, Nanotechnology, SN"
+smart structures,SS
+smat,"smat Research, smat Technology"
+smfret,"smfret Research, smfret Technology"
+social and organizational psychology,SOP
+social computing,SC
+social justice,SJ
+social media,SM
+social media analytics,SMA
+social network analysis,"SNA, Telecommunications, Wireless Systems"
+social protection,SP
+social psychology,SP
+socially responsible behavior and,SRB
+socio-economic,SE
+sociology of education,SE
+sociology of knowledge,SK
+sociology of science,SS
+sodium & magnesium ion batteries,SMIB
+sodium ion batteries and supercapacitors,SIBS
+sodium-ion batteries,SIB
+sodium-ion battery,"Clean Energy, Renewable Energy Systems, SIB"
+sofcs,"sofcs Research, sofcs Technology"
+soft active materials,"Advanced Materials, Materials Science, SAM"
+soft and active matter,SAM
+soft classification of,SC
+soft computing,SC
+soft computing applications to thydrology,SCAT
+soft condensed matter,SCM
+soft condensed matter physics,SCMP
+soft electronic,SE
+soft lithography,SL
+soft materials,"Advanced Materials, Materials Science, SM"
+soft matter,SM
+soft matter physics,SMP
+soft robotics,"Autonomous Systems, Robotics & Automation, SR"
+soft-computing and industrial automation,SCIA
+soft-computing techniques in,SCT
+software engineering,SE
+software-defined networking,"SDN, Telecommunications, Wireless Systems"
+soil,"soil Research, soil Technology"
+soil dynamics,SD
+soil image analysis,"Image Analysis, SIA, Visual Recognition"
+soil mechanics,SM
+soil quality,SQ
+soil reinforcement,SR
+soil science,SS
+soil science and plant nutrition,SSPN
+soil sensors,SS
+soil structure interaction,SSI
+soil-structure interaction,SSI
+sol-gel,SG
+solar cell,"Clean Energy, Renewable Energy Systems, SC"
+solar cells,"Clean Energy, Renewable Energy Systems, SC"
+solar cells and piezoelectric devices,"Clean Energy, Renewable Energy Systems, SCPD"
+solar desalination,"Clean Energy, Renewable Energy Systems, SD"
+solar energy,"Clean Energy, Renewable Energy Systems, SE"
+solar energy and other renewable energy,"Clean Energy, Renewable Energy Systems, SEORE"
+solar energy conversion,"Clean Energy, Renewable Energy Systems, SEC"
+solar energy harvesting and storage,"Clean Energy, Renewable Energy Systems, SEHS"
+solar fuels & devices,"Clean Energy, Renewable Energy Systems, SFD"
+solar physics,"Clean Energy, Renewable Energy Systems, SP"
+solar system,"Clean Energy, Renewable Energy Systems, SS"
+solar thermal,"Clean Energy, Renewable Energy Systems, ST"
+solar thermal energy conversion,"Clean Energy, Renewable Energy Systems, STEC"
+solid adsorbents,SA
+solid desiccant cooling,SDC
+solid electrolytes,SE
+solid mechanics,SM
+solid state chemistry,SSC
+solid state electrochemistry,SSE
+solid state physics,SSP
+solid waste,SW
+solid waste management,SWM
+solidification,"solidification Research, solidification Technology"
+solitons,"solitons Research, solitons Technology"
+solute transport,ST
+solution and solid state magnetic resonance,SSSMR
+solvation dynamics,SD
+solvent-free organic liquids,SFOL
+source apportionment,SA
+space flight vehicles guidance,SFVG
+space weather,SW
+spark plasma sintering,SPS
+sparse optimization,SO
+sparse representation theory,SRT
+spatial audio,SA
+spatial data science,SDS
+spatial modulation,SM
+spatio temporal modeling,STM
+special functions,SF
+special values of l-functions,SVLF
+spectral finite element method,SFEM
+spectral graph theory,SGT
+spectroscopy,"spectroscopy Research, spectroscopy Technology"
+speech / audio signal processing,SASP
+speech processing,SP
+speech signal processing,SSP
+speech synthesis,SS
+spiking neural networks,"SNN, Telecommunications, Wireless Systems"
+spin-orbit coupling,SOC
+spin-orbital excitations,SOE
+spintr,"spintr Research, spintr Technology"
+spintronic devices,SD
+spintronics,"spintronics Research, spintronics Technology"
+spr effect,SE
+spray forming modeling coating thin films,SFMCTF
+sprays,"sprays Research, sprays Technology"
+sprituality,"sprituality Research, sprituality Technology"
+sr isotopes,SI
+sram,"sram Research, sram Technology"
+state estimation,SE
+statistical computing,SC
+statistical data analysis,SDA
+statistical inference,SI
+statistical mechanics,SM
+statistical modeling,SM
+statistical modelling specialist | worked on,SMSWO
+statistical physics,SP
+statistical signal processing,SSP
+statistics,"statistics Research, statistics Technology"
+stealth materials,"Advanced Materials, Materials Science, SM"
+steel,"steel Research, steel Technology"
+steel design,SD
+steel structures,SS
+steel-concrete composites,SCC
+steelmaking and process modelling,SPM
+stem cell,SC
+stem cell biology,"Biomedical Engineering, Biotechnology, SCB"
+stem cells,SC
+stimuli-responsive,SR
+stochastic geometry,SG
+stochastic hydrology,SH
+stochastic mechanics,SM
+stochastic process,SP
+strainoptronics,"Artificial Intelligence, Machine Intelligence"
+strategic analysis,SA
+strategy,"strategy Research, strategy Technology"
+strategy-as-practice,SAP
+stratospheric ozone,SO
+streamflow forecasting,SF
+stress analysis,SA
+string theory,ST
+strong ground motion,SGM
+strong motion instrumentation,SMI
+strongly correlated electron system (kondo,SCESK
+structural & computational biology,"Biomedical Engineering, Biotechnology, SCB"
+structural analysis and design,SAD
+structural and functional applications,SFA
+structural and impact mechanics,SIM
+structural biology,"Biomedical Engineering, Biotechnology, SB"
+structural damage detection,SDD
+structural dynamics,SD
+structural engineering,SE
+structural equation modelling,SEM
+structural fire engineering,SFE
+structural geology,SG
+structural health monit,SHM
+structural health monitoring,SHM
+structural health monitoring and damage,SHMD
+structural identification,SI
+structural mechanics,SM
+structural nanocomposites,"Nanoscale Science, Nanotechnology, SN"
+structural reliability,SR
+structural safety,SS
+structural/ earthquake engineering,SEE
+structure elucidation of natural products,SENP
+structure property relationship,SPR
+structure property relationship in organic,SPRO
+structure-property relationship,SPR
+structures under earthquake and fire,SUEF
+sub-2nm devices,S2D
+submersible robotics,"Autonomous Systems, Robotics & Automation, SR"
+superabsorbent superhydrophobi materials,"Advanced Materials, Materials Science, SSM"
+superalloys,"superalloys Research, superalloys Technology"
+supercapacitor,"supercapacitor Research, supercapacitor Technology"
+supercapacitors,"supercapacitors Research, supercapacitors Technology"
+superconductivity,"superconductivity Research, superconductivity Technology"
+superconductivity and magnetsim,SM
+superconductors,"superconductors Research, superconductors Technology"
+supercritical fluids,SF
+superfinishing,"superfinishing Research, superfinishing Technology"
+superplasticity,"superplasticity Research, superplasticity Technology"
+supersonic and hypersonic flows,SHF
+supersonic mixing enhancement,SME
+supplementary cementitious,SC
+supply chain coordination and contract,"Artificial Intelligence, Machine Intelligence, SCCC"
+supply chain logistics,"Artificial Intelligence, Machine Intelligence, SCL"
+supply chain management,"Artificial Intelligence, Machine Intelligence, SCM"
+support vector machines,SVM
+supramolecular and materials chemistry,"Advanced Materials, Materials Science, SMC"
+supramolecular chemistry,SC
+supramolecular chirogenesis,SC
+supramolecular coordination chemistry,SCC
+supramolecular organic chemistry group,SOCG
+supramolecular polymers,SP
+surface acoustic wave device,SAWD
+surface chemistry,SC
+surface coating,SC
+surface coatings,SC
+surface engineering,SE
+surface engineering & coating,SEC
+surface engineering and coatings,SEC
+surface modification,SM
+surface mofification,SM
+surface science,SS
+surfaces and interfaces,SI
+surrogate model development for automotive,SMDA
+surrogate modelling,SM
+surrogate multi-objective optimizati,SMOO
+sustainability,"Artificial Intelligence, Machine Intelligence"
+sustainability and civil engineering,"Artificial Intelligence, Machine Intelligence, SCE"
+sustainable & precision agriculture,"Artificial Intelligence, Machine Intelligence, SPA"
+sustainable agricultural mechanization,"Artificial Intelligence, Machine Intelligence, SAM"
+sustainable agriculture,"Artificial Intelligence, Machine Intelligence, SA"
+sustainable architecture,"Artificial Intelligence, Machine Intelligence, SA"
+sustainable bioprocessing,"Artificial Intelligence, Biomedical Engineering, Biotechnology, Machine Intelligence, SB"
+sustainable building technology,"Artificial Intelligence, Machine Intelligence, SBT"
+sustainable catalysis,"Artificial Intelligence, Machine Intelligence, SC"
+sustainable chemistry,"Artificial Intelligence, Machine Intelligence, SC"
+sustainable construction materials,"Advanced Materials, Artificial Intelligence, Machine Intelligence, Materials Science, SCM"
+sustainable construction practices,"Artificial Intelligence, Machine Intelligence, SCP"
+sustainable development,"Artificial Intelligence, Machine Intelligence, SD"
+sustainable machining,"Artificial Intelligence, Machine Intelligence, SM"
+sustainable marketing,"Artificial Intelligence, Machine Intelligence, SM"
+sustainable materials & engineering design,"Advanced Materials, Artificial Intelligence, Machine Intelligence, Materials Science, SMED"
+sustainable metallurgy,"Artificial Intelligence, Machine Intelligence, SM"
+sustainable multi-modal transportation,"Artificial Intelligence, Machine Intelligence, SMMT"
+sustainable technologies for,"Artificial Intelligence, Machine Intelligence, ST"
+sustainable transport,"Artificial Intelligence, Machine Intelligence, ST"
+sustained donors of hydrogen sulfide,"Artificial Intelligence, Machine Intelligence, SDHS"
+swarm intelligence techniques,"Artificial Intelligence, Machine Intelligence, SIT"
+swelling-shrinkage behaviour of soil,SSBS
+switching systems,SS
+synchronization,"synchronization Research, synchronization Technology"
+synchrophasors,"synchrophasors Research, synchrophasors Technology"
+synchrotron and,"synchrotron and Research, synchrotron and Technology"
+syntax,"syntax Research, syntax Technology"
+synthesis,"synthesis Research, synthesis Technology"
+synthesis and characterization of materials,"Advanced Materials, Materials Science, SCM"
+synthesis and therapy,ST
+synthesis of nanomaterials including,"Advanced Materials, Materials Science, Nanoscale Science, Nanotechnology, SNI"
+synthetic biology,"Biomedical Engineering, Biotechnology, SB"
+synthetic coordination/bio-inorganic,"Biomedical Engineering, Biotechnology, SCBI"
+synthetic materials chemistry,"Advanced Materials, Materials Science, SMC"
+synthetic methodology,SM
+synthetic organic,SO
+synthetic organic chemistry,SOC
+synthetic organic chemistry and medicinal,SOCM
+synthetic polymer chemistry,SPC
+sysdl,"sysdl Research, sysdl Technology"
+system identification,SI
+systems analyses for sustainability,"Artificial Intelligence, Machine Intelligence, SAS"
+systems and control,"Autonomous Systems, Robotics & Automation, SC"
+systems biology,"Biomedical Engineering, Biotechnology, SB"
+systems neuroscience,SN
+systems science and philosophy,SSP
+tag,"tag Research, tag Technology"
+tailor-made specialty polymers via controlled,"Artificial Intelligence, Autonomous Systems, Machine Intelligence, Robotics & Automation, TMSPVC"
+tandem solar cells,"Clean Energy, Renewable Energy Systems, TSC"
+targeted drug delivery and biomedical,"Biomedical Engineering, Biotechnology, TDDB"
+task interdependence,TI
+taylor flow,TF
+tdp-43,T4
+tea,"tea Research, tea Technology"
+teacher education,TE
+teaching,"teaching Research, teaching Technology"
+technoeconomic,"technoeconomic Research, technoeconomic Technology"
+technology and knowledge,TK
+technology enhanced learning,"Artificial Intelligence, Machine Intelligence, TEL"
+technology management,TM
+technology management & sustainability,"Artificial Intelligence, Machine Intelligence, TMS"
+tectonics,"tectonics Research, tectonics Technology"
+telemedicine,"telemedicine Research, telemedicine Technology"
+television studies,"Image Analysis, TS, Visual Recognition"
+terahertz spectroscopy,TS
+terhertz spectroscopy and high harmonic,TSHH
+testing,"testing Research, testing Technology"
+testing and synthesis of reversible circuits,TSRC
+theoretical and computational chemistry,TCC
+theoretical computer science,TCS
+theoretical condensed matter physics,TCMP
+theoretical high energy physics,"Clean Energy, Renewable Energy Systems, THEP"
+theoretical linguistics,TL
+theoretical particle physics,TPP
+theory & simulations,TS
+theory of computation,TC
+theranostic systems,TS
+therapeutic ultrasound,TU
+thermal conversion processes,TCP
+thermal energy storage,"Clean Energy, Renewable Energy Systems, TES"
+thermal engineering,TE
+thermal fluids,TF
+thermal hydraulics,TH
+thermal hydraulics in nuclear and fuel cell,"Clean Energy, Renewable Energy Systems, THNFC"
+thermal lattice boltzmann method,TLBM
+thermal management,TM
+thermal management of electronics,TME
+thermal management systems,TMS
+thermal spray coating,TSC
+thermal spray processing,TSP
+thermal spraying,TS
+thermo hydraulics of nuclear reactors,THNR
+thermo-chemical water splitting,TCWS
+thermo-fluids,TF
+thermo-mechanical processing,TMP
+thermoacoustic instability,TI
+thermoacoustics,"thermoacoustics Research, thermoacoustics Technology"
+thermochemical cycles,TC
+thermochemical technologies,TT
+thermodynamics,"thermodynamics Research, thermodynamics Technology"
+thermoelectric,"thermoelectric Research, thermoelectric Technology"
+thermoelectric materials,"Advanced Materials, Materials Science, TM"
+thermoelectricity,"thermoelectricity Research, thermoelectricity Technology"
+thermoelectrics,"thermoelectrics Research, thermoelectrics Technology"
+thermomechnical simulation,TS
+thermophysical properties,TP
+thermoplastic composites,TC
+thin film,TF
+thin film instability,TFI
+thin film solid sate batteries,TFSSB
+thin film stability,TFS
+thin film transistors,TFT
+thin films,TF
+thin-walled structures,TWS
+thz communication,"TC, Telecommunications, Wireless Systems"
+time series,TS
+time series data mining,TSDM
+time-delay systems,TDS
+time-series analysis,TSA
+tissue engineering,TE
+tissue engineering and biomaterials,"Advanced Materials, Biomedical Engineering, Biotechnology, Materials Science, TEB"
+tissue/organ models,TOM
+tomographic sar,TS
+tomography,"tomography Research, tomography Technology"
+tomography error,TE
+tools for fluid structure interaction,TFSI
+topology optimization,TO
+toxicology,"toxicology Research, toxicology Technology"
+toxins,"toxins Research, toxins Technology"
+tpes and tpvs,TT
+trace contaminant removal,TCR
+trace contaminants,TC
+trace gases,TG
+traffic emission,TE
+traffic engineering,TE
+traffic flow analysis and modeling,TFAM
+traffic flow modeling,TFM
+traffic flow theory,TFT
+traffic operation and simulation,TOS
+traffic operations,TO
+traffic safety,TS
+transcripion,"transcripion Research, transcripion Technology"
+transfer processes,TP
+transformer,"transformer Research, transformer Technology"
+transgenic zebrafish,TZ
+transition,"transition Research, transition Technology"
+transition metal-catalysis,TMC
+transmitarray,"transmitarray Research, transmitarray Technology"
+transport,"transport Research, transport Technology"
+transport modelling,TM
+transport phenomena,TP
+transportation design,TD
+transportation engineering,TE
+transportation network modeling,"TNM, Telecommunications, Wireless Systems"
+transportation safety and,TS
+transportation systems,TS
+travel behaviour,TB
+triarylbismuth reagents,TR
+tribal languages of india,TLI
+triboelectric nanogenerator,"Nanoscale Science, Nanotechnology, TN"
+tribology,"tribology Research, tribology Technology"
+tribology and vibrations,TV
+triple-decker,TD
+trustworthy ai,"Artificial Intelligence, Machine Intelligence, TA"
+tuberculosis,"tuberculosis Research, tuberculosis Technology"
+tumor angiogenesis,TA
+tunable nanoplasmonic metadevices,"Nanoscale Science, Nanotechnology, TNM"
+tundish steelmaking,TS
+turan type inequalities,TTI
+turbomachinery,"turbomachinery Research, turbomachinery Technology"
+turbulence,"turbulence Research, turbulence Technology"
+turbulence modeling,TM
+turbulent convection,TC
+turbulent flows,TF
+two phase flow,TPF
+two-dimensional (2d) materials,"Advanced Materials, Materials Science, TD2M"
+two-phase flow,TPF
+two-phase flow and heat transfer,TPFHT
+uav applications,UA
+uav remote sensing,URS
+uhecr sources & properties,USP
+ultra high temperature ceramics,UHTC
+ultra high temperature ceramics and,UHTC
+ultra-precision finishing,UPF
+ultrafast  lasers and photonics,ULP
+ultrafast cooling,UC
+ultrafast cooling methods,UCM
+ultrafast devices,UD
+ultrafast magnetism,UM
+ultrafast spectroscopy,US
+ultrafast spectrosocpy,US
+ultrasonic,"ultrasonic Research, ultrasonic Technology"
+ultrasonic/ megasonic fields,UMF
+ultrasonics,"ultrasonics Research, ultrasonics Technology"
+ultrasound imaging,UI
+uncertainty modeling,"Artificial Intelligence, Machine Intelligence, UM"
+uncertainty quantification,"Artificial Intelligence, Machine Intelligence, UQ"
+uncertainty quantification & stochastic,"Artificial Intelligence, Machine Intelligence, UQS"
+underactuated hands,UH
+underground structures,US
+underwater acoustics,UA
+unsaturated soil mechanics,USM
+urban air quality,"Artificial Intelligence, Machine Intelligence, UAQ"
+urban air quality management,"Artificial Intelligence, Machine Intelligence, UAQM"
+urban climate,UC
+urban environmental planning,UEP
+urban floods,UF
+urban modelling,UM
+urban transport planning,UTP
+urban water,UW
+urban water systems,UWS
+urfc,"urfc Research, urfc Technology"
+use of frps in infrastructure,UFI
+user experience design,UED
+usm,"usm Research, usm Technology"
+uwb antenna,UA
+v2x,"v2x Research, v2x Technology"
+vaccine,"vaccine Research, vaccine Technology"
+valence fluctuation),VF
+value chain,"Artificial Intelligence, Machine Intelligence, VC"
+variable angle tow composites,VATC
+vascular ageing,VA
+vascular biology,"Biomedical Engineering, Biotechnology, VB"
+vehicle dynamics,VD
+ventilation,"ventilation Research, ventilation Technology"
+vibration,"vibration Research, vibration Technology"
+vibration & rotor dynamics,VRD
+vibration and control,"Autonomous Systems, Robotics & Automation, VC"
+vibration control,"Autonomous Systems, Robotics & Automation, VC"
+vibration control of mechatronic systems,"Autonomous Systems, Robotics & Automation, VCMS"
+vibrations,"vibrations Research, vibrations Technology"
+vibrations and control,"Autonomous Systems, Robotics & Automation, VC"
+vibrio,"vibrio Research, vibrio Technology"
+video understanding,VU
+virology,"virology Research, virology Technology"
+virology and vaccine development,VVD
+virtual reality,VR
+virtual teams,VT
+viscoelastic flows,VF
+viscoelasticity,"viscoelasticity Research, viscoelasticity Technology"
+visible light-based communications,"Telecommunications, VLBC, Wireless Systems"
+visual culture and narrative systems,VCNS
+vitrimer,"vitrimer Research, vitrimer Technology"
+vlc,"vlc Research, vlc Technology"
+vlsi,"vlsi Research, vlsi Technology"
+vlsi and signal processing,VSP
+vlsi circuit design,VCD
+vlsi circuits and systems,VCS
+vlsi design and testing,VDT
+vlsi image processing,"Image Analysis, VIP, Visual Recognition"
+vlsi signal processing,VSP
+vortex tube air separation,"Artificial Intelligence, Machine Intelligence, VTAS"
+vr/ar,VA
+walking,"walking Research, walking Technology"
+wams,"wams Research, wams Technology"
+warm mix asphalt,WMA
+wash,"wash Research, wash Technology"
+waste,"waste Research, waste Technology"
+waste and waste wat,WWW
+waste incineration etc,WIE
+waste plastics and solid wastes to fuels and,"Clean Energy, Renewable Energy Systems, WPSWF"
+waste utilization in construction,WUC
+waste valorization,WV
+waste water treatment,WWT
+wastewater,"wastewater Research, wastewater Technology"
+wastewater recycling and reuse,WRR
+wastewater remediation,WR
+wastewater treatment,WT
+wastewater treatment using constructed,WTUC
+watar-splitting,WS
+watehsed modelling,WM
+water,"water Research, water Technology"
+water & wastewater treatment,WWT
+water and sanitation,WS
+water and wastewater treatment,WWT
+water audit,WA
+water electrolysers,"Electrochemical Hydrogen, Hydrogen Generation, PEM Electrolysis, WE, Water Splitting"
+water governance,WG
+water management,WM
+water policy,WP
+water purification,WP
+water quality,WQ
+water quality and treatment,WQT
+water quality mapping,WQM
+water quality monitoring and surveillance,WQMS
+water remediation,WR
+water res. planning & management,WRPM
+water resources,WR
+water resources and remote sensing,WRRS
+water resources development &,WRD
+water resources engg,WRE
+water resources engineering,WRE
+water resources management,WRM
+water safety,WS
+water splitting,WS
+water treament,WT
+water treatment,WT
+water waves,WW
+watershed hydrology,WH
+watershed management,WM
+wave hydrodynamics,WH
+wave propagation,WP
+wave propagation aspects,WPA
+wavelet,"wavelet Research, wavelet Technology"
+wavelets,"wavelets Research, wavelets Technology"
+wavelets analysis,WA
+wax pattern,WP
+wear & tribology,WT
+wearable,"wearable Research, wearable Technology"
+wearable robots,"Autonomous Systems, Robotics & Automation, WR"
+web analytics,WA
+web social media,WSM
+weed management,WM
+weld processing,WP
+welding,"welding Research, welding Technology"
+welding and joining,WJ
+welding processes,WP
+wetting,"wetting Research, wetting Technology"
+white leds,WL
+wi-fi,WF
+wind energy,"Clean Energy, Renewable Energy Systems, WE"
+wind power,WP
+wire arc additive manufacturing,WAAM
+wire arc ded,WAD
+wireless & sensor networks,"Telecommunications, WSN, Wireless Systems"
+wireless and mobile communications,"Telecommunications, WMC, Wireless Systems"
+wireless communication,"Telecommunications, WC, Wireless Systems"
+wireless communication and signal,"Telecommunications, WCS, Wireless Systems"
+wireless communications,"Telecommunications, WC, Wireless Systems"
+wireless mesh networks,"Telecommunications, WMN, Wireless Systems"
+wireless networks,"Telecommunications, WN, Wireless Systems"
+wireless power transfer,"Telecommunications, WPT, Wireless Systems"
+wireless sensor networks,"Telecommunications, WSN, Wireless Systems"
+wisdom,"wisdom Research, wisdom Technology"
+women in management,WM
+women's health,WSH
+word combinatorics,WC
+work-family interface,WFI
+ws2,"ws2 Research, ws2 Technology"
+w–mo nanoalloy,"Nanoscale Science, Nanotechnology, WMN"
+x-ray binaries,XRB
+x-ray crystallography,XRC
+x-ray detectors,XRD
+xafs,"xafs Research, xafs Technology"
+xfem,"xfem Research, xfem Technology"
+xr,"xr Research, xr Technology"
+yagi-uda antennas,YUA
+yeast prions,YP
+zebrafish models,ZM

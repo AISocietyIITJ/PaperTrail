@@ -11,8 +11,8 @@ from src.logger import logger
 script_dir = os.path.dirname(os.path.abspath(__file__))
 file_path = os.path.join(script_dir, "../../../data/interests_with_aliases.csv")
  
-INDEX_NAME = "academic-interest"
-VECTOR_DIMENSION = 1024 
+INDEX_NAME = "interest-granite-125m"
+VECTOR_DIMENSION = 768 
  
  
 def gen_res_emb_ingestion():
@@ -40,7 +40,7 @@ def gen_res_emb_ingestion():
     df['Combined_Text'] = df['Interest'].fillna('') + ": " + df['Aliases'].fillna('')
  
     logger.info("Building sentence embeddings")
-    model = SentenceTransformer("Qwen/Qwen3-Embedding-0.6B")
+    model = SentenceTransformer("ibm-granite/granite-embedding-125m-english")
     
     embeddings = model.encode(df['Combined_Text'].tolist(), normalize_embeddings=True)
     vectors_to_upsert = []

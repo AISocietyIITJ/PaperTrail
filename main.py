@@ -10,8 +10,8 @@ import yaml
 from src.usecase_2.embedding.generate_alias import generate_phrase
 from src.usecase_2.embedding.generate_embedding import gen_res_emb_ingestion
 from src.usecase_2.embedding.generate_embedding_prof import gen_prof_emb_ingestion
-from src.usecase_2.ingestion.load_proffesor import ingest_proff_connect_edges
-from src.usecase_2.ingestion.load_reaseach_node import ingest_research_node
+from src.usecase_2.ingestion.load_professor import ingest_proff_connect_edges
+from src.usecase_2.ingestion.load_research_node import ingest_research_node
 from src.usecase_1.build_graph import assemble_graph
 from src.usecase_1.candidate_edges import generate_candidate_edges
 from src.usecase_1.data_prep import prepare_dataset as prepare_reading_path_data
@@ -47,11 +47,6 @@ def get_reading_path(query: str, config_path="config.yaml"):
 
 def setup_academic_profiles_pipeline():
     """Use case 2: run setup, generating aliases, embeddings, and ingesting nodes/edges."""
-    from src.usecase_2.embedding.generate_alias import generate_phrase
-    from src.usecase_2.embedding.gen_interest_no_alias import gen_res_emb_ingestion
-    from src.usecase_2.embedding.generate_embedding_prof import gen_prof_emb_ingestion
-    from src.usecase_2.ingestion.load_proffesor import ingest_proff_connect_edges
-    from src.usecase_2.ingestion.load_reaseach_node import ingest_research_node
 
     print("\n" + "=" * 60)
     print("PaperTrail Academic Profiles Setup (Use Case 2)")
@@ -64,7 +59,7 @@ def setup_academic_profiles_pipeline():
     gen_res_emb_ingestion()
 
     print("[3/5] Generating professor embeddings...")
-    gen_prof_emb_ingestion()
+    # gen_prof_emb_ingestion()
 
     print("[4/5] Ingesting research nodes...")
     ingest_research_node()
@@ -86,10 +81,6 @@ def find_academic_profiles(
     send ``resume_text`` (or omit both) so the query works without access to
     the server filesystem.
     """
-    from src.usecase_2.local_llm.testing import get_interest_topics
-    from src.usecase_2.utils.get_prof_info import query_graph_db
-    from src.usecase_2.utils.vec_query_search import search_vector_db
-    from src.usecase_2.utils.parsing_resume import extract_text_from_pdf
     
     if resume_text is None:
         resume_text = extract_text_from_pdf(resume_path) if resume_path else ""

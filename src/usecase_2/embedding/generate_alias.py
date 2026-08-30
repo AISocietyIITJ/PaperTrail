@@ -5,7 +5,7 @@ import re
 from src.logger import logger
  
 script_dir = os.path.dirname(os.path.abspath(__file__))
-csv_path = os.path.join(script_dir, "../../../data/professor_updated1.csv")
+csv_path = os.path.join(script_dir, "../../../data/professor_all.csv")
 save_path = os.path.join(script_dir, "../../../data/interests_with_aliases.csv")
  
  
