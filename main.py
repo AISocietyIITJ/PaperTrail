@@ -18,7 +18,7 @@ from src.usecase_1.data_prep import prepare_dataset as prepare_reading_path_data
 from src.usecase_1.direction import assign_edge_directions
 from src.usecase_1.embed import generate_embeddings as generate_reading_path_embeddings
 from src.usecase_1.query import generate_path_neo4j, load_neo4j_driver
-from src.usecase_2.local_llm.extractor import get_interest_topics
+from src.usecase_2.local_llm.testing import get_interest_topics
 from src.usecase_2.utils.get_prof_info import query_graph_db
 from src.usecase_2.utils.vec_query_search import search_vector_db
 from src.usecase_2.utils.parsing_resume import extract_text_from_pdf
