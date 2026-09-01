@@ -1,12 +1,12 @@
 const API_BASE = import.meta.env.VITE_API_BASE;
 
-export async function getResearchPath(query, maxHops = 3) {
-  const response = await fetch(`${API_BASE}/usecase1/get-reading-path`, {
+export async function getStructuredPath(query) {
+  const response = await fetch(`${API_BASE}/api/structured-path`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ query_str: query, config_path: "config.yaml" })
   });
-  if (!response.ok) throw new Error('Failed to fetch research path');
+  if (!response.ok) throw new Error('Failed to fetch structured path');
   return response.json();
 }
 

@@ -17,7 +17,7 @@ from src.usecase_1.candidate_edges import generate_candidate_edges
 from src.usecase_1.data_prep import prepare_dataset as prepare_reading_path_data
 from src.usecase_1.direction import assign_edge_directions
 from src.usecase_1.embed import generate_embeddings as generate_reading_path_embeddings
-from src.usecase_1.query import generate_path_neo4j, load_neo4j_driver
+from src.usecase_1.query_pipeline import generate_reading_path as generate_structured_path
 from src.usecase_2.local_llm.testing import get_interest_topics
 from src.usecase_2.utils.get_prof_info import query_graph_db
 from src.usecase_2.utils.vec_query_search import search_vector_db
@@ -37,12 +37,7 @@ def generate_reading_path_pipeline(config_path="config.yaml"):
 
 def get_reading_path(query: str, config_path="config.yaml"):
     """Use case 1: return a JSON-ready foundational reading path."""
-
-    config, driver, model = load_neo4j_driver(config_path)
-    try:
-        return generate_path_neo4j(query, driver, model, max_hops=config["query"]["max_hops"])
-    finally:
-        driver.close()
+    return generate_structured_path(query)
 
 
 def setup_academic_profiles_pipeline():
@@ -206,14 +201,11 @@ if __name__ == "__main__":
         ingest_reading_path_to_neo4j(args.config)
         
     elif args.query_reading:
-        path = get_reading_path(args.query_reading, args.config)
         print(f"\n=================== NEO4J READING PATH FOR: '{args.query_reading}' ===================")
-        nodes = path.get("nodes", []) if isinstance(path, dict) else (path or [])
-        if not nodes:
+        # The function itself prints the steps, but we can also capture the returned list
+        path = get_reading_path(args.query_reading, args.config)
+        if not path:
             print("No matching path found in domain subgraph.")
-        else:
-            for r in nodes:
-                print(f"[Hop {r['hop_distance']}] {r['title']} ({r['published_date']})")
         print("===================================================================================\n")
     elif args.run_academic_profiles_setup:
         setup_academic_profiles_pipeline()
