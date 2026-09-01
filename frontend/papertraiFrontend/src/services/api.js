@@ -1,12 +1,12 @@
-const API_BASE = 'http://10.36.16.97:8000';
+const API_BASE = import.meta.env.VITE_API_BASE;
 
-export async function getResearchPath(query, maxHops = 3) {
-  const response = await fetch(`${API_BASE}/usecase1/get-reading-path`, {
+export async function getStructuredPath(query) {
+  const response = await fetch(`${API_BASE}/api/structured-path`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ query_str: query, config_path: "config.yaml" })
   });
-  if (!response.ok) throw new Error('Failed to fetch research path');
+  if (!response.ok) throw new Error('Failed to fetch structured path');
   return response.json();
 }
 
@@ -36,7 +36,7 @@ export async function getFacultyMatches(resumeFile, interests) {
       ? prof.affiliation.split(' ').map(n => n.charAt(0).toUpperCase() + n.slice(1)).join(' ')
       : "Affiliation Unknown",
     matchScore: Number(prof.rank_score) || 0,
-    summary: `Strongly matches your profile based on shared interests: ${prof.matched_interests ? prof.matched_interests.join(', ') : 'N/A'}. They have an h-index of ${prof.h_index} and ${prof.cited_by} total citations.`,
+    summary: `Strongly matches your profile based on shared interests: ${prof.matched_topics ? prof.matched_topics.map(t => t.topic_name).join(', ') : 'N/A'}. They have an h-index of ${prof.h_index} and ${prof.cited_by} total citations.`,
     evidencePapers: [], // Backend does not return individual evidence papers yet
     profileUrl: prof.profile_url
   }));

@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import QueryInputBar from '../components/shared/QueryInputBar';
-import PathGraphCanvas from '../components/research-path/PathGraphCanvas';
+import StructuredPathTimeline from '../components/research-path/StructuredPathTimeline';
 import PaperDetailDrawer from '../components/shared/PaperDetailDrawer';
 import EmptyState from '../components/shared/EmptyState';
-import { getResearchPath } from '../services/api';
+import { getStructuredPath } from '../services/api';
 import { Map } from 'lucide-react';
 import '../components/research-path/research-path.css';
 
@@ -22,7 +22,7 @@ export default function ResearchPath() {
     setHasSearched(true);
     
     try {
-      const result = await getResearchPath(query);
+      const result = await getStructuredPath(query);
       setData(result);
     } catch (err) {
       console.error(err);
@@ -33,12 +33,7 @@ export default function ResearchPath() {
 
   const handleNodeClick = (paper) => {
     setSelectedPaper(paper);
-    
-    // Find the edge leading OUT of this node to show its connection
-    if (data) {
-      const edge = data.edges.find(e => e.src === paper.nodeIdx);
-      setDrawerEdge(edge || null);
-    }
+    setDrawerEdge(null); // No edge info needed for simple vertical timeline
     
     setIsDrawerOpen(true);
   };
@@ -62,7 +57,7 @@ export default function ResearchPath() {
       )}
 
       {!isLoading && data && (
-        <PathGraphCanvas data={data} onNodeClick={handleNodeClick} />
+        <StructuredPathTimeline data={data} onNodeClick={handleNodeClick} />
       )}
       
       {!isLoading && hasSearched && !data && (
