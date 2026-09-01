@@ -10,45 +10,21 @@ import yaml
 from src.usecase_2.embedding.generate_alias import generate_phrase
 from src.usecase_2.embedding.generate_embedding import gen_res_emb_ingestion
 from src.usecase_2.embedding.generate_embedding_prof import gen_prof_emb_ingestion
-from src.usecase_2.ingestion.load_proffesor import ingest_proff_connect_edges
-from src.usecase_2.ingestion.load_reaseach_node import ingest_research_node
+from src.usecase_2.ingestion.load_professor import ingest_proff_connect_edges
+from src.usecase_2.ingestion.load_research_node import ingest_research_node
 from src.usecase_1.build_graph import assemble_graph
 from src.usecase_1.candidate_edges import generate_candidate_edges
 from src.usecase_1.data_prep import prepare_dataset as prepare_reading_path_data
 from src.usecase_1.direction import assign_edge_directions
 from src.usecase_1.embed import generate_embeddings as generate_reading_path_embeddings
 from src.usecase_1.query import generate_path_neo4j, load_neo4j_driver
-from src.usecase_2.local_llm.extractor import get_interest_topics
+from src.usecase_2.local_llm.testing import get_interest_topics
 from src.usecase_2.utils.get_prof_info import query_graph_db
 from src.usecase_2.utils.vec_query_search import search_vector_db
 from src.usecase_2.utils.parsing_resume import extract_text_from_pdf
 from src.usecase_1.ingest_neo4j import ingest_to_neo4j as ingest_reading_path_to_neo4j
-
-def generate_reading_path_pipeline(config_path="config.yaml"):
-    """Run the complete data prep and graph building pipeline."""
-    
-import pandas as pd
-from pinecone import Pinecone
-from src.config import PINECONE_API_KEY
-from sentence_transformers import SentenceTransformer
-import yaml
-
-from src.usecase_2.embedding.generate_alias import generate_phrase
-from src.usecase_2.embedding.generate_embedding import gen_res_emb_ingestion
-from src.usecase_2.embedding.generate_embedding_prof import gen_prof_emb_ingestion
-from src.usecase_2.ingestion.load_proffesor import ingest_proff_connect_edges
-from src.usecase_2.ingestion.load_reaseach_node import ingest_research_node
-from src.usecase_1.build_graph import assemble_graph
-from src.usecase_1.candidate_edges import generate_candidate_edges
-from src.usecase_1.data_prep import prepare_dataset as prepare_reading_path_data
-from src.usecase_1.direction import assign_edge_directions
-from src.usecase_1.embed import generate_embeddings as generate_reading_path_embeddings
-from src.usecase_1.query import generate_path_neo4j, load_neo4j_driver
-from src.usecase_2.local_llm.extractor import get_interest_topics
-from src.usecase_2.utils.get_prof_info import query_graph_db
-from src.usecase_2.utils.vec_query_search import search_vector_db
-from src.usecase_2.utils.parsing_resume import extract_text_from_pdf
-from src.usecase_1.ingest_neo4j import ingest_to_neo4j as ingest_reading_path_to_neo4j
+from src.usecase_3.document_setter import docs_setter
+from src.usecase_3.reranker import return_reranked_docs
 
 def generate_reading_path_pipeline(config_path="config.yaml"):
     """Run the complete data prep and graph building pipeline."""
@@ -71,12 +47,6 @@ def get_reading_path(query: str, config_path="config.yaml"):
 
 def setup_academic_profiles_pipeline():
     """Use case 2: run setup, generating aliases, embeddings, and ingesting nodes/edges."""
-    from src.usecase_2.embedding.generate_alias import generate_phrase
-    from src.usecase_2.embedding.gen_interest_no_alias import gen_res_emb_ingestion
-    from src.usecase_2.embedding.gen_interest_no_alias import gen_res_emb_ingestion
-    from src.usecase_2.embedding.generate_embedding_prof import gen_prof_emb_ingestion
-    from src.usecase_2.ingestion.load_proffesor import ingest_proff_connect_edges
-    from src.usecase_2.ingestion.load_reaseach_node import ingest_research_node
 
     print("\n" + "=" * 60)
     print("PaperTrail Academic Profiles Setup (Use Case 2)")
@@ -89,7 +59,7 @@ def setup_academic_profiles_pipeline():
     gen_res_emb_ingestion()
 
     print("[3/5] Generating professor embeddings...")
-    gen_prof_emb_ingestion()
+    # gen_prof_emb_ingestion()
 
     print("[4/5] Ingesting research nodes...")
     ingest_research_node()
@@ -111,10 +81,6 @@ def find_academic_profiles(
     send ``resume_text`` (or omit both) so the query works without access to
     the server filesystem.
     """
-    from src.usecase_2.local_llm.testing import get_interest_topics
-    from src.usecase_2.utils.get_prof_info import query_graph_db
-    from src.usecase_2.utils.vec_query_search import search_vector_db
-    from src.usecase_2.utils.parsing_resume import extract_text_from_pdf
     
     if resume_text is None:
         resume_text = extract_text_from_pdf(resume_path) if resume_path else ""
@@ -160,8 +126,22 @@ def recommend_papers(query: str, top_n: int = 5, config_path="config.yaml"):
     index = pc.Index(pinecone_index)
     
     # Query pinecone with candidate buffer to account for missing/filtered nodes
-    fetch_k = max(top_n * 3, 20)
-    search_res = index.query(vector=query_vector, top_k=fetch_k, include_metadata=False)
+    fetch_k = max(top_n * 3, 30)
+    search_res = index.query(vector=query_vector, top_k=fetch_k, include_metadata=True)
+
+    if not search_res.matches:
+        return []
+
+    docs = docs_setter(search_res.matches)
+    final_formatted_docs = [l[1] for l in docs]
+    titles = [l[0] for l in docs]
+
+    top_n_docs_and_indices= return_reranked_docs(query, final_formatted_docs, top_n)
+
+    recommended_docs= top_n_docs_and_indices[1]
+    recommended_doc_indices= top_n_docs_and_indices[0]
+
+    recommended_doc_titles= [titles[i] for i in recommended_doc_indices]
     
     interim_path = config["paths"]["interim_data"]
     if not os.path.exists(interim_path):
@@ -170,7 +150,8 @@ def recommend_papers(query: str, top_n: int = 5, config_path="config.yaml"):
     df_papers = pd.read_parquet(interim_path)
     
     results = []
-    for match in search_res.matches:
+    for idx in recommended_doc_indices:
+        match = search_res.matches[idx]
         try:
             node_idx = int(match.id)
         except ValueError:

@@ -1,0 +1,68 @@
+.structured-timeline-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.timeline-item {
+  display: flex;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.timeline-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 1.5rem;
+}
+
+.step-circle {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: var(--route-blue, #4f46e5);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-family: var(--font-mono, monospace);
+  flex-shrink: 0;
+  z-index: 2;
+}
+
+.step-line {
+  width: 2px;
+  background-color: var(--border-color, #e5e7eb);
+  flex-grow: 1;
+  margin-top: 0.5rem;
+  margin-bottom: -1rem; /* overlap with next margin */
+}
+
+.timeline-content {
+  flex-grow: 1;
+  cursor: pointer;
+}
+
+.timeline-content.paper-node {
+  /* Inherits from research-path.css but we can override widths if needed */
+  width: 100%;
+}
+
+.node-citations {
+  font-size: 0.85rem;
+  color: var(--graphite-600, #4b5563);
+  font-weight: 500;
+}
+
+.node-abstract-snippet {
+  font-size: 0.9rem;
+  color: var(--graphite-600, #4b5563);
+  margin-top: 0.75rem;
+  line-height: 1.4;
+}
