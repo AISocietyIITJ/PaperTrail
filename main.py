@@ -81,6 +81,8 @@ def find_academic_profiles(
         resume_text = extract_text_from_pdf(resume_path) if resume_path else ""
 
     interests = get_interest_topics(query, resume_text)
+    if interests is None:
+        return None
     if not interests:
         # The local LLM can occasionally omit its expected JSON fields.  The
         # request query is still a useful semantic-search input, so do not
