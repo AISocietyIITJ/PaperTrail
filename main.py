@@ -36,10 +36,10 @@ def generate_reading_path_pipeline(config_path="config.yaml"):
     """Run the complete data prep and graph building pipeline."""
     
     prepare_reading_path_data(config_path)
-    #generate_reading_path_embeddings(config_path)
-    # generate_candidate_edges(config_path)
-    # assign_edge_directions(config_path)
-    # assemble_graph(config_path)
+    generate_reading_path_embeddings(config_path)
+    generate_candidate_edges(config_path)
+    assign_edge_directions(config_path)
+    assemble_graph(config_path)
 
 def get_reading_path(query: str, config_path="config.yaml"):
     """Use case 1: return a JSON-ready foundational reading path."""
@@ -140,22 +140,31 @@ def recommend_papers(query:str, top_n: int = 5, config_path="config.yaml"):
     final_formatted_docs= [l[1] for l in docs_setter(search_res.matches)]
     titles=[l[0] for l in docs_setter(search_res.matches)]
 
-    docs = docs_setter(search_res.matches)
-    final_formatted_docs = [l[1] for l in docs]
-    titles = [l[0] for l in docs]
+    top_n_docs_and_indices= return_reranked_docs(query_fin,final_formatted_docs)
 
-    top_n_docs_and_indices= return_reranked_docs(query, final_formatted_docs, top_n)
-
-    recommended_docs= top_n_docs_and_indices[1]
+    # recommended_docs= top_n_docs_and_indices[1]
+    # print(f"Length of recommended docs:{len(recommended_docs)}")
     recommended_doc_indices= top_n_docs_and_indices[0]
+    print(f"Length of recommended docs:{len(recommended_doc_indices)}")
 
     recommended_doc_titles= [titles[i] for i in recommended_doc_indices]
+    # print(recommended_doc_titles)
+
+    print(f"Length of recommended titles:{len(recommended_doc_titles)}")
+
+    sim_scores= [next((match.score for match in search_res.matches if match.metadata['title'] == title),0.0) for title in recommended_doc_titles]
+
+    title_to_score={
+            title : sc
+
+            for (title,sc) in zip(recommended_doc_titles,sim_scores)
+    }
     
     interim_path = config["paths"]["interim_data"]
     if not os.path.exists(interim_path):
         return []
 
-    df_papers = pd.read_parquet(interim_path)
+    df_papers = pd.read_parquet(interim_path, engine="pyarrow")
     
     results = []
     for title in recommended_doc_titles:
@@ -166,6 +175,7 @@ def recommend_papers(query:str, top_n: int = 5, config_path="config.yaml"):
 
         matched_df = df_papers[df_papers["title"] == title]
         if matched_df.empty:
+            print("Empty")
             continue
 
         paper_info = matched_df.iloc[0]
@@ -176,7 +186,7 @@ def recommend_papers(query:str, top_n: int = 5, config_path="config.yaml"):
             pub_date = pub_date.split(" ")[0]
 
         results.append({
-            # "score": float(match.score),
+            "score": float(title_to_score[title]),
             "title": str(paper_info.get("title", "")),
             "published_date": pub_date,
             "abstract": str(paper_info.get("abstract", "")),
@@ -243,13 +253,13 @@ if __name__ == "__main__":
                 print("-"*60)
                 
     elif args.recommend_papers:
-        gc.collect()
-        torch.cuda.empty_cache()
+        # gc.collect()
+        # torch.cuda.empty_cache()
         print(f"\n=================== PAPER RECOMMENDATIONS FOR: '{args.recommend_papers}' ===================")
         recs = recommend_papers(args.recommend_papers, top_n=args.top_n, config_path=args.config)
         for i, rec in enumerate(recs, 1):
             print(f"\n[{i}] {rec['title']}")
-            print(f"Date: {str(rec['published_date']).split('T')[0]} ")
+            print(f"Date: {str(rec['published_date']).split('T')[0]} | Similarity Score: {rec['score']:.4f}")
             # print a snippet of abstract
             abstract_snippet = (rec['abstract'][:200] + '...') if len(str(rec['abstract'])) > 200 else rec['abstract']
             print(f"Abstract: {abstract_snippet}")
@@ -257,4 +267,3 @@ if __name__ == "__main__":
     else:
         parser.print_help()
 
-# | Similarity Score: {rec['score']:.4f}

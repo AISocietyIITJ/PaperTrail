@@ -1,9 +1,9 @@
-import traceback
+# import traceback
 def concatenate_title_abstract(metadata):
     title = metadata.get('title', '') if metadata else ''
     abstract = metadata.get('summary', metadata.get('abstract', '')) if metadata else ''
 
-    formatted_doc = f"Title:{title}\nAbstract:{abstract}"
+    formatted_doc= f"Title:{title}\nAbstract:{abstract}"
 
     return [title, formatted_doc]
 
