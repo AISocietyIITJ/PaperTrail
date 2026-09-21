@@ -1,10 +1,12 @@
 import torch
 from transformers import AutoModel, AutoTokenizer, AutoModelForCausalLM
 import numpy as np
-# import gc
+import gc
 
 tokenizer = AutoTokenizer.from_pretrained("Qwen/Qwen3-Reranker-0.6B", padding_side='left')
-model = AutoModelForCausalLM.from_pretrained("Qwen/Qwen3-Reranker-0.6B", torch_dtype= torch.bfloat16).eval()
+model = AutoModelForCausalLM.from_pretrained("Qwen/Qwen3-Reranker-0.6B", torch_dtype= torch.bfloat16).to('cuda')
+
+model.eval()
 
 token_false_id = tokenizer.convert_tokens_to_ids("no")
 token_true_id = tokenizer.convert_tokens_to_ids("yes")
@@ -22,13 +24,18 @@ def format_instruction(instruction, query, doc):
     return output
 
 def process_inputs(pairs):
+    if not pairs:
+        raise ValueError(
+            "process_inputs received an empty list of pairs! Ensure candidate"
+            " documents are not empty."
+        )
+    formatted_pairs = [f"{prefix}{p}{suffix}" for p in pairs]
+
     inputs = tokenizer(
-        pairs, padding=True, truncation=True,
-        return_attention_mask=True, max_length=1024
+        formatted_pairs, padding=True, truncation=True,
+        max_length=384,return_tensors="pt"
     )
-    for i, ele in enumerate(inputs['input_ids']):
-        inputs['input_ids'][i] = prefix_tokens + ele + suffix_tokens
-    inputs = tokenizer.pad(inputs, padding=True, return_tensors="pt", max_length=max_length)
+
     for key in inputs:
         inputs[key] = inputs[key].to(model.device)
     return inputs
@@ -36,32 +43,55 @@ def process_inputs(pairs):
 @torch.no_grad()
 def compute_logits(inputs, **kwargs):
     batch_scores = model(**inputs).logits[:, -1, :]
+
     true_vector = batch_scores[:, token_true_id]
     false_vector = batch_scores[:, token_false_id]
+
     batch_scores = torch.stack([false_vector, true_vector], dim=1)
     batch_scores = torch.nn.functional.log_softmax(batch_scores, dim=1)
+
     scores = batch_scores[:, 1].exp().tolist()
+
     return scores
 
 
-def return_reranked_docs(query, documents, top_n=5):        
+def return_reranked_docs(query, documents,top_n=5,batch_size=8): 
+    print(f"DEBUG: Query='{query[:30]}...' | Documents Count={len(documents)}")     
+    if not documents:
+        print(
+            f"[WARNING] Skipping query '{query[:30]}...' because candidate list is"
+            " empty."
+        )
+        return ([], [], [])
+    
     task = 'Given a web search query, retrieve relevant passages that answer the query'
 
     pairs = [format_instruction(task, query, doc) for doc in documents]
     print(f"Length of pairs:{len(pairs)}")
 
+    reranked_scores_fin=[]
+
     with torch.no_grad():
         with torch.autocast('cuda'):
-            inputs = process_inputs(pairs)
-            reranked_scores = compute_logits(inputs)
+            for i in range(0,len(pairs),batch_size):
+                batch_pairs=pairs[i:i+ batch_size]
+                if not batch_pairs:
+                    continue
 
-            # gc.collect()
-            # torch.cuda.empty_cache()
-    print(f"DEBUG: Reranker scores count = {len(reranked_scores)}")
+                batch_inputs = process_inputs(batch_pairs)
+                batch_reranked_scores = compute_logits(batch_inputs)
 
-    top_n_indices= np.argsort(np.array(reranked_scores))[::-1][:top_n]
+                reranked_scores_fin.extend(batch_reranked_scores)
+
+                del batch_inputs,batch_reranked_scores
+
+    gc.collect()
+    torch.cuda.empty_cache()
+    print(f"DEBUG: Reranker scores count = {len(reranked_scores_fin)}")
+
+    top_n_indices= np.argsort(np.array(reranked_scores_fin))[::-1][:top_n].tolist()
 
     top_n_reranked_docs= [documents[i] for i in top_n_indices]
     print(f"Length of top_n_reranked:{len(top_n_reranked_docs)}")
 
-    return (top_n_indices,top_n_reranked_docs)
+    return (top_n_indices,top_n_reranked_docs,reranked_scores_fin)

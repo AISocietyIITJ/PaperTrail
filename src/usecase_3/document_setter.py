@@ -1,7 +1,7 @@
 # import traceback
 def concatenate_title_abstract(metadata):
-    title = metadata.get('title', '') if metadata else ''
-    abstract = metadata.get('summary', metadata.get('abstract', '')) if metadata else ''
+    title = metadata['title']
+    abstract= metadata['abstract']
 
     formatted_doc= f"Title:{title}\nAbstract:{abstract}"
 
@@ -17,4 +17,13 @@ def docs_setter(matches):
         final_docs.append(formatted_doc_and_title)
 
     return final_docs
-    
+
+def docs_setter_2(candidates):
+    print(f"DEBUG: Docs before setting = {len(candidates)}")
+    final_docs= []
+    for doc in candidates:
+        formatted_doc_and_title=concatenate_title_abstract(doc)
+
+        final_docs.append(formatted_doc_and_title)
+
+    return final_docs 
