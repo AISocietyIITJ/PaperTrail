@@ -5,8 +5,8 @@ import re
 from src.logger import logger
  
 script_dir = os.path.dirname(os.path.abspath(__file__))
-csv_path = os.path.join(script_dir, "../../../data/professor_all.csv")
-save_path = os.path.join(script_dir, "../../../data/interests_with_aliases.csv")
+csv_path = os.path.join(script_dir, "../../../data/professor_all_with_interests.csv")
+save_path = os.path.join(script_dir, "../../../data/interests_with_aliases_paper.csv")
  
  
 # 1. Clean interest text (remove non-breaking spaces, trailing dots/ellipses)
