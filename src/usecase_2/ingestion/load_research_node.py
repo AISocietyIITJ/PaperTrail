@@ -8,7 +8,7 @@ from src.logger import logger
  
  
 script_dir = os.path.dirname(os.path.abspath(__file__))
-file_path = os.path.join(script_dir, "../../../data/interests_with_aliases.csv")
+file_path = os.path.join(script_dir, "../../../data/interests_domains_with_aliases.csv")
  
  
  

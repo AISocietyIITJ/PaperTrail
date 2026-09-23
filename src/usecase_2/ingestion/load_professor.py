@@ -8,8 +8,8 @@ from src.logger import logger
  
  
 script_dir = os.path.dirname(os.path.abspath(__file__))
-proff_path = os.path.join(script_dir, "../../../data/professor_all.csv")
-alias_path = os.path.join(script_dir, "../../../data/interests_with_aliases.csv")
+proff_path = os.path.join(script_dir, "../../../data/professor_all_with_interests.csv")
+alias_path = os.path.join(script_dir, "../../../data/interests_domains_with_interests.csv")
  
 BATCH_SIZE = 500
  
