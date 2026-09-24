@@ -14,9 +14,9 @@ from src.config import PINECONE_API_KEY, AURA_URI, AURA_USER, AURA_PASSWORD, yam
 from dotenv import load_dotenv
 load_dotenv()
 
-NEO4J_URI = os.getenv("NEO4J_URI") or AURA_URI
-NEO4J_USERNAME = os.getenv("NEO4J_USERNAME") or os.getenv("NEO4J_USER") or AURA_USER
-NEO4J_PASSWORD = os.getenv("NEO4J_PASSWORD") or AURA_PASSWORD
+NEO4J_URI = os.getenv("NEO4J_URI")
+NEO4J_USERNAME = os.getenv("NEO4J_USERNAME") or os.getenv("NEO4J_USER")
+NEO4J_PASSWORD = os.getenv("NEO4J_PASSWORD")
 
 # Fallback to env var if not in config.yaml
 PINECONE_INDEX_NAME = yaml_config.get("embedding", {}).get("pinecone_index", os.getenv("PINECONE_INDEX_NAME", "paper-embeddings"))
@@ -54,29 +54,18 @@ def search_pinecone(driver, query_text, top_k=4):
             title = match['metadata'].get('title', 'Unknown Title')
             semantic_score = match['score']
             
-            # Fetch paperId and s_node to rerank
-            result = session.run("MATCH (p:Paper) WHERE p.title = $title RETURN p.paperId AS pid, p.s_node AS s_node", title=title)
-            record = result.single()
-            
-            if record and record["pid"]:
-                s_node = record.get("s_node") or 0.0
-                # We use a gentle addition for influence. 
-                # Semantic score is ~0.7 to 1.0. 
-                # log(s_node + 1) is usually 0 to 5. 
-                # Multiplying by 0.02 gives a max bonus of ~0.1, acting as a strong tie-breaker
-                # without letting heavily cited but irrelevant papers win.
-                rerank_score = semantic_score + (0.02 * math.log(s_node + 1.0))
-                candidates.append((rerank_score, record["pid"], title, semantic_score))
+            try:
+                node_idx = int(match['id'])
+                target_ids.append(node_idx)
+            except (ValueError, KeyError):
+                # Fallback to matching by title if ID is not numeric
+                result = session.run("MATCH (p:ResearchPaper) WHERE p.title = $title RETURN p.node_idx AS pid LIMIT 1", title=title)
+                record = result.single()
                 
-    # Sort by the new Rerank Score (Influence * Relevance)
-    candidates.sort(key=lambda x: x[0], reverse=True)
-    
-    target_ids = []
-    print("\n[Reranking] Top 4 Seeds selected after balancing Relevance & Influence:")
-    for score, pid, title, sem_score in candidates[:top_k]:
-        safe_title = title.encode('ascii', 'replace').decode('ascii')
-        print(f"  -> {safe_title} (Semantic: {sem_score:.2f}, Reranked Score: {score:.2f})")
-        target_ids.append(pid)
+                if record and record["pid"] is not None:
+                    target_ids.append(record["pid"])
+                else:
+                    print(f"     [Warning] Could not find this paper in Neo4j to get its true ID.")
                     
     print(f"\n[Debug] target_ids collected: {target_ids}")
     return target_ids
@@ -87,12 +76,10 @@ def extract_subgraph(driver, target_ids):
     """
     print("\n[Neo4j] Extracting 2-hop prerequisite subgraph...")
     
-    # CITES*0..2 means it will grab the seeds themselves (0 hops) 
-    # plus everything they cite up to 2 layers deep.
+    # Prerequisite relationship: (prereq)-[:PREREQUISITE_OF]->(seed)
     query = """
-    MATCH path = (seed:Paper)-[:CITES*0..2]->(prereq:Paper)
-    WHERE seed.paperId IN $target_ids
-    AND (prereq.citationCount >= 50 OR prereq.paperId IN $target_ids)
+    MATCH path = (prereq:ResearchPaper)-[:PREREQUISITE_OF*0..2]->(seed:ResearchPaper)
+    WHERE seed.node_idx IN $target_ids
     RETURN nodes(path) AS nodes, relationships(path) AS edges
     """
     
@@ -100,35 +87,39 @@ def extract_subgraph(driver, target_ids):
     
     with driver.session() as session:
         # Debug: Check if the nodes actually exist in Neo4j
-        total_res = session.run("MATCH (p:Paper) RETURN count(p) as c")
+        total_res = session.run("MATCH (p:ResearchPaper) RETURN count(p) as c")
         total_nodes = total_res.single()['c']
-        print(f"[Debug] Total Paper nodes in Neo4j database: {total_nodes}")
+        print(f"[Debug] Total ResearchPaper nodes in Neo4j database: {total_nodes}")
         
-        debug_res = session.run("MATCH (p:Paper) WHERE p.paperId IN $t RETURN count(p) as c", t=target_ids)
+        debug_res = session.run("MATCH (p:ResearchPaper) WHERE p.node_idx IN $t RETURN count(p) as c", t=target_ids)
         print(f"[Debug] Found {debug_res.single()['c']} out of {len(target_ids)} seed nodes in Neo4j.")
         
         result = session.run(query, target_ids=target_ids)
         for record in result:
             for node in record["nodes"]:
-                n_id = node["paperId"]
+                n_id = node["node_idx"]
                 if not G.has_node(n_id):
+                    pub_date = str(node.get("published_date", "1970"))
+                    year_str = pub_date.split("-")[0] if "-" in pub_date else pub_date
+                    try:
+                        year = int(year_str)
+                    except ValueError:
+                        year = 0
+                        
                     G.add_node(
                         n_id,
                         title=node.get("title", "Unknown Title"),
-                        year=node.get("year", 0) or 0,
-                        citationCount=node.get("citationCount", 0) or 0,
-                        nodeCost=node.get("nodeCost"),
+                        year=year,
+                        abstract=node.get("abstract", ""),
+                        citationCount=node.get("citationCount", 0) or 0
                     )
             
             for edge in record["edges"]:
-                start_node = edge.start_node["paperId"]
-                end_node = edge.end_node["paperId"]
-                # Neo4j -[:CITES]-> means start_node CITES end_node
-                G.add_edge(
-                    start_node, end_node,
-                    edgeCost=edge.get("edgeCost"),
-                    traversalCost=edge.get("traversalCost"),
-                )
+                # In Neo4j: start_node (prereq) -> end_node (seed)
+                # In NEWST graph G: we model 'seed depends on prereq' as seed -> prereq
+                start_node = edge.end_node["node_idx"]
+                end_node = edge.start_node["node_idx"]
+                G.add_edge(start_node, end_node)
                 
     print(f"  -> Subgraph extracted: {G.number_of_nodes()} nodes, {G.number_of_edges()} edges")
     return G

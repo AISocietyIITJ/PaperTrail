@@ -8,7 +8,8 @@ from sentence_transformers import SentenceTransformer
 import yaml
 
 from src.usecase_2.embedding.generate_alias import generate_phrase
-from src.usecase_2.embedding.generate_embedding import gen_res_emb_ingestion
+from src.usecase_2.embedding.gen_alias_new import generate_domain_aliases
+from src.usecase_2.embedding.gen_interest_no_alias import gen_res_emb_ingestion
 from src.usecase_2.embedding.generate_embedding_prof import gen_prof_emb_ingestion
 from src.usecase_2.ingestion.load_professor import ingest_proff_connect_edges
 from src.usecase_2.ingestion.load_research_node import ingest_research_node
@@ -49,7 +50,8 @@ def setup_academic_profiles_pipeline():
     print("=" * 60)
 
     print("\n[1/5] Generating phrase aliases...")
-    generate_phrase()
+    # generate_phrase()
+    generate_domain_aliases()
 
     print("[2/5] Generating research embeddings...")
     gen_res_emb_ingestion()
@@ -82,6 +84,8 @@ def find_academic_profiles(
         resume_text = extract_text_from_pdf(resume_path) if resume_path else ""
 
     interests = get_interest_topics(query, resume_text)
+    if interests is None:
+        return None
     if not interests:
         # The local LLM can occasionally omit its expected JSON fields.  The
         # request query is still a useful semantic-search input, so do not

@@ -1,4 +1,5 @@
 import re
+import unicodedata
 import pandas as pd
 from neo4j import GraphDatabase
 import os
@@ -8,7 +9,7 @@ from src.logger import logger
  
  
 script_dir = os.path.dirname(os.path.abspath(__file__))
-file_path = os.path.join(script_dir, "../../../data/interests_with_aliases.csv")
+file_path = os.path.join(script_dir, "../../../data/interest_domains_with_aliases.csv")
  
  
  
@@ -30,17 +31,35 @@ def clean_text(text):
         return ""
     text = text.replace("\xa0", " ").strip()
     return re.sub(r"[\.\…]+$", "", text).strip().lower()
+
+
+def interest_key(text):
+    """Create a stable lookup key for equivalent interest spellings."""
+    text = clean_text(text)
+    text = unicodedata.normalize("NFKC", text)
+    text = re.sub(r"[\u2010-\u2015\u2212]", "-", text)
+    text = text.casefold()
+    return re.sub(r"[^a-z0-9]+", "", text)
  
  
 def ingest_research_topics(driver, interests_csv):
     logger.info(f"Loading research topics from {interests_csv}...")
     df_int = pd.read_csv(interests_csv)
+    interest_col = "Interest Domain" if "Interest Domain" in df_int.columns else "Interest"
  
-    df_int["clean_interest"] = df_int["Interest"].apply(clean_text)
+    df_int["clean_interest"] = df_int[interest_col].apply(clean_text)
+    df_int["interest_key"] = df_int[interest_col].apply(interest_key)
  
-    df_int_unique = df_int.drop_duplicates(subset=["clean_interest"]).copy()
+    df_int_unique = df_int.drop_duplicates(subset=["interest_key"]).copy()
     if len(df_int_unique) != len(df_int):
         logger.debug(f"Dropped {len(df_int) - len(df_int_unique)} duplicate-interest rows before ingestion.")
+    if "vector_id" not in df_int_unique.columns:
+        df_int_unique["vector_id"] = [f"interest_{i}" for i in range(len(df_int_unique))]
+    else:
+        missing_vector_id = df_int_unique["vector_id"].isna() | (df_int_unique["vector_id"].astype(str).str.strip() == "")
+        df_int_unique.loc[missing_vector_id, "vector_id"] = [
+            f"interest_{i}" for i in df_int_unique.index[missing_vector_id]
+        ]
  
     topic_batch = []
     for _, row in df_int_unique.iterrows():
@@ -54,7 +73,7 @@ def ingest_research_topics(driver, interests_csv):
         topic_batch.append(
             {
                 "vector_id": str(row["vector_id"]),
-                "name": clean_text(row["Interest"]),
+                "name": clean_text(row[interest_col]),
                 "aliases": cleaned_aliases, 
             }
         )

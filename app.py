@@ -6,6 +6,7 @@ from pydantic import BaseModel
 from pathlib import Path
 from typing import List, Optional
 from uuid import uuid4
+from src.usecase_1.query_pipeline import generate_reading_path 
 
 import main
 from src.usecase_1.query_pipeline import generate_reading_path as generate_structured_path
@@ -14,7 +15,7 @@ app = FastAPI(title="Reading Path & Academic Graph API")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://paper-trail-k7cp.vercel.app"],
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -49,7 +50,7 @@ class AcademicProfilesRequest(BaseModel):
 
 @app.post("/api/structured-path")
 def api_structured_path(req: QueryReq):
-    result = generate_structured_path(req.query_str)
+    result = generate_reading_path(req.query_str)
     return {"query": req.query_str, "path": result or []}
 
 # Usecase 2: Academic profiles (Pinecone-backed)
