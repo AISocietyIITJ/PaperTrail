@@ -1,4 +1,7 @@
 import re
+import ast
+import json
+import unicodedata
 import pandas as pd
 from neo4j import GraphDatabase
 import os
@@ -9,7 +12,7 @@ from src.logger import logger
  
 script_dir = os.path.dirname(os.path.abspath(__file__))
 proff_path = os.path.join(script_dir, "../../../data/professor_all_with_interests.csv")
-alias_path = os.path.join(script_dir, "../../../data/interests_domains_with_interests.csv")
+alias_path = os.path.join(script_dir, "../../../data/interest_domains_with_aliases.csv")
  
 BATCH_SIZE = 500
  
@@ -28,45 +31,95 @@ def clean_text(text):
         return ""
     text = text.replace("\xa0", " ").strip()
     return re.sub(r"[\.\…]+$", "", text).strip().lower()
+
+
+def interest_key(text):
+    """Create a stable lookup key for equivalent interest spellings."""
+    text = clean_text(text)
+    text = unicodedata.normalize("NFKC", text)
+    text = re.sub(r"[\u2010-\u2015\u2212]", "-", text)
+    text = text.casefold()
+    return re.sub(r"[^a-z0-9]+", "", text)
+
+
+def parse_interest_list(value):
+    if pd.isna(value) or not value:
+        return []
+    value = str(value).strip()
+    if value.startswith("[") and value.endswith("]"):
+        try:
+            return ast.literal_eval(value)
+        except (ValueError, SyntaxError):
+            try:
+                return json.loads(value)
+            except json.JSONDecodeError:
+                pass
+    return value.split(",")
  
  
 def ingest_professors_and_edges(driver, prof_csv, interests_csv):
     logger.info(f"Loading professors from {prof_csv} and interests from {interests_csv}...")
     df_prof = pd.read_csv(prof_csv)
     df_int = pd.read_csv(interests_csv)
- 
-    df_int["clean_interest"] = df_int["Interest"].apply(clean_text)
-    df_int_unique = df_int.drop_duplicates(subset=["clean_interest"]).copy()
- 
-    interest_to_vector = dict(
-        zip(df_int_unique["clean_interest"], df_int_unique["vector_id"])
+    interest_col = "Interest Domain" if "Interest Domain" in df_int.columns else "Interest"
+    prof_interest_col = "Interest Domains"
+    if prof_interest_col not in df_prof.columns:
+        raise ValueError("professor CSV must include 'Interest Domains'; run infer_professor_interests.py first")
+
+    logger.info(
+        f"Loaded {len(df_prof)} professors and {len(df_int)} interest rows; "
+        f"matching column '{interest_col}' from {os.path.abspath(interests_csv)}"
     )
+
+    df_int["clean_interest"] = df_int[interest_col].apply(clean_text)
+    df_int["interest_key"] = df_int[interest_col].apply(interest_key)
+    df_int_unique = df_int.drop_duplicates(subset=["interest_key"]).copy()
+    if "vector_id" not in df_int_unique.columns:
+        df_int_unique["vector_id"] = [f"interest_{i}" for i in range(len(df_int_unique))]
+    else:
+        missing_vector_id = df_int_unique["vector_id"].isna() | (df_int_unique["vector_id"].astype(str).str.strip() == "")
+        df_int_unique.loc[missing_vector_id, "vector_id"] = [
+            f"interest_{i}" for i in df_int_unique.index[missing_vector_id]
+        ]
  
-    interest_to_vector_id = {
-        clean_text(row["Interest"]): str(row["vector_id"])
-        for _, row in df_int.iterrows()
-    }
+    interest_to_vector = {}
+    for _, row in df_int_unique.iterrows():
+        vector_id = str(row["vector_id"])
+        interest_to_vector[interest_key(row[interest_col])] = vector_id
+
+        if "Aliases" in df_int_unique.columns and pd.notna(row["Aliases"]):
+            for alias in str(row["Aliases"]).split(","):
+                alias_key = interest_key(alias)
+                if alias_key:
+                    interest_to_vector.setdefault(alias_key, vector_id)
  
     prof_batch = []
     unmatched_tokens = set()
+    matched_tokens = set()
     for _, row in df_prof.iterrows():
-        raw_interests = (
-            str(row["Interests"]) if pd.notna(row["Interests"]) else ""
-        )
         interest_tokens = [
-            clean_text(i) for i in raw_interests.split(",") if clean_text(i)
+            clean_text(i) for i in parse_interest_list(row[prof_interest_col]) if clean_text(i)
         ]
+        if not interest_tokens:
+            continue
  
         matched_vector_ids = list(
             {
-                interest_to_vector[token]
+                interest_to_vector[interest_key(token)]
                 for token in interest_tokens
-                if token in interest_to_vector
+                if interest_key(token) in interest_to_vector
             }
         )
  
         unmatched_tokens.update(
-            token for token in interest_tokens if token not in interest_to_vector
+            token
+            for token in interest_tokens
+            if interest_key(token) not in interest_to_vector
+        )
+        matched_tokens.update(
+            token
+            for token in interest_tokens
+            if interest_key(token) in interest_to_vector
         )
  
         prof_batch.append(
@@ -94,6 +147,11 @@ def ingest_professors_and_edges(driver, prof_csv, interests_csv):
     if unmatched_tokens:
         logger.warning(f"{len(unmatched_tokens)} interest tokens had no matching vector_id and were skipped, "
                         f"e.g. {list(unmatched_tokens)[:10]}")
+    logger.info(
+        f"Resolved {len(matched_tokens)} unique professor interests to "
+        f"{len(set(interest_to_vector.values()))} vector IDs; "
+        f"unmatched: {len(unmatched_tokens)}"
+    )
  
     prof_query = """
     UNWIND $batch AS row

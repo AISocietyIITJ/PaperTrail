@@ -9,9 +9,9 @@ from src.logger import logger
  
  
 script_dir = os.path.dirname(os.path.abspath(__file__))
-file_path = os.path.join(script_dir, "../../../data/interests_domains_with_aliases.csv")
+file_path = os.path.join(script_dir, "../../../data/interest_domains_with_aliases.csv")
 
-INDEX_NAME = "interest-granite-125m"
+INDEX_NAME = "interest-no-alias-new"
 VECTOR_DIMENSION = 768 
 
 
@@ -36,8 +36,9 @@ def gen_res_emb_ingestion():
     index = pc.Index(INDEX_NAME)
     logger.info(f"Loading interests from {file_path}...")
     df = pd.read_csv(file_path)
+    interest_col = "Interest Domain" if "Interest Domain" in df.columns else "Interest"
  
-    df['Combined_Text'] = df['Interest'].fillna('')
+    df['Combined_Text'] = df[interest_col].fillna('')
  
     logger.info("Building sentence embeddings")
     # model = SentenceTransformer("Qwen/Qwen3-Embedding-0.6B")
@@ -54,7 +55,7 @@ def gen_res_emb_ingestion():
         vector_values = embeddings[idx].tolist()
         
         metadata = {
-            "interest": str(row['Interest'])
+            "interest": str(row[interest_col])
         }
         
         vectors_to_upsert.append((vector_id, vector_values, metadata))
@@ -69,7 +70,7 @@ def gen_res_emb_ingestion():
     logger.info("[OK] Pinecone ingestion complete")
  
     df['vector_id'] = vector_ids
-    df_final = df[['Interest', 'Aliases', 'vector_id']]
+    df_final = df[[interest_col, 'Aliases', 'vector_id']]
     df_final.to_csv(file_path, index=False)
     logger.info("[OK] Updated interests_with_aliases.csv with vector IDs")
  
