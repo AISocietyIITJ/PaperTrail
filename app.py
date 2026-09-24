@@ -13,7 +13,7 @@ app = FastAPI(title="Reading Path & Academic Graph API")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["https://paper-trail-k7cp.vercel.app"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -46,60 +46,10 @@ class AcademicProfilesRequest(BaseModel):
 
 # Usecase 1: Reading path pipeline
 
-@app.post("/usecase1/get-reading-path")
-def get_reading_path(req: QueryReq):
-    result = main.get_reading_path(req.query_str, req.config_path)
-    if not result or not isinstance(result, dict) or not result.get("nodes"):
-        return {"query": req.query_str, "targetNodeIdx": None, "nodes": [], "edges": []}
-    
-    targetNodeIdx = result.get("target_node_idx")
-    nodes = []
-    for r in result["nodes"]:
-        nodes.append({
-            "nodeIdx": r["node_idx"],
-            "title": r["title"],
-            "publishedDate": r["published_date"],
-            "hopDistance": r.get("hop_distance", 0),
-            "abstract": r.get("abstract", ""),
-            "arxivId": r.get("arxiv_id", ""),
-            "arxivUrl": f"https://arxiv.org/abs/{r.get('arxiv_id', '')}" if r.get("arxiv_id") else "",
-            "pdfUrl": f"https://arxiv.org/pdf/{r.get('arxiv_id', '')}.pdf" if r.get("arxiv_id") else "",
-            "authors": []
-        })
-
-    edges = []
-    for e in result.get("edges", []):
-        edges.append({
-            "src": e["src"],
-            "dst": e["dst"],
-            "similarity": float(e.get("similarity", 0.8)),
-            "reason": str(e.get("reason", "prerequisite"))
-        })
-
-    # Fallback: if there are multiple nodes but no Neo4j edges were returned, synthesize edges by hop distance
-    if len(nodes) > 1 and not edges:
-        hops = {}
-        for r in result["nodes"]:
-            h = r.get("hop_distance", 0)
-            hops.setdefault(h, []).append(r["node_idx"])
-            
-        for h in sorted(hops.keys(), reverse=True):
-            if h - 1 in hops:
-                for src in hops[h]:
-                    for dst in hops[h - 1]:
-                        edges.append({
-                            "src": src,
-                            "dst": dst,
-                            "similarity": 0.8,
-                            "reason": "prerequisite"
-                        })
-
-    return {
-        "query": req.query_str,
-        "targetNodeIdx": targetNodeIdx,
-        "nodes": nodes,
-        "edges": edges
-    }
+@app.post("/api/structured-path")
+def api_structured_path(req: QueryReq):
+    result = generate_structured_path(req.query_str)
+    return {"query": req.query_str, "path": result or []}
 
 # Usecase 2: Academic profiles (Pinecone-backed)
 
