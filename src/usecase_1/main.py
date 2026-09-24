@@ -7,6 +7,7 @@ from src.usecase_1.candidate_edges import generate_candidate_edges
 from src.usecase_1.direction import assign_edge_directions
 from src.usecase_1.build_graph import assemble_graph
 from src.usecase_1.ingest_neo4j import ingest_to_neo4j
+from src.usecase_1.precompute_costs import run_precompute
 
 from src.usecase_1.query import load_neo4j_driver, generate_path_neo4j
 
@@ -16,6 +17,7 @@ def main():
     parser = argparse.ArgumentParser(description="PaperTrail Structured Research Path Generation Pipeline & Query Interface")
     parser.add_argument("--run-pipeline", action="store_true", help="Execute complete dataset prep and graph building")
     parser.add_argument("--ingest-neo4j", action="store_true", help="Push generated pipeline data into Neo4j")
+    parser.add_argument("--precompute-costs", action="store_true", help="Precompute NEWST node/edge costs in Neo4j")
     parser.add_argument("--query", type=str, help="Generate an ordered foundational reading path from Neo4j")
     parser.add_argument("--config", default="config.yaml", help="Path to config yaml file")
     
@@ -33,6 +35,10 @@ def main():
     elif args.ingest_neo4j:
         logger.info("=== INGESTING DATA INTO NEO4J ===")
         ingest_to_neo4j(args.config)
+
+    elif args.precompute_costs:
+        logger.info("=== PRECOMPUTING NEWST COSTS IN NEO4J ===")
+        run_precompute(config_path=args.config)
         
     elif args.query:
         config, driver, model = load_neo4j_driver(args.config)

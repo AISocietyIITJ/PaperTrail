@@ -8,6 +8,7 @@ from typing import List, Optional
 from uuid import uuid4
 
 import main
+from src.usecase_1.query_pipeline import generate_reading_path as generate_structured_path
 
 app = FastAPI(title="Reading Path & Academic Graph API")
 
