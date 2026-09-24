@@ -221,14 +221,14 @@ def generate_domain_aliases():
     results = []
     for item in unique_domains:
         cleaned, alias_str = generate_aliases(item)
-        results.append({"Interest Domain": cleaned.lower(), "Aliases": alias_str.lower()})
+        results.append({"Interest": cleaned.lower(), "Aliases": alias_str.lower()})
 
     # Save DataFrame, deduplicate and output to CSV
     df_out = pd.DataFrame(results)
     before = len(df_out)
     df_out = (
-        df_out.drop_duplicates(subset=["Interest Domain"])
-        .sort_values(by="Interest Domain")
+        df_out.drop_duplicates(subset=["Interest"])
+        .sort_values(by="Interest")
         .reset_index(drop=True)
     )
 

@@ -9,7 +9,7 @@ import yaml
 
 from src.usecase_2.embedding.generate_alias import generate_phrase
 from src.usecase_2.embedding.gen_alias_new import generate_domain_aliases
-from src.usecase_2.embedding.generate_embedding import gen_res_emb_ingestion
+from src.usecase_2.embedding.gen_interest_no_alias import gen_res_emb_ingestion
 from src.usecase_2.embedding.generate_embedding_prof import gen_prof_emb_ingestion
 from src.usecase_2.ingestion.load_professor import ingest_proff_connect_edges
 from src.usecase_2.ingestion.load_research_node import ingest_research_node
@@ -53,16 +53,16 @@ def setup_academic_profiles_pipeline():
     generate_domain_aliases()
 
     print("[2/5] Generating research embeddings...")
-    # gen_res_emb_ingestion()
+    gen_res_emb_ingestion()
 
     print("[3/5] Generating professor embeddings...")
     # gen_prof_emb_ingestion()
 
     print("[4/5] Ingesting research nodes...")
-    # ingest_research_node()
+    ingest_research_node()
 
     print("[5/5] Ingesting professor connections...")
-    # ingest_proff_connect_edges()
+    ingest_proff_connect_edges()
 
     print("\nSetup complete.")
 
