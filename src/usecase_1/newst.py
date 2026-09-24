@@ -21,6 +21,18 @@ def reallocate_seeds(G, initial_seeds, co_occurrence_threshold=2):
         if count >= co_occurrence_threshold:
             compulsory_nodes.add(node)
             
+    # NEW FEATURE: To ensure a rich, historical reading path, we force the 
+    # top 5 most foundational papers in the entire subgraph to be compulsory.
+    # This stops the Steiner tree from taking a "minimal 5-node shortcut" 
+    # and forces it to build a proper syllabus.
+    all_nodes = [(n, G.nodes[n].get('citationCount', 0)) for n in G.nodes()]
+    # Sort by citation count descending
+    all_nodes.sort(key=lambda x: x[1], reverse=True)
+    
+    # Add the top 15 most cited papers in this subgraph as compulsory
+    for n, count in all_nodes[:15]:
+        compulsory_nodes.add(n)
+            
     # Also ensure all compulsory_nodes are actually in G
     valid_compulsory = [n for n in compulsory_nodes if G.has_node(n)]
     return valid_compulsory
@@ -116,10 +128,26 @@ def get_reading_path(G, final_mst):
         elif G.has_edge(v, u):
             directed_subgraph.add_edge(v, u)
             
+    # Apply Transitive Reduction to remove redundant prerequisite edges
+    try:
+        tr_graph = nx.transitive_reduction(directed_subgraph)
+        # transitive_reduction loses node attributes, so copy them over
+        for n in tr_graph.nodes():
+            tr_graph.nodes[n].update(directed_subgraph.nodes[n])
+        directed_subgraph = tr_graph
+    except Exception as e:
+        print(f"[Warning] Transitive reduction failed (possible cycle): {e}")
+        
     # The reading order can be a topological sort. 
     # If there are cycles (rare in citation graphs, but possible), we break them.
     try:
-        path = list(nx.topological_sort(directed_subgraph))
+        # Use lexicographical sort to secondary-sort siblings by Year.
+        # We sort by -year because the caller in query_pipeline.py will reverse the list.
+        # This ensures older papers come first in the final output.
+        path = list(nx.lexicographical_topological_sort(
+            directed_subgraph, 
+            key=lambda n: -(directed_subgraph.nodes[n].get('year', 0) or 0)
+        ))
     except nx.NetworkXUnfeasible:
         # If there's a cycle, just use a fallback heuristic (e.g. sort by year)
         path = sorted(mst_nodes, key=lambda x: G.nodes[x].get('year') or 0)

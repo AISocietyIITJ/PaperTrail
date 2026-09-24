@@ -37,21 +37,22 @@ def search_pinecone(driver, query_text, top_k=4):
     model = SentenceTransformer('allenai/specter2_base')
     query_embedding = model.encode(query_text).tolist()
     
-    print(f"[Pinecone] Searching index '{PINECONE_INDEX_NAME}' for top {top_k} matches...")
+    import math
+    print(f"[Pinecone] Searching index '{PINECONE_INDEX_NAME}' for top 15 semantic matches...")
     pc = Pinecone(api_key=PINECONE_API_KEY)
     index = pc.Index(PINECONE_INDEX_NAME)
     
     response = index.query(
         vector=query_embedding,
-        top_k=top_k,
+        top_k=15,
         include_metadata=True
     )
     
-    target_ids = []
+    candidates = []
     with driver.session() as session:
         for match in response['matches']:
             title = match['metadata'].get('title', 'Unknown Title')
-            print(f"  -> Found match (Score: {match['score']:.4f}): {title}")
+            semantic_score = match['score']
             
             try:
                 node_idx = int(match['id'])
@@ -132,7 +133,26 @@ def compute_graph_weights(G):
     
     if G.number_of_nodes() == 0:
         return
-        
+
+    # ── Check for precomputed NEWST costs from Neo4j ──────────────────────
+    has_node_costs = any(
+        G.nodes[n].get("nodeCost") is not None for n in G.nodes()
+    )
+    has_edge_costs = (
+        G.number_of_edges() > 0
+        and any(G.edges[u, v].get("edgeCost") is not None for u, v in G.edges())
+    )
+
+    if has_node_costs and has_edge_costs:
+        print("  -> Using precomputed NEWST costs from Neo4j.")
+        for n in G.nodes():
+            G.nodes[n]['weight'] = G.nodes[n].get('nodeCost') or (GAMMA / 0.0001)
+        for u, v in G.edges():
+            G.edges[u, v]['weight'] = G.edges[u, v].get('edgeCost') or (ALPHA / 0.0001)
+        return
+
+    print("  -> No precomputed costs found. Computing locally (run precompute_costs.py for better results).")
+
     # --- Node Weights ---
     # 1. Subgraph Centrality (in-degree within THIS specific graph)
     centrality = {n: G.in_degree(n) for n in G.nodes()}
@@ -191,7 +211,8 @@ def format_output(reading_path_ids, G):
         title = paper.get("title", "Unknown Title")
         citations = paper.get("citationCount", 0)
         
-        print(f"Step {i:02d} | [{year}] {title}")
+        safe_title = title.encode('ascii', 'replace').decode('ascii')
+        print(f"Step {i:02d} | [{year}] {safe_title}")
         print(f"         |- (Global Citations: {citations:,})")
         
         structured_path.append({
