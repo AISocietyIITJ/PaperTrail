@@ -1,3 +1,6 @@
+/* ============================
+   SHELL LAYOUT
+   ============================ */
 .app-shell {
   display: flex;
   height: 100vh;
@@ -6,6 +9,67 @@
   background-color: var(--paper-50);
 }
 
+/* ============================
+   MOBILE HEADER (burger bar)
+   ============================ */
+.mobile-header {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 56px;
+  z-index: 200;
+  background-color: var(--surface-color);
+  border-bottom: 1px solid var(--border-color);
+  align-items: center;
+  padding: 0 1rem;
+  gap: 0.75rem;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.5);
+}
+
+.mobile-brand {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: var(--route-blue);
+  letter-spacing: -0.02em;
+}
+
+.burger-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--ink-900);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.4rem;
+  border-radius: 8px;
+  transition: background-color 0.2s;
+  flex-shrink: 0;
+}
+
+.burger-btn:hover {
+  background-color: var(--surface-raised);
+}
+
+/* ============================
+   OVERLAY (mobile only)
+   ============================ */
+.nav-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.75);
+  z-index: 299;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+/* ============================
+   SIDE NAV
+   ============================ */
 .side-nav {
   width: 250px;
   flex-shrink: 0;
@@ -15,12 +79,41 @@
   flex-direction: column;
   padding: 1.5rem;
   z-index: 100;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .brand {
   margin-bottom: 2rem;
-  color: var(--route-blue);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.brand h1 {
   font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--route-blue);
+  letter-spacing: -0.02em;
+}
+
+/* Close button inside nav (mobile only) */
+.nav-close-btn {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--graphite-600);
+  padding: 0.4rem;
+  border-radius: 8px;
+  transition: all 0.2s;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-close-btn:hover {
+  background-color: var(--surface-raised);
+  color: var(--ink-900);
 }
 
 .nav-links {
@@ -32,25 +125,38 @@
 .nav-link {
   display: flex;
   align-items: center;
-  padding: 0.75rem 1rem;
-  border-radius: 8px;
-  margin-bottom: 0.5rem;
+  padding: 0.7rem 1rem;
+  border-radius: 10px;
+  margin-bottom: 0.35rem;
   color: var(--graphite-600);
   transition: all 0.2s ease;
   font-weight: 500;
+  font-size: 0.95rem;
   gap: 0.75rem;
+  text-decoration: none;
 }
 
 .nav-link:hover {
-  background-color: var(--border-color);
+  background-color: var(--surface-raised);
   color: var(--ink-900);
+  text-decoration: none;
 }
 
+/* Unsloth-style: pill active with teal glow */
 .nav-link.active {
   background-color: var(--route-blue-tint);
-  color: var(--route-blue);
+  color: var(--route-blue-bright);
+  border-left: 2px solid var(--route-blue);
+  padding-left: calc(1rem - 2px);
 }
 
+.nav-link.active svg {
+  filter: drop-shadow(0 0 4px var(--route-blue));
+}
+
+/* ============================
+   MAIN CONTENT AREA
+   ============================ */
 .app-main {
   flex: 1;
   min-width: 0;
@@ -59,4 +165,45 @@
   overflow: hidden;
   display: flex;
   flex-direction: column;
+}
+
+/* ============================
+   RESPONSIVE — TABLET & MOBILE
+   (breakpoint: 768px)
+   ============================ */
+@media (max-width: 768px) {
+  .mobile-header {
+    display: flex;
+  }
+
+  .nav-overlay {
+    display: block;
+  }
+
+  .side-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: min(280px, 85vw);
+    z-index: 300;
+    transform: translateX(-100%);
+    box-shadow: 8px 0 32px rgba(0, 0, 0, 0.6);
+  }
+
+  .side-nav.side-nav--open {
+    transform: translateX(0);
+  }
+
+  .nav-close-btn {
+    display: flex;
+  }
+
+  .app-main {
+    padding-top: 56px;
+  }
+
+  .app-shell {
+    flex-direction: column;
+  }
 }

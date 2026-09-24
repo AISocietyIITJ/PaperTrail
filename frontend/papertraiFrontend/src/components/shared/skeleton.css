@@ -1,22 +1,29 @@
 .skeleton-card {
-  background-color: var(--surface-color);
+  background-color: var(--surface-raised);
   border: 1px solid var(--border-color);
-  border-radius: 12px;
+  border-radius: 14px;
   padding: 1.5rem;
   margin-bottom: 1rem;
-  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
 .skeleton-text {
-  height: 1rem;
-  background-color: var(--border-color);
-  border-radius: 4px;
+  height: 0.9rem;
+  border-radius: 6px;
   margin-bottom: 0.75rem;
+  /* Shimmer animation using teal */
+  background: linear-gradient(
+    90deg,
+    var(--border-color) 0%,
+    #333333 50%,
+    var(--border-color) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.6s ease-in-out infinite;
 }
 
 .skeleton-title {
   width: 70%;
-  height: 1.5rem;
+  height: 1.4rem;
   margin-bottom: 1rem;
 }
 
@@ -24,11 +31,7 @@
 .skeleton-body-2 { width: 85%; }
 .skeleton-body-3 { width: 40%; }
 
-@keyframes pulse {
-  0%, 100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: .5;
-  }
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
 }
