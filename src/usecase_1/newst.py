@@ -1,5 +1,6 @@
 import networkx as nx
 from itertools import combinations
+import math
 
 def reallocate_seeds(G, initial_seeds, co_occurrence_threshold=2):
     """
@@ -21,16 +22,24 @@ def reallocate_seeds(G, initial_seeds, co_occurrence_threshold=2):
         if count >= co_occurrence_threshold:
             compulsory_nodes.add(node)
             
-    # NEW FEATURE: To ensure a rich, historical reading path, we force the 
-    # top 5 most foundational papers in the entire subgraph to be compulsory.
-    # This stops the Steiner tree from taking a "minimal 5-node shortcut" 
-    # and forces it to build a proper syllabus.
-    all_nodes = [(n, G.nodes[n].get('citationCount', 0)) for n in G.nodes()]
-    # Sort by citation count descending
+    # We use Network TF-IDF: we heavily reward papers that are cited many times locally,
+    # but we penalize them logarithmically if they have massive global citation counts.
+    # Score = (Local_Citations ^ 2) / log(Global_Citations + 10)
+    all_nodes = []
+    for n in G.nodes():
+        local_in_deg = G.in_degree(n)
+        global_citations = G.nodes[n].get('citationCount', 0) or 0
+        
+        # Penalize generic papers like Adam (170k+ citations) while boosting true prerequisites
+        tfidf_score = (local_in_deg ** 2) / math.log(global_citations + 10)
+        
+        all_nodes.append((n, tfidf_score, local_in_deg, global_citations))
+    
+    # Sort primarily by Network TF-IDF score
     all_nodes.sort(key=lambda x: x[1], reverse=True)
     
-    # Add the top 15 most cited papers in this subgraph as compulsory
-    for n, count in all_nodes[:15]:
+    # Add the top 15 most foundational domain-specific papers as compulsory
+    for n, tfidf, in_deg, count in all_nodes[:15]:
         compulsory_nodes.add(n)
             
     # Also ensure all compulsory_nodes are actually in G
@@ -152,4 +161,4 @@ def get_reading_path(G, final_mst):
         # If there's a cycle, just use a fallback heuristic (e.g. sort by year)
         path = sorted(mst_nodes, key=lambda x: G.nodes[x].get('year') or 0)
         
-    return path
+    return path, directed_subgraph
