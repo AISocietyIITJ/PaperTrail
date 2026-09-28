@@ -1,6 +1,6 @@
 import json
 import yaml
-from src.usecase_3.reranker import return_reranked_docs
+from src.usecase_3.reranker_fin import return_reranked_docs
 from src.usecase_3.document_setter import docs_setter_2
 
 
@@ -24,10 +24,11 @@ def main():
         # reranked_docs= return_reranked_docs(query,modified_candidates,50)[1]
         reranked_indices,_,reranked_scores=return_reranked_docs(query,modified_candidates,50)
        
-        for new_rank,og_idx in enumerate(reranked_indices,1):
-            candidates[og_idx]["rank"]=new_rank
-            candidates[og_idx]["reranked_score"]=reranked_scores[og_idx]
+        for new_rank, (og_idx, score) in enumerate(zip(reranked_indices, reranked_scores), start=1):
+            candidates[og_idx]["rank"] = new_rank
+            candidates[og_idx]["reranked_score"] = score
 
+            
         rereanked_benchmarks.append({
             "query_id": obj['query_id'],
             "target_paper_id": target_paper_id,
@@ -36,7 +37,7 @@ def main():
         })
 
     
-    with open("benchmark_reranked.json","w",encoding="utf-8") as f:
+    with open("benchmark_reranked_jina.json","w",encoding="utf-8") as f:
         json.dump(rereanked_benchmarks,f,indent=2)
 
 

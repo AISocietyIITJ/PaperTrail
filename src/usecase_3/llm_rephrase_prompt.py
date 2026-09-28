@@ -142,77 +142,75 @@ Return a JSON object:
 
 
 LLM_AS_A_JUDGE_PROMPT="""
-You are an expert relevance judge for search and retrieval evaluation. Your task is to assess how relevant each candidate paper is to a given query, and assign a graded relevance score that will be used as ground truth for calculating NDCG (Normalized Discounted Cumulative Gain).
+You are an expert relevance judge for search and retrieval evaluation. Your task is to assess how relevant each candidate document is to a given query, and assign a graded relevance score that will be used as ground truth for calculating NDCG (Normalized Discounted Cumulative Gain) and MRR (Mean Reciprocal Rank).
 
-## Input
-{{query_object}}
-<!--
-Expected input format (a single query object):
+Input
+
+Query: {{query}}
+
+Title: {{title}}
+
+Abstract: {{abstract}}
+
+<!-- Expected input format: a string, where every candidate belongs to the SAME query above. [ "query":"....." "title": "...", "abstract": "..." ] -->
+Relevance Scale
+
+Judge each candidate independently using this graded scale:
+
+3 = Highly relevant: The candidate directly and fully addresses the query's intent; this is exactly what the query is looking for.
+2 = Relevant: The candidate addresses the query's core topic and intent, but is missing some detail, is broader/narrower than ideal, or requires minor inference to connect to the query.
+1 = Marginally relevant: The candidate is topically related (shares keywords, domain, or techniques) but does not address the query's actual intent, or only tangentially touches on it.
+0 = Not relevant: The candidate has no meaningful connection to the query's intent, even if there is superficial keyword overlap.
+
+Instructions
+Read the query and identify its core intent — what specific method, system, dataset, topic, or finding is being searched for?
+For EACH candidate, using only its title and abstract, independently assess whether it actually satisfies that intent, or only shares surface-level topic/keywords.
+Judge each candidate independently of the others — do not let your assessment of one candidate anchor or bias your assessment of another.
+Judge candidates independently of their position/order in the input list — the order candidates appear in has no bearing on relevance and must not influence your score.
+Be discriminating: use the full 0-3 range. Reserve 3 for genuinely excellent matches; do not default to the middle of the scale.
+If a candidate is borderline between two scores, choose the lower score and note the ambiguity in the rationale.
+Output Format
+
+Return ONLY a JSON array, with one object per candidate, in the SAME order as the input candidates array. Each object must contain ONLY the following two fields — no other fields:
+
+[ { "llm_grade": <0 | 1 | 2 | 3>, "rationale": "1 sentence explaining why this score was assigned, referencing what the candidate does/does not satisfy about the query intent" }, ... ]
+
+Constraints
+Return exactly one grade object per input candidate, in the same order — do not skip, merge, reorder, or add any.
+Each object must contain ONLY "llm_grade" and "rationale" — no title, abstract, id, rank, or any other field.
+Do not repeat or echo back the candidate's title or abstract anywhere in the output.
+Base judgment only on the title + abstract provided — do not assume external knowledge of the candidate beyond what's given, and do not fabricate details not present in the text.
+Rationale must be specific and reference actual content from the title/abstract, not generic phrasing (avoid "this seems related").
+Maintain consistent scoring criteria across all candidates for this query — a "3" must mean the same thing for every candidate in the set.
+Do not include any preamble, explanation, or markdown formatting outside the JSON array itself.
+"""
+
+
+GENERATE_ADV_QUERY_PROMPT= """
+I am benchmarking a cross-encoder reranker model. Below is a sample document/abstract from my database:
+
+---
+DOCUMENT:
+"[Paste one of your actual document texts/abstracts here]"
+---
+
+Based on this document, generate 30 specific adversarial test cases(10 per pattern) in JSON format targeting these failure modes:
+1. Negation / Logical Flip: Query asks for something WITHOUT a feature or condition mentioned in the doc, or flips a core constraint. Create a decoy text that includes all query keywords but violates the constraint.
+2. Keyword Trap / Lexical Overlap: Query asks a semantic question that the document answers. Create a decoy text that repeats the query's exact keywords multiple times but delivers zero useful information.
+3. Constraint Swap: Query asks for a specific constraint (e.g., year, framework, method, hardware, or target entity). Create a decoy text that swaps that single constraint to something else.
+
+Return ONLY a valid JSON object matching this structure:
 {
-  "query_id": "q_001",
-  "target_paper_id": "2103.00020",
-  "query": "...",
-  "candidates_evaluated": [
+  "test_cases": [
     {
-      "rank": 1,
-      "paper_id": "...",
-      "title": "...",
-      "abstract": "...",
-      "retrieval_score": 0.8842,
-      "reranker_score": 8.4215
-    },
-    ...
+      "pattern": "negation",
+      "query": "...",
+      "candidates": [
+        {"True/decoy": "true_doc", "text": "...", "label": 1},
+        {"True/decoy": "decoy_doc", "text": "...", "label": 0}
+      ]
+    }
   ]
 }
--->
-
-## Relevance Scale
-Judge each candidate paper independently using this graded scale (standard for NDCG):
-
-- 3 = Highly relevant: The paper directly and fully addresses the query's intent; this is exactly the paper the query is looking for (often, but not always, this will be the target_paper_id).
-- 2 = Relevant: The paper addresses the query's core topic and method/domain, but is missing some detail, is broader/narrower than ideal, or requires minor inference to connect to the query.
-- 1 = Marginally relevant: The paper is topically related (shares keywords, domain, or techniques) but does not address the query's actual intent, or only tangentially touches on it.
-- 0 = Not relevant: The paper has no meaningful connection to the query's intent, even if there is superficial keyword overlap.
-
-## Instructions
-1. Read the query and identify its core intent — what specific method, system, dataset, or finding is being searched for?
-2. For EACH candidate paper (using its title and abstract), independently assess whether it actually satisfies that intent, or only shares surface-level topic/keywords.
-3. Judge each candidate independently of its rank, retrieval_score, or reranker_score — these are upstream system outputs, not signals of true relevance, and must NOT influence your judgment. A high retrieval_score does not imply high relevance; a paper ranked #1 could still be a 0.
-4. Judge candidates independently of each other — do not let your assessment of one paper anchor your assessment of another.
-5. Be discriminating: use the full 0-3 range. Reserve 3 for genuinely excellent matches. The target_paper_id will often, but does not automatically, deserve a 3 — judge its abstract on merit like any other candidate.
-6. If a paper is borderline between two scores, choose the lower score and note the ambiguity in the rationale.
-
-## Output Format
-Return the SAME query object structure as the input, with every field preserved exactly as given (query_id, target_paper_id, query, and for each candidate: rank, paper_id, title, abstract, retrieval_score, reranker_score), and a new "judge_evaluation" object added inside each candidate:
-
-{
-  "query_id": "<unchanged from input>",
-  "target_paper_id": "<unchanged from input>",
-  "query": "<unchanged from input>",
-  "candidates_evaluated": [
-    {
-      "rank": <unchanged from input>,
-      "paper_id": "<unchanged from input>",
-      "title": "<unchanged from input>",
-      "abstract": "<unchanged from input>",
-      "retrieval_score": <unchanged from input>,
-      "reranker_score": <unchanged from input>,
-      "judge_evaluation": {
-        "relevance_score": <0 | 1 | 2 | 3>,
-        "rationale": "1 sentence explaining why this score was assigned, referencing what the paper does/does not satisfy about the query intent"
-      }
-    },
-    ...
-  ]
-}
-
-## Constraints
-- Evaluate every candidate in "candidates_evaluated" — do not skip, merge, reorder, or add any.
-- Do not alter, drop, or recompute any pre-existing field (rank, paper_id, title, abstract, retrieval_score, reranker_score) — copy them through unchanged.
-- Base judgment only on title + abstract content provided — do not assume external knowledge of the paper beyond what's given.
-- Rationale must be specific and reference actual abstract content, not generic phrasing (avoid "this seems related").
-- Do not let retrieval_score, reranker_score, or rank influence relevance_score in any way.
-- Maintain consistent scoring criteria across all 50 candidates for this query (a "3" should mean the same thing across the full candidate set).
-
 
 """
