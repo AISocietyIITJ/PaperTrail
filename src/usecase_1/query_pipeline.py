@@ -50,6 +50,8 @@ def search_pinecone(driver, query_text, top_k=4):
     candidates = []
     with driver.session() as session:
         for match in response['matches']:
+            title = (match.get('metadata') or {})
+            print(f"  -> Found match (Score: {match['score']:.4f}): {title}")
             title = match['metadata'].get('title', 'Unknown Title')
             semantic_score = match['score']
             
