@@ -6,6 +6,7 @@ from pinecone import Pinecone
 from src.config import PINECONE_API_KEY
 from sentence_transformers import SentenceTransformer
 import yaml
+import torch,gc
 
 from src.usecase_2.embedding.generate_alias import generate_phrase
 from src.usecase_2.embedding.gen_alias_new import generate_domain_aliases
@@ -26,9 +27,12 @@ from src.usecase_2.utils.parsing_resume import extract_text_from_pdf
 from src.usecase_1.ingest_neo4j import ingest_to_neo4j as ingest_reading_path_to_neo4j
 from src.usecase_1.precompute_costs import run_precompute as precompute_reading_path_costs
 from src.usecase_3.document_setter import docs_setter
-from src.usecase_3.reranker import return_reranked_docs
+from src.usecase_3.reranker_fin import return_reranked_docs
+from src.usecase_3.user_query_rephrasing import rephrase_user_query
 
 def generate_reading_path_pipeline(config_path="config.yaml"):
+    gc.collect()
+    torch.cuda.empty_cache()
     """Run the complete data prep and graph building pipeline."""
     
     prepare_reading_path_data(config_path)
@@ -102,7 +106,7 @@ def find_academic_profiles(
     }
 
 
-def recommend_papers(query: str, top_n: int = 5, config_path="config.yaml"):
+def recommend_papers(query:str, top_n: int = 5, config_path="config.yaml"):
     """Use case 3: return the top matching paper records for a query directly from Pinecone."""
     if top_n < 1:
         raise ValueError("top_n must be at least 1")
@@ -119,7 +123,11 @@ def recommend_papers(query: str, top_n: int = 5, config_path="config.yaml"):
     global _main_embedding_model
     if '_main_embedding_model' not in globals() or _main_embedding_model is None:
         _main_embedding_model = SentenceTransformer(model_name)
-    query_vector = _main_embedding_model.encode([query], normalize_embeddings=True)[0].tolist()
+
+    print(query)
+    query_fin= rephrase_user_query(query)
+    print(query_fin)
+    query_vector = _main_embedding_model.encode([query_fin], normalize_embeddings=True)[0].tolist()
 
     print(f"Querying top recommendations from Pinecone index '{pinecone_index}'...")
     pc = Pinecone(api_key=PINECONE_API_KEY)
@@ -129,55 +137,38 @@ def recommend_papers(query: str, top_n: int = 5, config_path="config.yaml"):
     fetch_k = max(top_n * 3, 30)
     search_res = index.query(vector=query_vector, top_k=fetch_k, include_metadata=True)
 
-    if not search_res.matches:
-        return []
+    final_formatted_docs= [l[1] for l in docs_setter(search_res.matches)]
+    titles=[l[0] for l in docs_setter(search_res.matches)]
+    abstracts=[l[2] for l in docs_setter(search_res.matches)]
 
-    docs = docs_setter(search_res.matches)
-    final_formatted_docs = [l[1] for l in docs]
-    titles = [l[0] for l in docs]
+    top_n_indices,top_n_reranked_docs,reranked_scores= return_reranked_docs(query_fin,final_formatted_docs)
 
-    top_n_docs_and_indices= return_reranked_docs(query, final_formatted_docs, top_n)
+    print(f"Length of recommended docs:{len(top_n_indices)}")
 
-    recommended_docs= top_n_docs_and_indices[1]
-    recommended_doc_indices= top_n_docs_and_indices[0]
+    recommended_doc_titles= [titles[i] for i in top_n_indices]
+    recommended_doc_abstracts=[abstracts[i] for i in top_n_indices]
 
-    recommended_doc_titles= [titles[i] for i in recommended_doc_indices]
+    print(f"Length of recommended titles:{len(recommended_doc_titles)}")
+
+    sim_scores= [next((match.score for match in search_res.matches if ((match.metadata is not None) and (match.metadata.get('title') == title))),0.0) for title in recommended_doc_titles]
+
+    title_to_score={
+            title : sc
+
+            for (title,sc) in zip(recommended_doc_titles,sim_scores)
+    }
     
-    interim_path = config["paths"]["interim_data"]
-    if not os.path.exists(interim_path):
-        return []
-
-    df_papers = pd.read_parquet(interim_path)
     
     results = []
-    for idx in recommended_doc_indices:
-        match = search_res.matches[idx]
-        try:
-            node_idx = int(match.id)
-        except ValueError:
-            continue
 
-        matched_df = df_papers[df_papers["node_idx"] == node_idx]
-        if matched_df.empty:
-            continue
 
-        paper_info = matched_df.iloc[0]
-        pub_date = str(paper_info.get("published_date", ""))
-        if "T" in pub_date:
-            pub_date = pub_date.split("T")[0]
-        elif " " in pub_date:
-            pub_date = pub_date.split(" ")[0]
-
+    for title, abstract,rr_score in zip(recommended_doc_titles, recommended_doc_abstracts,reranked_scores):
         results.append({
-            "score": float(match.score),
-            "title": str(paper_info.get("title", "")),
-            "published_date": pub_date,
-            "abstract": str(paper_info.get("abstract", "")),
-            "arxiv_id": str(paper_info.get("arxiv_base_id", paper_info.get("id", "")))
+            "score": float(title_to_score[title]),
+            "title": str(title),
+            "abstract": str(abstract),
+            "reranked_score": float(rr_score)
         })
-
-        if len(results) >= top_n:
-            break
             
     return results
 
@@ -240,11 +231,13 @@ if __name__ == "__main__":
         recs = recommend_papers(args.recommend_papers, top_n=args.top_n, config_path=args.config)
         for i, rec in enumerate(recs, 1):
             print(f"\n[{i}] {rec['title']}")
-            print(f"Date: {str(rec['published_date']).split('T')[0]} | Similarity Score: {rec['score']:.4f}")
+            print(f"Similarity Score: {rec['score']:.4f}")
             # print a snippet of abstract
             abstract_snippet = (rec['abstract'][:200] + '...') if len(str(rec['abstract'])) > 200 else rec['abstract']
             print(f"Abstract: {abstract_snippet}")
+            print(f"Reranked_score: {rec['reranked_score']}")
         print("\n=========================================================================================\n")
     else:
         parser.print_help()
 
+# Date: {str(rec['published_date']).split('T')[0]} |

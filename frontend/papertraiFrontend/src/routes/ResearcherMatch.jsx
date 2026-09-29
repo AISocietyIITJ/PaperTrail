@@ -20,10 +20,11 @@ export default function ResearcherMatch() {
     
     setIsLoading(true);
     setHasSearched(true);
+    setMatches([]);
     
     try {
       const data = await getFacultyMatches(selectedFile, interests);
-      setMatches(data.matches || []);
+      setMatches(data?.matches || []);
     } catch (err) {
       console.error(err);
     } finally {

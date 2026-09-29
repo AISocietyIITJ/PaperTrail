@@ -28,16 +28,18 @@ GAMMA = 5.0
 A = 0.7
 B = 0.3
 
-def search_pinecone(driver, query_text, top_k=4):
+
+def search_pinecone(driver, query_text, top_k=15):
     """
     Embeds the user query using SPECTER2 and searches the Pinecone index.
     Reranks results using Semantic Score + Influence (s_node) tie-breaker.
+    Uses batch queries and abstract filtering to remove junk/PDF fragments.
     """
     print(f"\n[Pinecone] Loading SPECTER2 model and embedding query: '{query_text}'")
     model = SentenceTransformer('allenai/specter2_base')
     query_embedding = model.encode(query_text).tolist()
     
-    print(f"[Pinecone] Searching index '{PINECONE_INDEX_NAME}' for top 15 semantic matches...")
+    print(f"[Pinecone] Searching index '{PINECONE_INDEX_NAME}' for top 1500 semantic matches...")
     pc = Pinecone(api_key=PINECONE_API_KEY)
     index = pc.Index(PINECONE_INDEX_NAME)
     
@@ -49,6 +51,7 @@ def search_pinecone(driver, query_text, top_k=4):
     
     candidates = []
     with driver.session() as session:
+        # Extract all pids and create a mapping for semantic scores and titles
         pinecone_map = {}
         for match in response['matches']:
             pid = match['id']
@@ -56,9 +59,10 @@ def search_pinecone(driver, query_text, top_k=4):
                 'title': match['metadata'].get('title', 'Unknown Title'),
                 'semantic_score': match['score']
             }
-            
+        
         pids = list(pinecone_map.keys())
         
+        # Fetch all records in a single batch query to prevent timeouts
         result = session.run(
             "MATCH (p:Paper) WHERE p.paperId IN $pids RETURN p.paperId AS pid, p.s_node AS s_node, p.abstract AS abstract",
             pids=pids,
@@ -68,11 +72,11 @@ def search_pinecone(driver, query_text, top_k=4):
             pid = record["pid"]
             abstract = record.get("abstract")
             
+            # Filter out junk PDF fragments by requiring a valid abstract
             if not abstract or len(str(abstract).strip()) < 20:
                 continue
                 
             s_node = record.get("s_node") or 0.0
-            
             semantic_score = pinecone_map[pid]['semantic_score']
             title = pinecone_map[pid]['title']
             
@@ -84,7 +88,7 @@ def search_pinecone(driver, query_text, top_k=4):
     candidates.sort(key=lambda x: x[0], reverse=True)
     
     target_ids = []
-    print("\n[Reranking] Top 4 Seeds selected (Semantic + Influence):")
+    print(f"\n[Reranking] Top {top_k} Seeds selected (Semantic + Influence):")
     for score, pid, title, sem_score in candidates[:top_k]:
         safe_title = title.encode('ascii', 'replace').decode('ascii')
         print(f"  -> {safe_title} (Semantic: {sem_score:.4f}, Reranked: {score:.4f})")
@@ -93,16 +97,15 @@ def search_pinecone(driver, query_text, top_k=4):
     print(f"\n[Debug] target_ids collected: {target_ids}")
     return target_ids
 
+
 def extract_subgraph(driver, target_ids):
     """
     Walks backward 2 hops from the target papers to extract their prerequisites.
-    Quality Control: only keeps nodes with citationCount >= 50 (or seed nodes).
+    Quality Control: only keeps nodes with citationCount >= 500 or influentialCitationCount >= 50.
     """
     print("\n[Neo4j] Extracting 2-hop prerequisite subgraph...")
     
     # We fetch all paths first, then filter nodes in Python.
-    # This avoids the Neo4j bug where the citationCount filter only applies
-    # to the endpoint of the path, letting junk intermediate nodes through.
     query = """
     MATCH path = (seed:Paper)-[:CITES*0..2]->(prereq:Paper)
     WHERE seed.paperId IN $target_ids
@@ -124,7 +127,6 @@ def extract_subgraph(driver, target_ids):
                 if n_id is None:
                     continue
                 if not G.has_node(n_id):
-                    # Use the year field directly (already returned as int from Neo4j)
                     year = node.get("year") or 0
                     if not isinstance(year, int):
                         try:
@@ -135,7 +137,7 @@ def extract_subgraph(driver, target_ids):
                     citation_count = node.get("citationCount") or 0
                     influential_count = node.get("influentialCitationCount") or 0
                     
-                    # Quality Control: skip low-citation papers unless they are seeds
+                    # Strict Hall of Fame Quality Control Filter
                     if citation_count < 500 and influential_count < 50 and n_id not in seed_set:
                         continue
                     
@@ -151,7 +153,6 @@ def extract_subgraph(driver, target_ids):
             for edge in record["edges"]:
                 start_node = edge["start"]
                 end_node = edge["end"]
-                # Only add edges between nodes that passed the quality filter
                 if start_node is not None and end_node is not None:
                     if G.has_node(start_node) and G.has_node(end_node):
                         G.add_edge(
@@ -163,6 +164,7 @@ def extract_subgraph(driver, target_ids):
     print(f"  -> Subgraph extracted: {G.number_of_nodes()} nodes, {G.number_of_edges()} edges")
     return G
 
+
 def compute_graph_weights(G):
     """
     Computes node and edge weights exactly as described in the RePaGer paper.
@@ -173,36 +175,35 @@ def compute_graph_weights(G):
         return
 
     has_node_costs = any(G.nodes[n].get("nodeCost") is not None for n in G.nodes())
-    if has_node_costs:
+    has_edge_costs = (
+        G.number_of_edges() > 0
+        and any(G.edges[u, v].get("edgeCost") is not None for u, v in G.edges())
+    )
+
+    if has_node_costs and has_edge_costs:
         print("  -> Using precomputed NEWST costs from Neo4j.")
         for n in G.nodes():
             nc = G.nodes[n].get('nodeCost')
-            # Use a sensible fallback (median-ish cost) instead of extreme 50000
             G.nodes[n]['weight'] = nc if nc is not None else 10.0
-            
-        if G.number_of_edges() > 0:
-            for u, v in G.edges():
-                ec = G.edges[u, v].get('edgeCost')
-                G.edges[u, v]['weight'] = ec if ec is not None else 12.0
+        for u, v in G.edges():
+            ec = G.edges[u, v].get('edgeCost')
+            G.edges[u, v]['weight'] = ec if ec is not None else 12.0
         return
 
     print("  -> No precomputed costs found. Computing locally.")
     centrality = {n: G.in_degree(n) for n in G.nodes()}
     max_cent = max(centrality.values()) if centrality else 1
-    if max_cent == 0:
-        max_cent = 1
+    if max_cent == 0: max_cent = 1
     
     citations = {n: G.nodes[n].get("citationCount", 0) for n in G.nodes()}
     max_cit = max(citations.values()) if citations else 1
-    if max_cit == 0:
-        max_cit = 1
+    if max_cit == 0: max_cit = 1
     
     for n in G.nodes():
         cent_norm = centrality[n] / max_cent
         cit_norm = citations[n] / max_cit
         denom = (A * cent_norm) + (B * cit_norm)
-        if denom == 0:
-            denom = 0.0001
+        if denom == 0: denom = 0.0001
         G.nodes[n]['weight'] = GAMMA / denom
 
     co_citation = {}
@@ -217,6 +218,7 @@ def compute_graph_weights(G):
         co_count = co_citation.get(pair, 0)
         co_count = max(0.5, co_count)
         G.edges[u, v]['weight'] = ALPHA / (co_count ** BETA)
+
 
 def format_output(reading_path_ids, G, DAG):
     print("\n" + "="*80)
@@ -239,7 +241,6 @@ def format_output(reading_path_ids, G, DAG):
         
         prereqs = []
         if DAG is not None and DAG.has_node(pid):
-            # In our graph, edges are citer -> cited. So successors are the prerequisites.
             for prereq_id in DAG.successors(pid):
                 prereq_title = G.nodes[prereq_id].get("title", "Unknown")
                 prereqs.append({"paperId": prereq_id, "title": prereq_title})
@@ -262,11 +263,12 @@ def format_output(reading_path_ids, G, DAG):
     print("="*80 + "\n")
     return structured_path
 
+
 def generate_reading_path(query_text):
     driver = GraphDatabase.driver(NEO4J_URI, auth=(NEO4J_USERNAME, NEO4J_PASSWORD))
     
     try:
-        target_ids = search_pinecone(driver, query_text, top_k=4)
+        target_ids = search_pinecone(driver, query_text, top_k=15)
         if not target_ids:
             print("No initial seeds found. Try a different query.")
             return []

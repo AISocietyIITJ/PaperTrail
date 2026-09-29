@@ -8,7 +8,7 @@ embedding:
   model_name: "allenai/specter2_base"
   adapter_name: "allenai/specter2" # Proximity adapter
   batch_size: 256                  # Scaled for NVIDIA GeForce RTX 4060 GPU (8GB VRAM)
-  pinecone_index: "papertrail-papers"
+  pinecone_index: "papertrail-papers-2000"
   pinecone_dimension: 768
 
 candidate_edges:
@@ -32,7 +32,7 @@ paths:
   graph_path: "data/processed/graph.gpickle"
 
 neo4j:
-  uri: "neo4j+s://ad728d35.databases.neo4j.io"
-  user: "ad728d35"
-  password: "p1BdvlyZNHH0I2eUzHts4tiJXS56Raz-8vuNY3Fvh6w"  
+  uri: "neo4j+ssc://ef046f81.databases.neo4j.io"
+  user: "ef046f81"
+  password: "EvC_hBwpUwyjx6uNj6729pKh8LQMMF29jsFvCOSbBQ0"  
 

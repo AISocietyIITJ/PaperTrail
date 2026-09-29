@@ -25,6 +25,8 @@ def embed_corpus(
     adapter_name: str | None = None,
 ) -> None:
     """Encode title and abstract using SentenceTransformers and upsert to Pinecone."""
+    df = df.dropna(subset=["title", "abstract"])
+    df = df[df["title"].str.strip().ne("") & df["abstract"].str.strip().ne("")]
     pc = Pinecone(api_key=PINECONE_API_KEY)
  
     existing_indexes = [index.name for index in pc.list_indexes()]
@@ -82,10 +84,7 @@ def embed_corpus(
     for idx, emb in enumerate(res):
         vector_id = str(df.iloc[idx]["paperId"])
         vector_values = emb.tolist()
-        metadata = {
-            "title": str(df.iloc[idx]["title"]),
-            "abstract": str(df.iloc[idx]["abstract"])
-        }
+        metadata = {"title": str(df.iloc[idx]["title"]), "abstract":str(df.iloc[idx]["abstract"])}
         vectors_to_upsert.append({"id": vector_id, "values": vector_values, "metadata": metadata})
  
     PINECONE_BATCH_SIZE = 200

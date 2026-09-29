@@ -38,6 +38,28 @@ export default function ResearchPath() {
     setIsDrawerOpen(true);
   };
 
+  const handleEdgeClick = (edgeData) => {
+    // We need to find the target paper to show in the drawer, or we can just show the edge info
+    // The edgeData represents the prerequisite relation. We can show it in the drawer alongside the target paper,
+    // or just pass a dummy paper so the drawer opens and shows the edge info.
+    // Let's find the paper that is the target of this edge (or source) if we want to show it.
+    // Assuming `edgeData` has { paperId, title, reason, similarity } from prerequisite list
+    setDrawerEdge(edgeData);
+    // Find the paper that this prerequisite points to? Actually, edgeData is the prerequisite.
+    const targetPaper = data?.path?.find(p => p.paperId === edgeData.paperId);
+    if (targetPaper) {
+      setSelectedPaper(targetPaper);
+    } else {
+      setSelectedPaper({
+        title: edgeData.title,
+        publishedDate: new Date().toISOString(),
+        abstract: "This is a prerequisite paper.",
+        authors: []
+      });
+    }
+    setIsDrawerOpen(true);
+  };
+
   return (
     <div className="research-path-container">
       <QueryInputBar mode="path" onSubmit={handleSearch} isCentered={!hasSearched} />
@@ -58,7 +80,7 @@ export default function ResearchPath() {
         )}
 
         {!isLoading && data && (
-          <StructuredPathTimeline data={data} onNodeClick={handleNodeClick} />
+          <StructuredPathTimeline data={data} onNodeClick={handleNodeClick} onEdgeClick={handleEdgeClick} />
         )}
         
         {!isLoading && hasSearched && !data && (

@@ -34,6 +34,19 @@ export default function ProblemDiscovery() {
     setIsDrawerOpen(true);
   };
 
+  const handleQueryClick = () => {
+    if (!data) return;
+    handleBubbleClick({
+      title: 'Original Query',
+      abstract: data.query,
+      publishedDate: new Date().toISOString(),
+      categoryCode: 'QUERY',
+      authors: ['You'],
+      arxivUrl: null,
+      pdfUrl: null
+    });
+  };
+
   return (
     <div className="problem-discovery-container">
       <QueryInputBar 
@@ -49,8 +62,10 @@ export default function ProblemDiscovery() {
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ type: 'spring', bounce: 0.4 }}
+            title={data.query}
+            onClick={handleQueryClick}
           >
-            {data.query}
+            <span className="query-bubble-text">{data.query}</span>
           </motion.div>
         )}
       </AnimatePresence>
