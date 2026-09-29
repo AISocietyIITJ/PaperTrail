@@ -29,17 +29,21 @@ A = 0.7
 B = 0.3
 
 
-def search_pinecone(driver, query_text, top_k=4):
+def hybrid_seed_search(driver, query_text, top_k=4):
     """
-    Embeds the user query using SPECTER2 and searches the Pinecone index.
-    Reranks results using Semantic Score + Influence (s_node) tie-breaker.
-    Uses batch queries and abstract filtering to remove junk/PDF fragments.
+    Hybrid Search for Seeds using Reciprocal Rank Fusion (RRF):
+    Path A: Pinecone Dense Retrieval (top 1500 -> rerank -> top 100)
+    Path B: Neo4j Keyword Matching (top 100)
+    RRF: Combines rankings, giving more weight to Neo4j keyword matches.
     """
-    print(f"\n[Pinecone] Loading SPECTER2 model and embedding query: '{query_text}'")
+    print(f"\n[Hybrid Search] Processing query: '{query_text}'")
+    
+    # Path A: Pinecone Dense Retrieval
+    print("[Path A] Loading SPECTER2 model and embedding query...")
     model = SentenceTransformer('allenai/specter2_base')
     query_embedding = model.encode(query_text).tolist()
     
-    print(f"[Pinecone] Searching index '{PINECONE_INDEX_NAME}' for top 1500 semantic matches...")
+    print(f"[Path A] Searching Pinecone index '{PINECONE_INDEX_NAME}'...")
     pc = Pinecone(api_key=PINECONE_API_KEY)
     index = pc.Index(PINECONE_INDEX_NAME)
     
@@ -49,9 +53,8 @@ def search_pinecone(driver, query_text, top_k=4):
         include_metadata=True
     )
     
-    candidates = []
+    pinecone_candidates = []
     with driver.session() as session:
-        # Extract all pids and create a mapping for semantic scores and titles
         pinecone_map = {}
         for match in response['matches']:
             pid = match['id']
@@ -59,41 +62,96 @@ def search_pinecone(driver, query_text, top_k=4):
                 'title': match['metadata'].get('title', 'Unknown Title'),
                 'semantic_score': match['score']
             }
-        
+            
         pids = list(pinecone_map.keys())
-        
-        # Fetch all records in a single batch query to prevent timeouts
         result = session.run(
             "MATCH (p:Paper) WHERE p.paperId IN $pids RETURN p.paperId AS pid, p.s_node AS s_node, p.abstract AS abstract",
             pids=pids,
         )
-        
         for record in result:
             pid = record["pid"]
             abstract = record.get("abstract")
-            
-            # Filter out junk PDF fragments by requiring a valid abstract
             if not abstract or len(str(abstract).strip()) < 20:
                 continue
-                
             s_node = record.get("s_node") or 0.0
             semantic_score = pinecone_map[pid]['semantic_score']
             title = pinecone_map[pid]['title']
-            
-            # Base Score + Influence Tie-breaker
             rerank_score = semantic_score + (0.02 * math.log(s_node + 1.0))
-            candidates.append((rerank_score, pid, title, semantic_score))
+            pinecone_candidates.append({
+                "pid": pid, "title": title, "rerank_score": rerank_score, "sem_score": semantic_score
+            })
+            
+    pinecone_candidates.sort(key=lambda x: x["rerank_score"], reverse=True)
+    path_a_top_100 = pinecone_candidates[:100]
+    
+    # Path B: Neo4j Keyword Matching
+    terms = [term.lower() for term in query_text.split() if len(term) > 2]
+    print(f"[Path B] Searching Neo4j for keyword matches: {terms}")
+    
+    path_b_candidates = []
+    if terms:
+        query = """
+        MATCH (p:Paper)
+        WITH p, toLower(p.title + " " + coalesce(p.abstract, "")) as text
+        WHERE ALL(term IN $terms WHERE text CONTAINS term)
+        RETURN p.paperId as pid, p.title as title, p.s_node as s_node
+        ORDER BY s_node DESC
+        LIMIT 100
+        """
+        with driver.session() as session:
+            result = session.run(query, terms=terms)
+            for record in result:
+                path_b_candidates.append({
+                    "pid": record["pid"],
+                    "title": record["title"]
+                })
                 
-    # Sort by the combined Rerank Score
-    candidates.sort(key=lambda x: x[0], reverse=True)
+    print(f"  -> Path A found {len(path_a_top_100)} candidates (reranked)")
+    print(f"  -> Path B found {len(path_b_candidates)} candidates (keyword)")
+    
+    # Merge: Reciprocal Rank Fusion (RRF)
+    print(f"[Merge] Computing Reciprocal Rank Fusion (RRF)...")
+    path_a_ranks = {c["pid"]: (idx + 1, c) for idx, c in enumerate(path_a_top_100)}
+    path_b_ranks = {c["pid"]: (idx + 1, c) for idx, c in enumerate(path_b_candidates)}
+    
+    # RRF Configuration
+    k_constant = 60
+    weight_a = 1.0  # Pinecone weight
+    weight_b = 2.0  # Neo4j Keyword match weight (heavier)
+    
+    all_pids = set(path_a_ranks.keys()).union(set(path_b_ranks.keys()))
+    rrf_results = []
+    
+    for pid in all_pids:
+        score = 0.0
+        title = "Unknown Title"
+        
+        if pid in path_a_ranks:
+            rank_a, cand_a = path_a_ranks[pid]
+            score += weight_a * (1.0 / (k_constant + rank_a))
+            title = cand_a["title"]
+            
+        if pid in path_b_ranks:
+            rank_b, cand_b = path_b_ranks[pid]
+            score += weight_b * (1.0 / (k_constant + rank_b))
+            title = cand_b["title"]
+            
+        rrf_results.append({
+            "pid": pid,
+            "title": title,
+            "rrf_score": score
+        })
+        
+    # Sort by RRF score
+    rrf_results.sort(key=lambda x: x["rrf_score"], reverse=True)
     
     target_ids = []
-    print(f"\n[Reranking] Top {top_k} Seeds selected (Semantic + Influence):")
-    for score, pid, title, sem_score in candidates[:top_k]:
-        safe_title = title.encode('ascii', 'replace').decode('ascii')
-        print(f"  -> {safe_title} (Semantic: {sem_score:.4f}, Reranked: {score:.4f})")
-        target_ids.append(pid)
-                    
+    print(f"[Seeds] Top {top_k} Seeds selected via RRF:")
+    for c in rrf_results[:top_k]:
+        safe_title = c["title"].encode('ascii', 'replace').decode('ascii')
+        print(f"  -> [Hybrid RRF] {safe_title} (RRF Score: {c['rrf_score']:.4f})")
+        target_ids.append(c["pid"])
+            
     print(f"\n[Debug] target_ids collected: {target_ids}")
     return target_ids
 
@@ -276,7 +334,7 @@ def generate_reading_path(query_text):
     driver = GraphDatabase.driver(NEO4J_URI, auth=(NEO4J_USERNAME, NEO4J_PASSWORD))
     
     try:
-        target_ids = search_pinecone(driver, query_text, top_k=4)
+        target_ids = hybrid_seed_search(driver, query_text, top_k=4)
         if not target_ids:
             print("No initial seeds found. Try a different query.")
             return []
