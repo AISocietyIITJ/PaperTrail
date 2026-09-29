@@ -42,31 +42,33 @@ export default function ResearchPath() {
     <div className="research-path-container">
       <QueryInputBar mode="path" onSubmit={handleSearch} isCentered={!hasSearched} />
 
-      {!hasSearched && (
-        <div style={{ flex: 1 }}>
-          {/* Input bar is centered, no empty state needed per implementation plan */}
-        </div>
-      )}
+      <div className="research-path-scroll">
+        {!hasSearched && (
+          <div style={{ flex: 1 }}>
+            {/* Input bar is centered, no empty state needed per implementation plan */}
+          </div>
+        )}
 
-      {isLoading && hasSearched && (
-        <EmptyState 
-          icon={Map}
-          title="Mapping Route..."
-          description="Traversing the citation graph to find foundational papers."
-        />
-      )}
+        {isLoading && hasSearched && (
+          <EmptyState 
+            icon={Map}
+            title="Mapping Route..."
+            description="Traversing the citation graph to find foundational papers."
+          />
+        )}
 
-      {!isLoading && data && (
-        <StructuredPathTimeline data={data} onNodeClick={handleNodeClick} />
-      )}
-      
-      {!isLoading && hasSearched && !data && (
-        <EmptyState 
-          icon={Map}
-          title="No path found"
-          description="Could not map a connected research path for that topic."
-        />
-      )}
+        {!isLoading && data && (
+          <StructuredPathTimeline data={data} onNodeClick={handleNodeClick} />
+        )}
+        
+        {!isLoading && hasSearched && !data && (
+          <EmptyState 
+            icon={Map}
+            title="No path found"
+            description="Could not map a connected research path for that topic."
+          />
+        )}
+      </div>
 
       <PaperDetailDrawer 
         isOpen={isDrawerOpen} 

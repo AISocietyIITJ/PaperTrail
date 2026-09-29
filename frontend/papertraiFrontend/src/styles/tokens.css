@@ -1,24 +1,39 @@
 :root {
-  /* Color Palette - Rich Espresso/Sepia (Warm Dark) */
-  --paper-50: #2A2421; /* Deep warm espresso background */
-  --ink-900: #F5EBE1;  /* Soft warm cream text */
-  --graphite-600: #AFA199; /* Warm taupe for secondary text */
-  
-  --surface-color: #352E2B; /* Elevated warm sepia */
-  --border-color: #4A423D; /* Subtle warm border */
+  /* ============================================
+     UNSLOTH-INSPIRED DARK THEME
+     Near-black bg · Mint-Teal accent · White text
+     ============================================ */
 
-  --route-blue: #D97706; /* Warm Amber/Gold */
-  --route-blue-hover: #B45309;
-  --route-blue-tint: rgba(217, 119, 6, 0.15);
+  /* Backgrounds */
+  --paper-50:       #0C0C0C;    /* deepest bg — true near-black */
+  --surface-color:  #161616;    /* sidebar, navbar, modals */
+  --surface-raised: #1E1E1E;    /* cards, inputs, elevated panels */
+  --border-color:   #2A2A2A;    /* subtle separator */
 
-  --highlighter-400: #65A30D; /* Warm Olive/Green */
-  --highlighter-tint: rgba(101, 163, 13, 0.15);
+  /* Text */
+  --ink-900:        #FFFFFF;    /* primary text — pure white */
+  --graphite-600:   #888888;    /* muted / secondary text */
 
-  --signal-coral: #DC2626; /* Warm Red */
+  /* ── Teal / Mint Accent (Unsloth signature) ── */
+  --route-blue:        #00C896; /* primary teal-mint */
+  --route-blue-hover:  #00A87E; /* darker on hover */
+  --route-blue-bright: #3DFFC0; /* lighter for labels, active text */
+  --route-blue-tint:   rgba(0, 200, 150, 0.10); /* subtle fill */
+  --route-blue-border: rgba(0, 200, 150, 0.30); /* glow border */
+  --route-blue-glow:   rgba(0, 200, 150, 0.20); /* outer glow */
 
-  /* Typography */
+  /* Secondary accent — keep cyan for scores/metrics */
+  --highlighter-400:   #00E5B0; /* bright mint for numbers */
+  --highlighter-tint:  rgba(0, 229, 176, 0.10);
+
+  /* Danger */
+  --signal-coral: #FF5C5C;
+
+  /* ============================================
+     TYPOGRAPHY
+     ============================================ */
   --font-display: 'Inter', system-ui, -apple-system, sans-serif;
-  --font-body: 'Inter', system-ui, -apple-system, sans-serif;
-  --font-paper: 'Georgia', serif; /* Standard academic serif */
-  --font-mono: 'Consolas', 'Monaco', monospace; /* Standard mono */
+  --font-body:    'Inter', system-ui, -apple-system, sans-serif;
+  --font-paper:   'Georgia', serif;
+  --font-mono:    'Consolas', 'Monaco', monospace;
 }

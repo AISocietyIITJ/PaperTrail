@@ -1,10 +1,23 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ExternalLink, Download, FileText } from 'lucide-react';
 import Badge from './Badge';
 import './paper-drawer.css';
 
+function useIsMobile(breakpoint = 600) {
+  const [isMobile, setIsMobile] = useState(() => window.innerWidth <= breakpoint);
+  useEffect(() => {
+    const mq = window.matchMedia(`(max-width: ${breakpoint}px)`);
+    const handler = (e) => setIsMobile(e.matches);
+    mq.addEventListener('change', handler);
+    return () => mq.removeEventListener('change', handler);
+  }, [breakpoint]);
+  return isMobile;
+}
+
 export default function PaperDetailDrawer({ paper, edgeInfo, isOpen, onClose }) {
+  const isMobile = useIsMobile(600);
+
   // Handle escape key
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -14,38 +27,45 @@ export default function PaperDetailDrawer({ paper, edgeInfo, isOpen, onClose }) 
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isOpen, onClose]);
 
+  // Determine animation direction: slide from right on desktop, slide from bottom on mobile
+  const panelVariants = isMobile
+    ? { hidden: { y: '100%' }, visible: { y: 0 }, exit: { y: '100%' } }
+    : { hidden: { x: '100%' }, visible: { x: 0 }, exit: { x: '100%' } };
+
   return (
     <AnimatePresence>
       {isOpen && paper && (
         <>
-          <motion.div 
+          <motion.div
             className="drawer-overlay"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
           />
-          <motion.div 
+          <motion.div
             className="drawer-panel"
-            initial={{ x: '100%' }}
-            animate={{ x: 0 }}
-            exit={{ x: '100%' }}
+            variants={panelVariants}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
             transition={{ type: 'tween', ease: 'easeOut', duration: 0.28 }}
             role="dialog"
             aria-modal="true"
+            aria-label="Paper details"
           >
             <div className="drawer-header">
               <button className="drawer-close" onClick={onClose} aria-label="Close drawer">
                 <X size={20} />
               </button>
             </div>
-            
+
             <div className="drawer-content">
               <div className="drawer-meta-top">
                 <span className="drawer-date">{new Date(paper.publishedDate).getFullYear()}</span>
                 <Badge label={paper.categoryCode} variant="category" />
               </div>
-              
+
               <h2 className="drawer-title">{paper.title}</h2>
               <p className="drawer-authors">{paper.authors?.join(', ')}</p>
 
@@ -73,7 +93,12 @@ export default function PaperDetailDrawer({ paper, edgeInfo, isOpen, onClose }) 
                   <Download size={16} />
                   Open PDF
                 </a>
-                <button className="action-btn" onClick={() => navigator.clipboard.writeText(`@article{${paper.arxivId}, title={${paper.title}}, author={${paper.authors?.join(' and ')}}, year={${new Date(paper.publishedDate).getFullYear()}}}`)}>
+                <button
+                  className="action-btn"
+                  onClick={() => navigator.clipboard.writeText(
+                    `@article{${paper.arxivId}, title={${paper.title}}, author={${paper.authors?.join(' and ')}}, year={${new Date(paper.publishedDate).getFullYear()}}}`
+                  )}
+                >
                   <FileText size={16} />
                   Copy BibTeX
                 </button>
