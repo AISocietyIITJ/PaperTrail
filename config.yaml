@@ -8,7 +8,7 @@ embedding:
   model_name: "allenai/specter2_base"
   adapter_name: "allenai/specter2" # Proximity adapter
   batch_size: 256                  # Scaled for NVIDIA GeForce RTX 4060 GPU (8GB VRAM)
-  pinecone_index: "papertrail-papers"
+  pinecone_index: "papertrail-papers-2000"
   pinecone_dimension: 768
 
 candidate_edges:

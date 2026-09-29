@@ -8,7 +8,7 @@ from src.usecase_3.llm_rephrase_prompt import query_rec_prompt
 
 def sampling_papers():
     pc = Pinecone(api_key=PINECONE_API_KEY)
-    index = pc.Index('papertrail-papers')
+    index = pc.Index('papertrail-papers-2000')
 
     id_list=[]
 
