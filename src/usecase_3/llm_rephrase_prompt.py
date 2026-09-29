@@ -52,7 +52,13 @@ optimized search query, following these rules:
      unless the surrounding context already disambiguates it. Do not guess
      and expand it unless you're confident of the intended meaning.
 
-6. OUTPUT FORMAT
+6. PERSON NAME DETECTION
+   - If the input query consists of, or is essentially just, the name of a
+     person who is not clearly well-known/notable in any field or area
+     (e.g. not a famous scientist, researcher, public figure, or widely
+     recognized name), then return the query as it is.
+
+7. OUTPUT FORMAT
    Return ONLY the rewritten query as plain text. No preamble, no
    explanation, no quotation marks, no labels.
 

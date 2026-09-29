@@ -111,8 +111,6 @@ def recommend_papers(query:str, top_n: int = 5, config_path="config.yaml"):
     if top_n < 1:
         raise ValueError("top_n must be at least 1")
 
-    
-
     with open(config_path, "r", encoding="utf-8") as f:
         config = yaml.safe_load(f)
         
@@ -127,6 +125,8 @@ def recommend_papers(query:str, top_n: int = 5, config_path="config.yaml"):
     print(query)
     query_fin= rephrase_user_query(query)
     print(query_fin)
+    if(query.lower()==query_fin.lower()):return []
+
     query_vector = _main_embedding_model.encode([query_fin], normalize_embeddings=True)[0].tolist()
 
     print(f"Querying top recommendations from Pinecone index '{pinecone_index}'...")
@@ -157,18 +157,23 @@ def recommend_papers(query:str, top_n: int = 5, config_path="config.yaml"):
 
             for (title,sc) in zip(recommended_doc_titles,sim_scores)
     }
-    
+    filtered_results = [(score,idx,doc) for score,idx,doc in zip(reranked_scores,top_n_indices,top_n_reranked_docs) if score >=0.001]
+
+    if filtered_results:
+        reranked_scores,top_n_indices,top_n_reranked_docs=map(list,zip(*filtered_results))
+    else:
+        reranked_scores,top_n_indices,top_n_reranked_docs=[],[],[]
     
     results = []
 
-
-    for title, abstract,rr_score in zip(recommended_doc_titles, recommended_doc_abstracts,reranked_scores):
-        results.append({
-            "score": float(title_to_score[title]),
-            "title": str(title),
-            "abstract": str(abstract),
-            "reranked_score": float(rr_score)
-        })
+    if len(reranked_scores)!=0:
+        for title, abstract,rr_score in zip(recommended_doc_titles, recommended_doc_abstracts,reranked_scores):
+            results.append({
+                "score": float(title_to_score[title]),
+                "title": str(title),
+                "abstract": str(abstract),
+                "reranked_score": float(rr_score)
+            })
             
     return results
 
@@ -229,14 +234,18 @@ if __name__ == "__main__":
     elif args.recommend_papers:
         print(f"\n=================== PAPER RECOMMENDATIONS FOR: '{args.recommend_papers}' ===================")
         recs = recommend_papers(args.recommend_papers, top_n=args.top_n, config_path=args.config)
-        for i, rec in enumerate(recs, 1):
-            print(f"\n[{i}] {rec['title']}")
-            print(f"Similarity Score: {rec['score']:.4f}")
-            # print a snippet of abstract
-            abstract_snippet = (rec['abstract'][:200] + '...') if len(str(rec['abstract'])) > 200 else rec['abstract']
-            print(f"Abstract: {abstract_snippet}")
-            print(f"Reranked_score: {rec['reranked_score']}")
-        print("\n=========================================================================================\n")
+        if (len(recs)!=0):
+            for i, rec in enumerate(recs, 1):
+                print(f"\n[{i}] {rec['title']}")
+                print(f"Similarity Score: {rec['score']:.4f}")
+                # print a snippet of abstract
+                abstract_snippet = (rec['abstract'][:200] + '...') if len(str(rec['abstract'])) > 200 else rec['abstract']
+                print(f"Abstract: {abstract_snippet}")
+                print(f"Reranked_score: {rec['reranked_score']}")
+            print("\n=========================================================================================\n")
+        else:
+            print("Papers relevant to query are not found")
+            print("\n=========================================================================================\n")
     else:
         parser.print_help()
 
