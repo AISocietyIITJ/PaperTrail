@@ -11,6 +11,8 @@ from collections.abc import Iterable
 
 import networkx as nx
 import yaml
+import torch
+import torch.nn.functional as F
 from neo4j import GraphDatabase
 from pinecone import Pinecone
 
@@ -198,23 +200,38 @@ def inject_cosine_similarities(
     logger.info(f"Fetching {len(pinecone_ids)} vectors from Pinecone...")
     vectors = fetch_vectors(index, list(pinecone_ids), batch_size=100)
 
-    updates = []
+    # Prepare batch arrays for GPU processing
+    src_tensors = []
+    dst_tensors = []
+    valid_edges = []
+    
     for edge in edges:
         s_id = str(edge["src_id"])
         d_id = str(edge["dst_id"])
-        
-        if s_id not in vectors or d_id not in vectors:
-            continue
-            
-        updates.append(
-            {
-                "rel_id": edge["rel_id"],
-                "cos_similarity": cosine(vectors[s_id], vectors[d_id]),
-            }
-        )
+        if s_id in vectors and d_id in vectors:
+            src_tensors.append(vectors[s_id])
+            dst_tensors.append(vectors[d_id])
+            valid_edges.append(edge["rel_id"])
 
-    if not updates:
+    if not valid_edges:
         return 0
+
+    # Execute bulk Cosine Similarity on the GPU
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    logger.info(f"Computing {len(valid_edges)} cosine similarities on {device}...")
+    
+    # Convert to CUDA tensors
+    src_mat = torch.tensor(src_tensors, device=device)
+    dst_mat = torch.tensor(dst_tensors, device=device)
+    
+    # Bulk compute row-wise cosine similarity
+    cos_sims = F.cosine_similarity(src_mat, dst_mat, dim=1).cpu().tolist()
+    
+    # Zip back into Neo4j update dictionaries
+    updates = [
+        {"rel_id": rel_id, "cos_similarity": float(sim)}
+        for rel_id, sim in zip(valid_edges, cos_sims)
+    ]
 
     with driver.session() as session:
         for batch in batched(updates, batch_size):

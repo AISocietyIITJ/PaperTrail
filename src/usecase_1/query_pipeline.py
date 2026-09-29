@@ -29,7 +29,7 @@ A = 0.7
 B = 0.3
 
 
-def search_pinecone(driver, query_text, top_k=15):
+def search_pinecone(driver, query_text, top_k=4):
     """
     Embeds the user query using SPECTER2 and searches the Pinecone index.
     Reranks results using Semantic Score + Influence (s_node) tie-breaker.
@@ -220,9 +220,17 @@ def compute_graph_weights(G):
         G.edges[u, v]['weight'] = ALPHA / (co_count ** BETA)
 
 
-def format_output(reading_path_ids, G, DAG):
+def format_output(reading_path_ids, G, DAG, target_ids):
     print("\n" + "="*80)
-    print("--- TOPOLOGICAL READING PATH GENERATED ---")
+    print("--- 🎯 INITIAL SEED PAPERS ---")
+    for pid in target_ids:
+        if pid in G.nodes:
+            title = G.nodes[pid].get("title", "Unknown Title")
+            year = G.nodes[pid].get("year", "N/A")
+            safe_title = title.encode('ascii', 'replace').decode('ascii')
+            print(f"  * [{year}] {safe_title}")
+            
+    print("\n--- 📚 TOPOLOGICAL READING PATH GENERATED ---")
     print("="*80)
     
     structured_path = []
@@ -268,7 +276,7 @@ def generate_reading_path(query_text):
     driver = GraphDatabase.driver(NEO4J_URI, auth=(NEO4J_USERNAME, NEO4J_PASSWORD))
     
     try:
-        target_ids = search_pinecone(driver, query_text, top_k=15)
+        target_ids = search_pinecone(driver, query_text, top_k=4)
         if not target_ids:
             print("No initial seeds found. Try a different query.")
             return []
@@ -292,7 +300,7 @@ def generate_reading_path(query_text):
         reading_path_ids, DAG = get_reading_path(G, final_mst)
         
         reading_path_ids.reverse()
-        return format_output(reading_path_ids, G, DAG)
+        return format_output(reading_path_ids, G, DAG, target_ids)
         
     finally:
         driver.close()
