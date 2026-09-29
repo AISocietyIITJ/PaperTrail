@@ -9,7 +9,7 @@ from src.logger import logger
  
  
 script_dir = os.path.dirname(os.path.abspath(__file__))
-file_path = os.path.join(script_dir, "../../../data/professor_updated1.csv")
+file_path = os.path.join(script_dir, "../../../data/professor_all_with_interests.csv")
  
 INDEX_NAME = "interest-granite-125m"
 VECTOR_DIMENSION = 768 

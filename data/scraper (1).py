@@ -25,7 +25,7 @@ EXCLUDED_AFFILIATION_KEYWORDS = [
 # new pages once this many qualifying professors have been gathered.
 # Can end up with FEWER than this (e.g. if the org has fewer profiles, or
 # many get filtered out), but never MORE.
-MAX_PROFESSORS = 200
+MAX_PROFESSORS = 250
 
 # Persistent Chrome profile directory. Using a fixed folder here means
 # cookies / login sessions are SAVED between runs, so you won't have to log
@@ -39,9 +39,16 @@ def is_excluded_affiliation(affiliation: str) -> bool:
     return any(keyword in aff_lower for keyword in EXCLUDED_AFFILIATION_KEYWORDS)
 
 
-def fetch_indices(driver, profile_url):
-    """Visit a scholar's profile page and pull their h-index and i10-index."""
+def fetch_indices_and_papers(driver, profile_url):
+    """
+    Visit a scholar's profile page once and pull:
+      - h-index, i10-index
+      - titles of their top 10 papers (Scholar sorts by citations by
+        default, and shows 20 per page, so the first 10 rows are already
+        the top 10 most-cited papers — no extra pagination needed).
+    """
     h_index, i10_index = "", ""
+    top_papers = []
     try:
         driver.get(profile_url)
         WebDriverWait(driver, 10).until(
@@ -49,18 +56,22 @@ def fetch_indices(driver, profile_url):
         )
         html = driver.page_source
         soup = BeautifulSoup(html, "html.parser")
+
         stats = soup.select("td.gsc_rsb_std")
         values = [s.text.strip() for s in stats]
         # order: [Citations-All, Citations-Since, h-index-All, h-index-Since, i10-index-All, i10-index-Since]
         if len(values) >= 6:
             h_index = values[2]
             i10_index = values[4]
+
+        title_tags = soup.select("tr.gsc_a_tr td.gsc_a_t a.gsc_a_at")
+        top_papers = [t.text.strip() for t in title_tags[:10]]
     except Exception as e:
-        print(f"    [warn] could not fetch indices for {profile_url}: {e}")
-    return h_index, i10_index
+        print(f"    [warn] could not fetch indices/papers for {profile_url}: {e}")
+    return h_index, i10_index, top_papers
 
 
-def scrape_scholar_org(org_id,csv_filename):
+def scrape_scholar_org(org_id,val):
     url = f"https://scholar.google.com/citations?view_op=view_org&org={org_id}&hl=en"
     scholars_data = []
 
@@ -168,22 +179,24 @@ def scrape_scholar_org(org_id,csv_filename):
     if len(scholars_data) > MAX_PROFESSORS:
         scholars_data = scholars_data[:MAX_PROFESSORS]
 
-    # --- Fetch h-index / i10-index for every scholar collected above ---
-    print(f"\nFetching h-index and i10-index for {len(scholars_data)} scholars...")
+    # --- Fetch h-index / i10-index / top papers for every scholar collected above ---
+    print(f"\nFetching h-index, i10-index, and top papers for {len(scholars_data)} scholars...")
     for i, scholar in enumerate(scholars_data, start=1):
         profile_url = scholar.get('Profile URL', '')
         if not profile_url:
             scholar['h-index'] = ''
             scholar['i10-index'] = ''
+            scholar['Research Papers'] = ''
             continue
 
         print(f"  [{i}/{len(scholars_data)}] {scholar['Name']}")
-        h_index, i10_index = fetch_indices(driver, profile_url)
+        h_index, i10_index, top_papers = fetch_indices_and_papers(driver, profile_url)
         scholar['h-index'] = h_index
         scholar['i10-index'] = i10_index
+        scholar['Research Papers'] = top_papers  # stored as a Python list; written as e.g. ['Title 1', 'Title 2', ...] in the CSV
 
         if h_index:
-            print(f"    -> h-index={h_index}, i10-index={i10_index}")
+            print(f"    -> h-index={h_index}, i10-index={i10_index}, papers found={len(top_papers)}")
         else:
             print("    -> could not retrieve indices")
 
@@ -196,18 +209,17 @@ def scrape_scholar_org(org_id,csv_filename):
     if scholars_data:
         df = pd.DataFrame(scholars_data)
         df.drop_duplicates(subset=['Profile URL'], inplace=True)
-        # csv_filename = "kharagpur_data.csv"
+        csv_filename = val
         df.to_csv(csv_filename, index=False, encoding='utf-8')
         print(f"Data saved to {csv_filename} with {len(df)} unique records.")
     else:
         print("No data was retrieved.")
 
 # if __name__ == "__main__":
-#     ORG_ID = 9904414229552554802
-#     csv_file = "kanpur.csv"
-#     scrape_scholar_org(ORG_ID,csv_filename=csv_file)
+#     ORG_ID = "4137058844232715996"
+#     scrape_scholar_org(9904414229552554802)
 
-orgs = {8653688121748243861:"kanpur_data.csv",7829249322942557987:"indore_data.csv", 1706247663701369794:"hyderabad_data.csv",11345352608396081237:"guwahati_data.csv"}
+orgs = {6479859954410285989:"madras_data.csv",9904414229552554802:"kharagpur_data.csv", 4137058844232715996:"roorkee_data.csv",11242273558365109195:"jodhpur_data.csv"}
 
 for key, val in orgs.items():
     scrape_scholar_org(key,val)

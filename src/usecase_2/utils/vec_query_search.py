@@ -5,7 +5,7 @@ from src.config import PINECONE_API_KEY
 from src.logger import logger
 
 
-INDEX_NAME = "interest-granite-125m"
+INDEX_NAME = "interest-no-alias-new"
 VECTOR_DIMENSION = 768  
 
 

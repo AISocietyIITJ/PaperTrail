@@ -1,5 +1,6 @@
 import networkx as nx
 from itertools import combinations
+import math
 
 def reallocate_seeds(G, initial_seeds, co_occurrence_threshold=2):
     """
@@ -20,6 +21,26 @@ def reallocate_seeds(G, initial_seeds, co_occurrence_threshold=2):
     for node, count in co_cited_counts.items():
         if count >= co_occurrence_threshold:
             compulsory_nodes.add(node)
+            
+    # We use Network TF-IDF: we heavily reward papers that are cited many times locally,
+    # but we penalize them logarithmically if they have massive global citation counts.
+    # Score = (Local_Citations ^ 2) / log(Global_Citations + 10)
+    all_nodes = []
+    for n in G.nodes():
+        local_in_deg = G.in_degree(n)
+        global_citations = G.nodes[n].get('citationCount', 0) or 0
+        
+        # Penalize generic papers like Adam (170k+ citations) while boosting true prerequisites
+        tfidf_score = (local_in_deg ** 2) / math.log(global_citations + 10)
+        
+        all_nodes.append((n, tfidf_score, local_in_deg, global_citations))
+    
+    # Sort primarily by Network TF-IDF score
+    all_nodes.sort(key=lambda x: x[1], reverse=True)
+    
+    # Add the top 15 most foundational domain-specific papers as compulsory
+    for n, tfidf, in_deg, count in all_nodes[:15]:
+        compulsory_nodes.add(n)
             
     # Also ensure all compulsory_nodes are actually in G
     valid_compulsory = [n for n in compulsory_nodes if G.has_node(n)]
@@ -116,12 +137,28 @@ def get_reading_path(G, final_mst):
         elif G.has_edge(v, u):
             directed_subgraph.add_edge(v, u)
             
+    # Apply Transitive Reduction to remove redundant prerequisite edges
+    try:
+        tr_graph = nx.transitive_reduction(directed_subgraph)
+        # transitive_reduction loses node attributes, so copy them over
+        for n in tr_graph.nodes():
+            tr_graph.nodes[n].update(directed_subgraph.nodes[n])
+        directed_subgraph = tr_graph
+    except Exception as e:
+        print(f"[Warning] Transitive reduction failed (possible cycle): {e}")
+        
     # The reading order can be a topological sort. 
     # If there are cycles (rare in citation graphs, but possible), we break them.
     try:
-        path = list(nx.topological_sort(directed_subgraph))
+        # Use lexicographical sort to secondary-sort siblings by Year.
+        # We sort by -year because the caller in query_pipeline.py will reverse the list.
+        # This ensures older papers come first in the final output.
+        path = list(nx.lexicographical_topological_sort(
+            directed_subgraph, 
+            key=lambda n: -(directed_subgraph.nodes[n].get('year', 0) or 0)
+        ))
     except nx.NetworkXUnfeasible:
         # If there's a cycle, just use a fallback heuristic (e.g. sort by year)
         path = sorted(mst_nodes, key=lambda x: G.nodes[x].get('year') or 0)
         
-    return path
+    return path, directed_subgraph

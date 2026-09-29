@@ -8,7 +8,8 @@ from sentence_transformers import SentenceTransformer
 import yaml
 
 from src.usecase_2.embedding.generate_alias import generate_phrase
-from src.usecase_2.embedding.generate_embedding import gen_res_emb_ingestion
+from src.usecase_2.embedding.gen_alias_new import generate_domain_aliases
+from src.usecase_2.embedding.gen_interest_no_alias import gen_res_emb_ingestion
 from src.usecase_2.embedding.generate_embedding_prof import gen_prof_emb_ingestion
 from src.usecase_2.ingestion.load_professor import ingest_proff_connect_edges
 from src.usecase_2.ingestion.load_research_node import ingest_research_node
@@ -23,6 +24,7 @@ from src.usecase_2.utils.get_prof_info import query_graph_db
 from src.usecase_2.utils.vec_query_search import search_vector_db
 from src.usecase_2.utils.parsing_resume import extract_text_from_pdf
 from src.usecase_1.ingest_neo4j import ingest_to_neo4j as ingest_reading_path_to_neo4j
+from src.usecase_1.precompute_costs import run_precompute as precompute_reading_path_costs
 from src.usecase_3.document_setter import docs_setter
 from src.usecase_3.reranker import return_reranked_docs
 
@@ -48,7 +50,8 @@ def setup_academic_profiles_pipeline():
     print("=" * 60)
 
     print("\n[1/5] Generating phrase aliases...")
-    generate_phrase()
+    # generate_phrase()
+    generate_domain_aliases()
 
     print("[2/5] Generating research embeddings...")
     gen_res_emb_ingestion()
@@ -81,6 +84,8 @@ def find_academic_profiles(
         resume_text = extract_text_from_pdf(resume_path) if resume_path else ""
 
     interests = get_interest_topics(query, resume_text)
+    if interests is None:
+        return None
     if not interests:
         # The local LLM can occasionally omit its expected JSON fields.  The
         # request query is still a useful semantic-search input, so do not
@@ -182,6 +187,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="PaperTrail Unified API")
     parser.add_argument("--run-reading-pipeline", action="store_true", help="Execute complete dataset prep and graph building")
     parser.add_argument("--ingest-reading-neo4j", action="store_true", help="Push generated pipeline data into Neo4j")
+    parser.add_argument("--precompute-costs", action="store_true", help="Precompute NEWST node/edge costs in Neo4j")
     parser.add_argument("--query-reading", type=str, help="Generate an ordered foundational reading path from Neo4j")
     parser.add_argument("--recommend-papers", type=str, help="Execute Use Case 3 to find top N most relevant papers for a query")
     parser.add_argument("--top-n", type=int, default=5, help="Number of papers to recommend for Use Case 3")
@@ -199,6 +205,10 @@ if __name__ == "__main__":
     elif args.ingest_reading_neo4j:
         print("=== INGESTING DATA INTO NEO4J ===")
         ingest_reading_path_to_neo4j(args.config)
+
+    elif args.precompute_costs:
+        print("=== PRECOMPUTING NEWST COSTS IN NEO4J ===")
+        precompute_reading_path_costs(config_path=args.config)
         
     elif args.query_reading:
         print(f"\n=================== NEO4J READING PATH FOR: '{args.query_reading}' ===================")
