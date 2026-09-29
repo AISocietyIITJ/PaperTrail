@@ -17,6 +17,35 @@ function useIsMobile(breakpoint = 600) {
 
 export default function PaperDetailDrawer({ paper, edgeInfo, isOpen, onClose }) {
   const isMobile = useIsMobile(600);
+  const [semanticScholarUrl, setSemanticScholarUrl] = useState(null);
+
+  useEffect(() => {
+    async function fetchSemanticScholarLink() {
+      if (paper && paper.title && isOpen && paper.categoryCode !== 'QUERY') {
+        setSemanticScholarUrl(null);
+        try {
+          const keysStr = import.meta.env.VITE_SEMANTIC_SCHOLAR_API_KEYS || "";
+          const keys = keysStr.split(",").filter(k => k.trim().length > 0);
+          const headers = {};
+          if (keys.length > 0) {
+            const key = keys[Math.floor(Math.random() * keys.length)];
+            headers['x-api-key'] = key.trim();
+          }
+          const response = await fetch(`https://api.semanticscholar.org/graph/v1/paper/search?query=${encodeURIComponent(paper.title)}&limit=1&fields=url`, {
+            headers
+          });
+          if (!response.ok) return;
+          const data = await response.json();
+          if (data && data.data && data.data.length > 0) {
+            setSemanticScholarUrl(data.data[0].url);
+          }
+        } catch (err) {
+          console.error("Error fetching Semantic Scholar link", err);
+        }
+      }
+    }
+    fetchSemanticScholarLink();
+  }, [paper, isOpen]);
 
   // Handle escape key
   useEffect(() => {
@@ -74,7 +103,7 @@ export default function PaperDetailDrawer({ paper, edgeInfo, isOpen, onClose }) 
                   <span className="edge-info-label">Connection:</span>
                   <Badge label={edgeInfo.reason} variant={edgeInfo.reason} />
                   <span className="edge-score">
-                    Sim: {edgeInfo.similarity.toFixed(2)}
+                    Sim: {edgeInfo.similarity != null ? Number(edgeInfo.similarity).toFixed(2) : 'N/A'}
                   </span>
                 </div>
               )}
@@ -84,25 +113,33 @@ export default function PaperDetailDrawer({ paper, edgeInfo, isOpen, onClose }) 
                 <p className="drawer-abstract">{paper.abstract}</p>
               </div>
 
-              <div className="drawer-actions">
-                <a href={paper.arxivUrl} target="_blank" rel="noopener noreferrer" className="action-btn">
-                  <ExternalLink size={16} />
-                  arXiv Page
-                </a>
-                <a href={paper.pdfUrl} target="_blank" rel="noopener noreferrer" className="action-btn primary">
-                  <Download size={16} />
-                  Open PDF
-                </a>
-                <button
-                  className="action-btn"
-                  onClick={() => navigator.clipboard.writeText(
-                    `@article{${paper.arxivId}, title={${paper.title}}, author={${paper.authors?.join(' and ')}}, year={${new Date(paper.publishedDate).getFullYear()}}}`
+              {paper.categoryCode !== 'QUERY' && (
+                <div className="drawer-actions">
+                  <a href={paper.arxivUrl} target="_blank" rel="noopener noreferrer" className="action-btn">
+                    <ExternalLink size={16} />
+                    arXiv Page
+                  </a>
+                  <a href={paper.pdfUrl} target="_blank" rel="noopener noreferrer" className="action-btn primary">
+                    <Download size={16} />
+                    Open PDF
+                  </a>
+                  {semanticScholarUrl && (
+                    <a href={semanticScholarUrl} target="_blank" rel="noopener noreferrer" className="action-btn">
+                      <ExternalLink size={16} />
+                      Semantic Scholar
+                    </a>
                   )}
-                >
-                  <FileText size={16} />
-                  Copy BibTeX
-                </button>
-              </div>
+                  <button
+                    className="action-btn"
+                    onClick={() => navigator.clipboard.writeText(
+                      `@article{${paper.arxivId}, title={${paper.title}}, author={${paper.authors?.join(' and ')}}, year={${new Date(paper.publishedDate).getFullYear()}}}`
+                    )}
+                  >
+                    <FileText size={16} />
+                    Copy BibTeX
+                  </button>
+                </div>
+              )}
             </div>
           </motion.div>
         </>
