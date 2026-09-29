@@ -130,13 +130,16 @@ def return_reranked_docs(query, documents,top_n=5,batch_size=8):
 
     # gc.collect()
     # torch.cuda.empty_cache()
+    top_n_indices= np.argsort(np.array(reranked_scores_fin))[::-1][:top_n].tolist()
+
+
+    top_n_reranked_scores = [reranked_scores_fin[i] for i in top_n_indices]
+
 
     print(f"DEBUG: Reranker scores count = {len(reranked_scores_fin)}")
 
-    top_n_indices= np.argsort(np.array(reranked_scores_fin))[::-1][:top_n].tolist()
 
     top_n_reranked_docs= [documents[i] for i in top_n_indices]
     print(f"Length of top_n_reranked:{len(top_n_reranked_docs)}")   
 
-    top_n_reranked_scores = [reranked_scores_fin[i] for i in top_n_indices]
     return (top_n_indices,top_n_reranked_docs,top_n_reranked_scores)
