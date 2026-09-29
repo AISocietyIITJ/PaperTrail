@@ -19,7 +19,7 @@ NEO4J_USERNAME = os.getenv("NEO4J_USERNAME") or os.getenv("NEO4J_USER") or AURA_
 NEO4J_PASSWORD = os.getenv("NEO4J_PASSWORD") or AURA_PASSWORD
 
 # Fallback to env var if not in config.yaml
-PINECONE_INDEX_NAME = yaml_config.get("embedding", {}).get("pinecone_index", os.getenv("PINECONE_INDEX_NAME", "papertrail-papers"))
+PINECONE_INDEX_NAME = yaml_config.get("embedding", {}).get("pinecone_index")
 
 # NEWST Constants (from RePaGer experimental results)
 ALPHA = 3.0
