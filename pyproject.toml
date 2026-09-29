@@ -21,6 +21,7 @@ dependencies = [
     "pypdf>=6.15.0",
     "pinecone>=9.1.0",
     "loguru>=0.7.3",
+    "requests>=2.34.2",
 ]
 
 [build-system]

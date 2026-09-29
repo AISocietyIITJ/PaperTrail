@@ -6,6 +6,7 @@ import argparse
 import math
 import os
 import re
+import json
 from collections.abc import Iterable
 
 import networkx as nx
@@ -138,31 +139,13 @@ def write_node_costs(driver, node_label: str) -> None:
          + (0.4 * log(coalesce(p.influentialCitationCount, 0) + 1)) AS sNode
     SET p.pagerank_normalized = prGlobal,
         p.s_node = sNode,
-        p.nodeCost = 5.0 / (CASE WHEN sNode = 0 THEN 0.00001 ELSE sNode END)
+        p.nodeCost = 5.0 / (CASE WHEN sNode <= 0.00001 THEN 0.00001 ELSE sNode END)
     """
     with driver.session() as session:
         session.run(query).consume()
 
 
 # ── Stage 3: Cosine Similarity Injection (Pinecone) ──────────────────────────
-
-def build_pinecone_mapping(index) -> dict[str, str]:
-    """Builds a mapping of paperId -> Pinecone vector ID by querying Pinecone."""
-    logger.info("Building Pinecone paperId mapping (this takes ~30s)...")
-    stats = index.describe_index_stats()
-    total = stats.total_vector_count
-    mapping = {}
-    
-    # Fetch in batches of 1000
-    for i in range(0, total, 1000):
-        ids = [str(x) for x in range(i, min(i + 1000, total))]
-        res = index.fetch(ids=ids)
-        for v_id, vec in res.vectors.items():
-            if vec.metadata and "paperId" in vec.metadata:
-                mapping[vec.metadata["paperId"]] = v_id
-    
-    logger.info(f"Mapped {len(mapping)} paperIds to Pinecone IDs.")
-    return mapping
 
 def fetch_edges(
     driver, node_label: str, rel_type: str, id_property: str, only_missing: bool
@@ -202,39 +185,31 @@ def inject_cosine_similarities(
         logger.info("No edges to process for cosine similarity.")
         return 0
 
-    mapping = build_pinecone_mapping(index)
-
-    # Collect all needed pinecone IDs
+    # Collect all needed pinecone IDs (which are now directly the paperIds)
     pinecone_ids = set()
     for edge in edges:
         s_id = str(edge["src_id"])
         d_id = str(edge["dst_id"])
-        if s_id in mapping:
-            pinecone_ids.add(mapping[s_id])
-        if d_id in mapping:
-            pinecone_ids.add(mapping[d_id])
+        if s_id and s_id != "None":
+            pinecone_ids.add(s_id)
+        if d_id and d_id != "None":
+            pinecone_ids.add(d_id)
 
     logger.info(f"Fetching {len(pinecone_ids)} vectors from Pinecone...")
-    vectors = fetch_vectors(index, list(pinecone_ids), batch_size=1000)
+    vectors = fetch_vectors(index, list(pinecone_ids), batch_size=100)
 
     updates = []
     for edge in edges:
         s_id = str(edge["src_id"])
         d_id = str(edge["dst_id"])
         
-        if s_id not in mapping or d_id not in mapping:
-            continue
-            
-        pc_src = mapping[s_id]
-        pc_dst = mapping[d_id]
-        
-        if pc_src not in vectors or pc_dst not in vectors:
+        if s_id not in vectors or d_id not in vectors:
             continue
             
         updates.append(
             {
                 "rel_id": edge["rel_id"],
-                "cos_similarity": cosine(vectors[pc_src], vectors[pc_dst]),
+                "cos_similarity": cosine(vectors[s_id], vectors[d_id]),
             }
         )
 
@@ -271,11 +246,11 @@ def write_edge_costs(driver, node_label: str, rel_type: str) -> None:
          END AS wIntent,
          CASE WHEN coalesce(r.isInfluential, false) THEN 2.0 ELSE 1.0 END AS mInf
     WITH r, wIntent, mInf,
-         coalesce(r.cos_similarity, 0.5) * wIntent * mInf AS score
+         coalesce(r.cos_similarity, 0.15) * wIntent * mInf AS score
     SET r.W_intent = wIntent,
         r.M_inf = mInf,
         r.score = score,
-        r.edgeCost = 3.0 / ((CASE WHEN score = 0 THEN 0.00001 ELSE score END) ^ 2.0)
+        r.edgeCost = 3.0 / ((CASE WHEN score <= 0.00001 THEN 0.00001 ELSE score END) ^ 2.0)
     """
     with driver.session() as session:
         session.run(query).consume()

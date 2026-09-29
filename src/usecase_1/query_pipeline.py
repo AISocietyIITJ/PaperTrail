@@ -43,31 +43,42 @@ def search_pinecone(driver, query_text, top_k=4):
     
     response = index.query(
         vector=query_embedding,
-        top_k=15,
+        top_k=1500,
         include_metadata=True
     )
     
     candidates = []
     with driver.session() as session:
+        pinecone_map = {}
         for match in response['matches']:
-            title = match['metadata'].get('title', 'Unknown Title')
-            semantic_score = match['score']
+            pid = match['id']
+            pinecone_map[pid] = {
+                'title': match['metadata'].get('title', 'Unknown Title'),
+                'semantic_score': match['score']
+            }
             
-            result = session.run(
-                "MATCH (p:Paper) WHERE p.title = $title RETURN p.paperId AS pid, p.s_node AS s_node LIMIT 1",
-                title=title,
-            )
-            record = result.single()
+        pids = list(pinecone_map.keys())
+        
+        result = session.run(
+            "MATCH (p:Paper) WHERE p.paperId IN $pids RETURN p.paperId AS pid, p.s_node AS s_node, p.abstract AS abstract",
+            pids=pids,
+        )
+        
+        for record in result:
+            pid = record["pid"]
+            abstract = record.get("abstract")
             
-            if record and record["pid"]:
-                s_node = record.get("s_node") or 0.0
+            if not abstract or len(str(abstract).strip()) < 20:
+                continue
                 
-                # Base Score + Influence Tie-breaker
-                # Semantic score is ~0.7–1.0; log(s_node+1) is ~0–5.
-                # Multiplying by 0.02 gives a max bonus of ~0.1.
-                rerank_score = semantic_score + (0.02 * math.log(s_node + 1.0))
-                    
-                candidates.append((rerank_score, record["pid"], title, semantic_score))
+            s_node = record.get("s_node") or 0.0
+            
+            semantic_score = pinecone_map[pid]['semantic_score']
+            title = pinecone_map[pid]['title']
+            
+            # Base Score + Influence Tie-breaker
+            rerank_score = semantic_score + (0.02 * math.log(s_node + 1.0))
+            candidates.append((rerank_score, pid, title, semantic_score))
                 
     # Sort by the combined Rerank Score
     candidates.sort(key=lambda x: x[0], reverse=True)
@@ -162,20 +173,17 @@ def compute_graph_weights(G):
         return
 
     has_node_costs = any(G.nodes[n].get("nodeCost") is not None for n in G.nodes())
-    has_edge_costs = (
-        G.number_of_edges() > 0
-        and any(G.edges[u, v].get("edgeCost") is not None for u, v in G.edges())
-    )
-
-    if has_node_costs and has_edge_costs:
+    if has_node_costs:
         print("  -> Using precomputed NEWST costs from Neo4j.")
         for n in G.nodes():
             nc = G.nodes[n].get('nodeCost')
             # Use a sensible fallback (median-ish cost) instead of extreme 50000
             G.nodes[n]['weight'] = nc if nc is not None else 10.0
-        for u, v in G.edges():
-            ec = G.edges[u, v].get('edgeCost')
-            G.edges[u, v]['weight'] = ec if ec is not None else 12.0
+            
+        if G.number_of_edges() > 0:
+            for u, v in G.edges():
+                ec = G.edges[u, v].get('edgeCost')
+                G.edges[u, v]['weight'] = ec if ec is not None else 12.0
         return
 
     print("  -> No precomputed costs found. Computing locally.")
