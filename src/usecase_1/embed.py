@@ -35,7 +35,7 @@ def embed_corpus(
         pc.create_index(
             name=index_name,
             dimension=dimension,
-            metric="cosine", 
+            metric="dotproduct", 
             spec=ServerlessSpec(
                 cloud="aws",
                 region="us-east-1" 

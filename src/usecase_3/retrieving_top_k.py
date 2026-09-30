@@ -4,6 +4,7 @@ from pinecone import Pinecone
 import json
 import yaml
 import torch
+import torch.nn.functional as F
 
 with open("config.yaml", "r") as file:
     data = yaml.safe_load(file)
@@ -30,7 +31,7 @@ def query_emb(model,tokens):
     A=output.last_hidden_state[:,0,:]
     embedding= A[0].detach().cpu()
 
-    return embedding
+    return embedding.normalize
 
 def retrieve_top_k(embedding,top_k=50, index_name=data['embedding']['pinecone_index']):
     pc = Pinecone(api_key=PINECONE_API_KEY)
@@ -70,6 +71,7 @@ def main():
 
         tokens= compute_token(tokenizer,query)
         query_vector=query_emb(model,tokens).numpy().tolist()
+        query_vector= F.normalize(query_vector)
 
         candidates=retrieve_top_k(query_vector)
 

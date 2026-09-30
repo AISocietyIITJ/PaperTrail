@@ -41,7 +41,7 @@ def hybrid_seed_search(driver, query_text, top_k=4):
     # Path A: Pinecone Dense Retrieval
     print("[Path A] Loading SPECTER2 model and embedding query...")
     model = SentenceTransformer('allenai/specter2_base')
-    query_embedding = model.encode(query_text).tolist()
+    query_embedding = model.encode(query_text, normalize_embeddings=True).tolist()
     
     print(f"[Path A] Searching Pinecone index '{PINECONE_INDEX_NAME}'...")
     pc = Pinecone(api_key=PINECONE_API_KEY)
