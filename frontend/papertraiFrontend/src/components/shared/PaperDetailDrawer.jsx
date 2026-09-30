@@ -18,11 +18,15 @@ function useIsMobile(breakpoint = 600) {
 export default function PaperDetailDrawer({ paper, edgeInfo, isOpen, onClose }) {
   const isMobile = useIsMobile(600);
   const [semanticScholarUrl, setSemanticScholarUrl] = useState(null);
+  const [fetchedAbstract, setFetchedAbstract] = useState(null);
+  const [fetchedPdfUrl, setFetchedPdfUrl] = useState(null);
 
   useEffect(() => {
     async function fetchSemanticScholarLink() {
       if (paper && paper.title && isOpen && paper.categoryCode !== 'QUERY') {
         setSemanticScholarUrl(null);
+        setFetchedAbstract(null);
+        setFetchedPdfUrl(null);
         try {
           const keysStr = import.meta.env.VITE_SEMANTIC_SCHOLAR_API_KEYS || "";
           const keys = keysStr.split(",").filter(k => k.trim().length > 0);
@@ -31,16 +35,21 @@ export default function PaperDetailDrawer({ paper, edgeInfo, isOpen, onClose }) 
             const key = keys[Math.floor(Math.random() * keys.length)];
             headers['x-api-key'] = key.trim();
           }
-          const response = await fetch(`https://api.semanticscholar.org/graph/v1/paper/search?query=${encodeURIComponent(paper.title)}&limit=1&fields=url`, {
+          const response = await fetch(`https://api.semanticscholar.org/graph/v1/paper/search?query=${encodeURIComponent(paper.title)}&limit=1&fields=url,abstract,openAccessPdf`, {
             headers
           });
           if (!response.ok) return;
           const data = await response.json();
           if (data && data.data && data.data.length > 0) {
-            setSemanticScholarUrl(data.data[0].url);
+            const p = data.data[0];
+            setSemanticScholarUrl(p.url);
+            if (p.abstract) setFetchedAbstract(p.abstract);
+            if (p.openAccessPdf && p.openAccessPdf.url) {
+              setFetchedPdfUrl(p.openAccessPdf.url);
+            }
           }
         } catch (err) {
-          console.error("Error fetching Semantic Scholar link", err);
+          console.error("Error fetching Semantic Scholar data", err);
         }
       }
     }
@@ -110,19 +119,19 @@ export default function PaperDetailDrawer({ paper, edgeInfo, isOpen, onClose }) 
 
               <div className="drawer-section">
                 <h3>Abstract</h3>
-                <p className="drawer-abstract">{paper.abstract}</p>
+                <p className="drawer-abstract">
+                  {fetchedAbstract || paper.abstract || "Abstract not available."}
+                </p>
               </div>
 
               {paper.categoryCode !== 'QUERY' && (
                 <div className="drawer-actions">
-                  <a href={paper.arxivUrl} target="_blank" rel="noopener noreferrer" className="action-btn">
-                    <ExternalLink size={16} />
-                    arXiv Page
-                  </a>
-                  <a href={paper.pdfUrl} target="_blank" rel="noopener noreferrer" className="action-btn primary">
-                    <Download size={16} />
-                    Open PDF
-                  </a>
+                  {fetchedPdfUrl && (
+                    <a href={fetchedPdfUrl} target="_blank" rel="noopener noreferrer" className="action-btn primary">
+                      <Download size={16} />
+                      Open PDF
+                    </a>
+                  )}
                   {semanticScholarUrl && (
                     <a href={semanticScholarUrl} target="_blank" rel="noopener noreferrer" className="action-btn">
                       <ExternalLink size={16} />
@@ -132,7 +141,7 @@ export default function PaperDetailDrawer({ paper, edgeInfo, isOpen, onClose }) 
                   <button
                     className="action-btn"
                     onClick={() => navigator.clipboard.writeText(
-                      `@article{${paper.arxivId}, title={${paper.title}}, author={${paper.authors?.join(' and ')}}, year={${new Date(paper.publishedDate).getFullYear()}}}`
+                      `@article{${paper.paperId || 'unknown'}, title={${paper.title}}, author={${paper.authors?.join(' and ')}}, year={${new Date(paper.publishedDate).getFullYear()}}}`
                     )}
                   >
                     <FileText size={16} />
