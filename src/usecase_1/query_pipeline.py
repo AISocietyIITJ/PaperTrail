@@ -354,6 +354,13 @@ def generate_reading_path(query_text):
         print("[NEWST] Running Steiner Tree heuristic...")
         final_mst = newst_heuristic(G, set(compulsory_nodes))
         
+        # --- Noise Filter ---
+        # Remove any stray papers that have 0 connections to the rest of the reading path
+        isolated_nodes = list(nx.isolates(final_mst))
+        if isolated_nodes:
+            print(f"[Filter] Removing {len(isolated_nodes)} completely disconnected paper(s) from the path.")
+            final_mst.remove_nodes_from(isolated_nodes)
+            
         print("[NEWST] Extracting reading path topological order...")
         reading_path_ids, DAG = get_reading_path(G, final_mst)
         
