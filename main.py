@@ -7,6 +7,8 @@ from src.config import PINECONE_API_KEY
 from sentence_transformers import SentenceTransformer
 import yaml
 import torch,gc
+from pinecone_text.sparse import BM25Encoder
+from pinecone_text.hybrid import hybrid_convex_scale
 
 from src.usecase_2.embedding.generate_alias import generate_phrase
 from src.usecase_2.embedding.gen_alias_new import generate_domain_aliases
@@ -78,7 +80,7 @@ def find_academic_profiles(
     resume_text: str | None = None,
 ):
     """Use case 2: return professors matching a query and optional resume data.
-
+# Dummy zero dense vector
     ``resume_path`` refers to a file on the server.  API clients can instead
     send ``resume_text`` (or omit both) so the query works without access to
     the server filesystem.
@@ -113,6 +115,9 @@ def recommend_papers(query:str, top_n: int = 5, config_path="config.yaml"):
 
     with open(config_path, "r", encoding="utf-8") as f:
         config = yaml.safe_load(f)
+
+    bm25_encoder = BM25Encoder()
+    bm25_encoder.load("academic_bm25_params.json")
         
     model_name = config["embedding"]["model_name"]
     pinecone_index = config["embedding"]["pinecone_index"]
@@ -128,14 +133,16 @@ def recommend_papers(query:str, top_n: int = 5, config_path="config.yaml"):
     if(query.lower()==query_fin.lower()):return []
 
     query_vector = _main_embedding_model.encode([query_fin], normalize_embeddings=True)[0].tolist()
+    sparse_vector= bm25_encoder.encode_queries(query_fin)
+
+    scaled_dv, scaled_sv= hybrid_convex_scale(query_vector,sparse_vector,alpha=0.5)
 
     print(f"Querying top recommendations from Pinecone index '{pinecone_index}'...")
     pc = Pinecone(api_key=PINECONE_API_KEY)
     index = pc.Index(pinecone_index)
     
-    # Query pinecone with candidate buffer to account for missing/filtered nodes
-    fetch_k = max(top_n * 3, 30)
-    search_res = index.query(vector=query_vector, top_k=fetch_k, include_metadata=True)
+    fetch_k = max(top_n * 3, 50)
+    search_res = index.query(vector=scaled_dv, sparse_vector=scaled_sv, top_k=fetch_k, include_metadata=True)
 
     final_formatted_docs= [l[1] for l in docs_setter(search_res.matches)]
     titles=[l[0] for l in docs_setter(search_res.matches)]
