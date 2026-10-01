@@ -84,7 +84,7 @@ def embed_corpus(
     for idx, emb in enumerate(res):
         vector_id = str(df.iloc[idx]["paperId"])
         vector_values = emb.tolist()
-        metadata = {"title": str(df.iloc[idx]["title"]), "abstract":str(df.iloc[idx]["abstract"])}
+        metadata = {"title": str(df.iloc[idx]["title"]), "abstract":str(df.iloc[idx]["abstract"]), "year":str(df.iloc[idx]["year"])}
         vectors_to_upsert.append({"id": vector_id, "values": vector_values, "metadata": metadata})
  
     PINECONE_BATCH_SIZE = 200

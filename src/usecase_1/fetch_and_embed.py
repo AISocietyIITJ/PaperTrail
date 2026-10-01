@@ -22,7 +22,7 @@ from src.logger import logger
 MODEL_NAME = "allenai/specter2_base"
 INDEX_NAME = "papertrail-papers-2000"
 
-QUERY = "MATCH (p:Paper) RETURN p.paperId AS paperId, p.title AS title, p.abstract AS abstract"
+QUERY = "MATCH (p:Paper) RETURN p.paperId AS paperId, p.title AS title, p.abstract AS abstract, p.year AS year"
 
 
 def fetch_papers() -> pd.DataFrame:
