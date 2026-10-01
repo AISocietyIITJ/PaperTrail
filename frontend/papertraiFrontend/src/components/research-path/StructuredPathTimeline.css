@@ -127,3 +127,17 @@
   width: 16px;
   height: 16px;
 }
+
+.node-step-badge {
+  background-color: var(--route-blue, #64ffda);
+  color: #0c0c0c;
+  padding: 0.2rem 0.5rem;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  font-family: var(--font-mono);
+  box-shadow: 0 0 8px rgba(100, 255, 218, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

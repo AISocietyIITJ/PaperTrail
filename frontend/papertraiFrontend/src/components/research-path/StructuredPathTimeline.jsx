@@ -80,9 +80,18 @@ const PaperNode = ({ data }) => {
       }}
     >
       <Handle type="target" position={Position.Top} style={{ background: 'var(--route-blue, #64ffda)' }} />
-      <div className="node-header">
-        <span className="node-year">{paper.year || 'N/A'}</span>
-        <span className="node-citations">Citations: {paper.citations || 0}</span>
+      <div className="node-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          {paper.step && (
+            <span className="node-step-badge">
+              {paper.step < 10 ? `0${paper.step}` : paper.step}
+            </span>
+          )}
+          <span className="node-year" style={{ color: 'var(--graphite-400)', fontSize: '0.85rem', fontWeight: '500' }}>{paper.year || 'N/A'}</span>
+        </div>
+        <span className="node-citations" style={{ color: 'var(--route-blue)', fontSize: '0.75rem', fontWeight: 600 }}>
+          {paper.citations ? paper.citations.toLocaleString() : 0} citations
+        </span>
       </div>
       <h3 className="node-title">{paper.title}</h3>
       {paper.abstract && (

@@ -5,8 +5,9 @@ __pycache__/
 
 # C extensions
 *.so
-
-
+test_rrf.py
+temp_search_neo4j.py
+temp_pinecone_seeds.py
 config.yaml
 
 # Distribution / packaging

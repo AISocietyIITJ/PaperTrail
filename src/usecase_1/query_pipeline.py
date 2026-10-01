@@ -116,8 +116,8 @@ def hybrid_seed_search(driver, query_text, top_k=4):
     
     # RRF Configuration
     k_constant = 60
-    weight_a = 1.0  # Pinecone weight
-    weight_b = 2.0  # Neo4j Keyword match weight (heavier)
+    weight_a = 0.8  # Pinecone weight
+    weight_b = 2.8  # Neo4j Keyword match weight (heavier)
     
     all_pids = set(path_a_ranks.keys()).union(set(path_b_ranks.keys()))
     rrf_results = []
@@ -152,7 +152,6 @@ def hybrid_seed_search(driver, query_text, top_k=4):
         print(f"  -> [Hybrid RRF] {safe_title} (RRF Score: {c['rrf_score']:.4f})")
         target_ids.append(c["pid"])
             
-    print(f"\n[Debug] target_ids collected: {target_ids}")
     return target_ids
 
 
