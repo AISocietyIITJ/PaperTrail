@@ -41,9 +41,9 @@ def generate_reading_path_pipeline(config_path="config.yaml"):
     assign_edge_directions(config_path)
     assemble_graph(config_path)
 
-def get_reading_path(query: str, config_path="config.yaml"):
+def get_reading_path(query: str, hops: int = 2, config_path="config.yaml"):
     """Use case 1: return a JSON-ready foundational reading path."""
-    return generate_structured_path(query)
+    return generate_structured_path(query, hops=hops)
 
 
 def setup_academic_profiles_pipeline():
@@ -185,6 +185,7 @@ if __name__ == "__main__":
     parser.add_argument("--ingest-reading-neo4j", action="store_true", help="Push generated pipeline data into Neo4j")
     parser.add_argument("--precompute-costs", action="store_true", help="Precompute NEWST node/edge costs in Neo4j")
     parser.add_argument("--query-reading", type=str, help="Generate an ordered foundational reading path from Neo4j")
+    parser.add_argument("--hops", type=int, default=2, help="Number of hops for reading path graph traversal")
     parser.add_argument("--recommend-papers", type=str, help="Execute Use Case 3 to find top N most relevant papers for a query")
     parser.add_argument("--top-n", type=int, default=5, help="Number of papers to recommend for Use Case 3")
     parser.add_argument("--run-academic-profiles-setup", action="store_true", help="Execute Use Case 2 setup (alias, embeddings, graph ingestion)")
@@ -209,7 +210,7 @@ if __name__ == "__main__":
     elif args.query_reading:
         print(f"\n=================== NEO4J READING PATH FOR: '{args.query_reading}' ===================")
         # The function itself prints the steps, but we can also capture the returned list
-        path = get_reading_path(args.query_reading, args.config)
+        path = get_reading_path(args.query_reading, args.hops, args.config)
         if not path:
             print("No matching path found in domain subgraph.")
         print("===================================================================================\n")

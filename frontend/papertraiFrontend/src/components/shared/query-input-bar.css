@@ -41,6 +41,35 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
+.query-input.with-hops {
+  padding-right: 14.5rem;
+}
+
+.hops-select {
+  position: absolute;
+  right: 7.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: var(--surface-color);
+  color: var(--ink-900);
+  border: 1px solid var(--border-color);
+  padding: 0.45rem 0.5rem;
+  border-radius: 8px;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  outline: none;
+}
+
+.hops-select:focus {
+  border-color: var(--route-blue-tint);
+}
+
+.hops-select:hover {
+  background-color: var(--surface-raised);
+}
+
 .query-input::placeholder {
   color: var(--graphite-600);
 }
@@ -114,6 +143,16 @@
   .query-input {
     font-size: 0.9rem;
     padding: 0.85rem 7rem 0.85rem 2.75rem;
+  }
+  
+  .query-input.with-hops {
+    padding-right: 13rem;
+  }
+
+  .hops-select {
+    right: 6rem;
+    padding: 0.35rem 0.4rem;
+    font-size: 0.75rem;
   }
 
   .query-submit {

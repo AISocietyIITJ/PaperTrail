@@ -30,6 +30,7 @@ class GenReq(BaseModel):
 class QueryReq(BaseModel):
     query_str: str
     config_path: str = "config.yaml"
+    hops: int = 2
 
 
 class ProfilesReq(BaseModel):
@@ -50,7 +51,8 @@ class AcademicProfilesRequest(BaseModel):
 
 @app.post("/api/structured-path")
 def api_structured_path(req: QueryReq):
-    result = generate_reading_path(req.query_str)
+    safe_hops = min(req.hops, 3)
+    result = generate_reading_path(req.query_str, hops=safe_hops)
     return {"query": req.query_str, "path": result or []}
 
 # Usecase 2: Academic profiles (Pinecone-backed)

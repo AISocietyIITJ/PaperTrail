@@ -17,12 +17,12 @@ export default function ResearchPath() {
   const [drawerEdge, setDrawerEdge] = useState(null);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
-  const handleSearch = async (query) => {
+  const handleSearch = async (query, hops = 2) => {
     setIsLoading(true);
     setHasSearched(true);
     
     try {
-      const result = await getStructuredPath(query);
+      const result = await getStructuredPath(query, hops);
       setData(result);
     } catch (err) {
       console.error(err);

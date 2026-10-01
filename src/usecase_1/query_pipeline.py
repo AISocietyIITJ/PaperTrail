@@ -156,7 +156,7 @@ def hybrid_seed_search(driver, query_text, top_k=4):
     return target_ids
 
 
-def extract_subgraph(driver, target_ids):
+def extract_subgraph(driver, target_ids, hops: int = 2):
     """
     Walks backward 2 hops from the target papers to extract their prerequisites.
     Quality Control: only keeps nodes with citationCount >= 500 or influentialCitationCount >= 50.
@@ -164,8 +164,8 @@ def extract_subgraph(driver, target_ids):
     print("\n[Neo4j] Extracting 2-hop prerequisite subgraph...")
     
     # We fetch all paths first, then filter nodes in Python.
-    query = """
-    MATCH path = (seed:Paper)-[:CITES*0..2]->(prereq:Paper)
+    query = f"""
+    MATCH path = (seed:Paper)-[:CITES*0..{hops}]->(prereq:Paper)
     WHERE seed.paperId IN $target_ids
     WITH nodes(path) AS ns, relationships(path) AS rs
     RETURN [n IN ns | {paperId: n.paperId, title: n.title, year: n.year,
@@ -330,7 +330,7 @@ def format_output(reading_path_ids, G, DAG, target_ids):
     return structured_path
 
 
-def generate_reading_path(query_text):
+def generate_reading_path(query_text, hops: int = 2):
     driver = GraphDatabase.driver(NEO4J_URI, auth=(NEO4J_USERNAME, NEO4J_PASSWORD))
     
     try:
@@ -339,7 +339,7 @@ def generate_reading_path(query_text):
             print("No initial seeds found. Try a different query.")
             return []
             
-        G = extract_subgraph(driver, target_ids)
+        G = extract_subgraph(driver, target_ids, hops=hops)
         if G.number_of_nodes() == 0:
             print("Subgraph is empty. Graph traversal failed.")
             return []

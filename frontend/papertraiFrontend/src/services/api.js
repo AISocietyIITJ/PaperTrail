@@ -1,10 +1,10 @@
 const API_BASE = import.meta.env.VITE_API_BASE;
 
-export async function getStructuredPath(query) {
+export async function getStructuredPath(query, hops = 2) {
   const response = await fetch(`${API_BASE}/api/structured-path`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ query_str: query, config_path: "config.yaml" })
+    body: JSON.stringify({ query_str: query, config_path: "config.yaml", hops })
   });
   if (!response.ok) throw new Error('Failed to fetch structured path');
   return response.json();
