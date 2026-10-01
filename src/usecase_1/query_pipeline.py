@@ -168,10 +168,10 @@ def extract_subgraph(driver, target_ids, hops: int = 2):
     MATCH path = (seed:Paper)-[:CITES*0..{hops}]->(prereq:Paper)
     WHERE seed.paperId IN $target_ids
     WITH nodes(path) AS ns, relationships(path) AS rs
-    RETURN [n IN ns | {paperId: n.paperId, title: n.title, year: n.year,
-                       citationCount: n.citationCount, influentialCitationCount: n.influentialCitationCount, nodeCost: n.nodeCost}] AS nodes,
-           [r IN rs | {start: startNode(r).paperId, end: endNode(r).paperId,
-                       edgeCost: r.edgeCost, traversalCost: r.traversalCost}] AS edges
+    RETURN [n IN ns | {{paperId: n.paperId, title: n.title, year: n.year,
+                       citationCount: n.citationCount, influentialCitationCount: n.influentialCitationCount, nodeCost: n.nodeCost}}] AS nodes,
+           [r IN rs | {{start: startNode(r).paperId, end: endNode(r).paperId,
+                       edgeCost: r.edgeCost, traversalCost: r.traversalCost}}] AS edges
     """
     
     G = nx.DiGraph()
