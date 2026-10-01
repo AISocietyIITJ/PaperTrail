@@ -1,4 +1,4 @@
-from src.usecase_3.reranker_fin import process_inputs,compute_logits
+from src.usecase_3.reranker import format_instruction,process_inputs,compute_logits
 import json
 
 def main():
@@ -21,11 +21,12 @@ def main():
         incorrect=0
         for case in pattern_list:
             pattern= case['pattern']
-            query= case['query']
+            query= case['query']    
             candidates=case['candidates']
 
             docs=[c['text'] for c in candidates]
-            
+
+            # formatted_pairs =[format_instruction(query,doc) for doc in docs]
 
             inputs=process_inputs(query,docs)
 
@@ -33,7 +34,7 @@ def main():
 
 
             logit_diff=logits[0]-logits[1]
-            if(logit_diff>0): pred =1
+            if(logit_diff>0): pred=1
             else: pred=0
             if(pred==candidates[0]['label']): correct=correct+1
             else:incorrect=incorrect+1
@@ -54,9 +55,14 @@ def main():
 
     avg_logit_diff_per_pattern=[sum(i)/len(i) for i in [neg_logit_diff_list,key_logit_diff_list,const_logit_diff_list]]
 
-    print(f"Average logit difference per pattern (negation,keyword_trap,constraint_swap){avg_logit_diff_per_pattern}")
-    print(f"Accuracy per pattern (negation,keyword_trap,constraint_swap):{accuracy_per_pattern_list}%")
-            # per_case_logits=[]
+    # print(f"Average logit difference per pattern (negation,keyword_trap,constraint_swap){avg_logit_diff_per_pattern}")
+    print("="*35)
+    print("Model: Qwen 0.6B Reranker")
+    print(f"Accuracy for negation type queries:{accuracy_per_pattern_list[0]}%")
+    print(f"Accuracy for keyword focussed type queries:{accuracy_per_pattern_list[1]}%")
+    print(f"Accuracy for constraint based queries:{accuracy_per_pattern_list[2]}%")
+    print("="*35)
+                # per_case_logits=[]
 
             # for c in candidates:
             #     abstract= c['text']

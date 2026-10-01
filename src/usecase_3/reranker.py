@@ -58,7 +58,7 @@ def process_inputs(pairs):
     return inputs
 
 @torch.no_grad()
-def compute_logits(inputs,batch_size2=8,**kwargs,):
+def compute_logits(inputs,batch_size2=8,**kwargs):
     scores_list=[]
     num_samples = inputs['input_ids'].shape[0]
     for i in range(0,num_samples,batch_size2):
