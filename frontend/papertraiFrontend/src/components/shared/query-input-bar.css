@@ -41,33 +41,69 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
-.query-input.with-hops {
-  padding-right: 14.5rem;
+.query-input.with-left-dropdown {
+  padding-left: 9rem;
 }
 
-.hops-select {
+.hops-dropdown-container {
   position: absolute;
-  right: 7.5rem;
+  left: 0.35rem;
   top: 50%;
   transform: translateY(-50%);
-  background-color: var(--surface-color);
-  color: var(--ink-900);
-  border: 1px solid var(--border-color);
-  padding: 0.45rem 0.5rem;
-  border-radius: 8px;
+  z-index: 30;
+}
+
+.hops-dropdown-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: #A60050; /* Magenta theme like the image */
+  color: white;
+  border: none;
+  padding: 0.65rem 1.25rem;
+  border-radius: 50px;
   font-family: var(--font-body);
-  font-size: 0.85rem;
+  font-weight: 500;
+  font-size: 0.95rem;
   cursor: pointer;
-  transition: all 0.2s;
-  outline: none;
+  transition: background-color 0.2s;
+  box-shadow: 0 2px 8px rgba(166, 0, 80, 0.3);
 }
 
-.hops-select:focus {
-  border-color: var(--route-blue-tint);
+.hops-dropdown-toggle:hover {
+  background-color: #8C0043;
 }
 
-.hops-select:hover {
-  background-color: var(--surface-raised);
+.hops-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  left: 0;
+  background-color: var(--surface-color, #ffffff);
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  width: 140px;
+  overflow: hidden;
+  border: 1px solid var(--border-color, #e0e0e0);
+  display: flex;
+  flex-direction: column;
+}
+
+.hops-dropdown-item {
+  padding: 0.75rem 1.2rem;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: var(--ink-900, #333);
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.hops-dropdown-item:hover {
+  background-color: var(--surface-raised, #f5f5f5);
+}
+
+.hops-dropdown-item.active {
+  font-weight: 600;
+  background-color: var(--surface-raised, #f0f0f0);
 }
 
 .query-input::placeholder {
@@ -145,14 +181,13 @@
     padding: 0.85rem 7rem 0.85rem 2.75rem;
   }
   
-  .query-input.with-hops {
-    padding-right: 13rem;
+  .query-input.with-left-dropdown {
+    padding-left: 8rem;
   }
 
-  .hops-select {
-    right: 6rem;
-    padding: 0.35rem 0.4rem;
-    font-size: 0.75rem;
+  .hops-dropdown-toggle {
+    padding: 0.5rem 0.8rem;
+    font-size: 0.85rem;
   }
 
   .query-submit {
